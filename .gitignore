@@ -1,0 +1,10 @@
+.dart_tool/
+build/
+.flutter-plugins*
+android/local.properties
+android/.gradle/
+android/key.properties
+*.jks
+*.keystore
+.env
+coverage/
