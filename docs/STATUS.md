@@ -21,7 +21,7 @@ This is a substantial **uncompiled source milestone**, not a completed product o
 | Release APK / AAB | Not built; signing identity not configured |
 | App screenshots / emulator verification | Not available; no screenshots are presented as app evidence |
 | Hosted Supabase / RLS tests | Not deployed or run |
-| GitHub Actions build | Authored, not dispatched; upload held because repository currently reports public |
+| GitHub Actions build | Authored; public upload now authorized; first run pending |
 
 ## Implemented, but awaiting Flutter verification
 
@@ -57,4 +57,4 @@ Entry journey, pet home, shape-based Flame character, care reactions, outfit rew
 
 ## Repository handoff update
 
-The user designated `rayadinaveen98-ship-it/milo-and-me` as authoritative. Initial GitHub metadata returned `private: false` and `visibility: public`. No project upload has occurred. Required foundation, roadmap, safety and content-system documents are prepared locally; original commits are preserved. This is an external visibility blocker, not a completed GitHub/CI milestone.
+The user designated `rayadinaveen98-ship-it/milo-and-me` as authoritative. The owner explicitly authorized public visibility after initial inspection. Required foundation, roadmap, safety and content-system documents are committed locally; original commits are preserved. GitHub publication and the first green CI/APK milestone are in progress.

@@ -6,7 +6,7 @@ Current source: **0.1.0+1**. This is not yet a verified Android release.
 | --- | --- | --- |
 | 0 — Foundation | Brand, modules, engines, local schema, content definitions | Source implemented; Flutter verification pending |
 | 1 — Vertical slice | Welcome/setup → pet home → drawing/puzzle/story → memory/reward | Source implemented; installed-device acceptance pending |
-| Repository / CI bootstrap | Preserve original commits, private GitHub main, analysis/tests, debug APK artifact | In progress; repository reported public on initial inspection; upload held |
+| Repository / CI bootstrap | Preserve original commits, public GitHub main, analysis/tests, debug APK artifact | In progress; public visibility explicitly authorized |
 | 2 — Pet core | Richer animation, memory, care, wardrobe and progression | Baseline source implemented; polish/validation pending |
 | 3 — Activity engines | Harden drawing, varied puzzle interaction, story playback | Baseline source implemented; hardening pending |
 | 4 — Curated content | About 24 drawings, 50–60 puzzles, 10–12 stories, recorded voice | Starter content: 8 / 15 / 3; expansion pending |
@@ -17,7 +17,7 @@ Current source: **0.1.0+1**. This is not yet a verified Android release.
 
 ## Immediate definition of done
 
-1. Existing Git history and audited complete source reach the intended **private** GitHub repository.
+1. Existing Git history and audited complete source reach the owner-authorized public GitHub repository.
 2. GitHub Actions resolves pinned direct dependencies and produces the dependency lockfile. No Dart code generation is required by the current explicit-SQL Drift implementation.
 3. `flutter analyze`, all Flutter tests and Android APK build pass for the same source commit.
 4. The installable debug APK is retained as a GitHub Actions artifact, with its commit identity and checksum.
