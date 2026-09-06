@@ -1,0 +1,89 @@
+name: Import original history and build Android
+on:
+  push:
+    branches: [main]
+    paths: ['.bootstrap/**', '.github/workflows/import-and-build.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Restore original Git history without rewriting existing commits
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git checkout -B import-main origin/main
+          if test -f .bootstrap/history.bundle.base64; then
+            python3 - <<'CODE'
+          import base64, hashlib, pathlib
+          content=base64.b64decode(pathlib.Path('.bootstrap/history.bundle.base64').read_text(),validate=True)
+          assert hashlib.sha256(content).hexdigest() == '473f0bcd2fa8b9ceb380c2ed81b8f9a989515a1dd4999a47d2743489fd47a862', 'History bundle checksum mismatch'
+          pathlib.Path('/tmp/milo-history.bundle').write_bytes(content)
+          CODE
+            git bundle verify /tmp/milo-history.bundle
+            git fetch /tmp/milo-history.bundle refs/heads/main:refs/remotes/original/main
+            test "$(git rev-parse refs/remotes/original/main)" = df57dc0a4604cf6bee991499eee2ec8e90bb0939
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git merge --allow-unrelated-histories --no-ff refs/remotes/original/main -m 'Import preserved Milo source history into main'
+            git rm .bootstrap/history.bundle.base64 .github/workflows/import-and-build.yml
+            git commit -m 'Remove completed one-time history transfer'
+            git push origin HEAD:main
+          fi
+          echo "SOURCE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.35.7'
+          channel: stable
+          cache: true
+      - name: Prepare official Android wrapper
+        run: python3 tool/bootstrap_android.py
+      - name: Install dependencies
+        run: flutter pub get
+      # Explicit SQL Drift implementation: no generated Dart files are required.
+      - name: Validate content and offline invariants
+        run: |
+          python3 tool/validate_content.py assets/content/meadow.json
+          python3 tool/test_offline.py
+      - name: Flutter static analysis
+        run: flutter analyze
+      - name: All Flutter tests
+        run: flutter test --coverage
+      - name: Build Android debug APK
+        run: flutter build apk --debug
+      - name: Record APK identity
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib
+          apk = pathlib.Path('build/app/outputs/flutter-apk/app-debug.apk')
+          report = {'commit': os.environ['SOURCE_SHA'], 'run_id': os.environ['GITHUB_RUN_ID'], 'version': '0.1.0+1', 'build_type': 'debug', 'sha256': hashlib.sha256(apk.read_bytes()).hexdigest()}
+          apk.with_name('build-manifest.json').write_text(json.dumps(report, indent=2) + '\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: milo-and-me-0.1.0-debug-apk-${{ env.SOURCE_SHA }}
+          path: |
+            build/app/outputs/flutter-apk/app-debug.apk
+            build/app/outputs/flutter-apk/build-manifest.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Retain dependency lock and coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verification-details-${{ env.SOURCE_SHA }}
+          path: |
+            pubspec.lock
+            coverage/lcov.info
+          if-no-files-found: warn
+          retention-days: 30
