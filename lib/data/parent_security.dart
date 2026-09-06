@@ -23,8 +23,9 @@ class ParentSecurity {
   ParentSecurity({this.storage = const FlutterSecureStorage()});
   Future<bool> hasPin() async => await storage.read(key: 'parent.pin') != null;
   Future<void> setPin(String pin) async {
-    if (!RegExp(r'^\d{6}$').hasMatch(pin))
+    if (!RegExp(r'^\d{6}$').hasMatch(pin)) {
       throw const FormatException('Choose six digits.');
+    }
     final random = Random.secure();
     final salt = base64Encode(List.generate(24, (_) => random.nextInt(256)));
     final hash = await compute(derivePin, [pin, salt]);
@@ -39,8 +40,9 @@ class ParentSecurity {
     final attempts = jsonDecode(
       await storage.read(key: 'parent.attempts') ?? '{"count":0,"until":0}',
     );
-    if (DateTime.now().millisecondsSinceEpoch < (attempts['until'] as int))
+    if (DateTime.now().millisecondsSinceEpoch < (attempts['until'] as int)) {
       throw StateError('Please wait a minute before trying again.');
+    }
     final raw = await storage.read(key: 'parent.pin');
     if (raw == null) return false;
     final record = jsonDecode(raw);

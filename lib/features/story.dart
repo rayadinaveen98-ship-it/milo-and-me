@@ -19,13 +19,14 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
   Widget build(BuildContext context) {
     final app = ref.watch(controllerProvider),
         story = app.content.find('stories', widget.id);
-    if (story == null)
+    if (story == null) {
       return const PageShell(
         title: 'Story corner',
         child: Center(
           child: Text('This story is unavailable. Your place is saved.'),
         ),
       );
+    }
     final position =
         app.world.storyPositions[widget.id] ?? story['start'] as String;
     final scene = StoryEngine().scene(story, position);
@@ -108,12 +109,13 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
                   : () async {
                       setState(() => busy = true);
                       final ok = await app.completeStory(story);
-                      if (ok && context.mounted)
+                      if (ok && context.mounted) {
                         await showReward(
                           context,
                           'A story to remember',
                           'Our ${story['topic']} is safe in the memory book. Try on your space helmet!',
                         );
+                      }
                       if (mounted) setState(() => busy = false);
                     },
               icon: const Icon(Icons.favorite_rounded),

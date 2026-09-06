@@ -57,10 +57,11 @@ class AppDatabase extends GeneratedDatabase {
     World world, {
     String? removeDraft,
   }) => transaction(() async {
-    if (removeDraft != null)
+    if (removeDraft != null) {
       await customStatement('DELETE FROM drawing_drafts WHERE id=?', [
         removeDraft,
       ]);
+    }
     await customStatement(
       'INSERT INTO world(id,payload) VALUES(1,?) ON CONFLICT(id) DO UPDATE SET payload=excluded.payload',
       [jsonEncode(world.toJson())],

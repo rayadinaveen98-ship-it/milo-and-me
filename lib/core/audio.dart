@@ -62,8 +62,9 @@ class AudioDirector implements AudioService {
 
   @override
   Future<void> reward() async {
-    if (effects)
+    if (effects) {
       await _effects.play(AssetSource('audio/reward.wav'), volume: .3);
+    }
   }
 
   @override

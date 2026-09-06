@@ -61,11 +61,12 @@ class _BootstrapState extends State<Bootstrap> {
   Widget build(BuildContext context) => FutureBuilder<AppController>(
     future: future,
     builder: (context, snapshot) {
-      if (snapshot.hasData)
+      if (snapshot.hasData) {
         return ProviderScope(
           overrides: [controllerProvider.overrideWith((ref) => snapshot.data!)],
           child: const MiloApp(),
         );
+      }
       return MaterialApp(
         theme: Brand.theme(),
         home: Scaffold(

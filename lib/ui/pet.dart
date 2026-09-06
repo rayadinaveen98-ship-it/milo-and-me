@@ -193,8 +193,9 @@ void paintPet(
     ..strokeCap = StrokeCap.round;
   c.drawArc(const Rect.fromLTWH(131, 146, 38, 21), .15, math.pi - .3, false, p);
   p.style = PaintingStyle.fill;
-  if (pose == 'surprise' || pose == 'curious')
+  if (pose == 'surprise' || pose == 'curious') {
     oval(const Rect.fromLTWH(142, 156, 15, 18), Brand.ink);
+  }
   if (pose == 'affection' || pose == 'dance') {
     for (var i = 0; i < 3; i++) {
       final heart = TextPainter(

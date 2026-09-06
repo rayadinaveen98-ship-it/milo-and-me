@@ -98,22 +98,26 @@ class PetEngine {
         'Our adventures can wait. A little stretch together?',
       ]);
     } else {
-      if (w.outfit == 'astronaut')
+      if (w.outfit == 'astronaut') {
         candidates.add(
           'Our space helmet is ready. Shall we visit the little star?',
         );
-      if (w.outfit == 'beret')
+      }
+      if (w.outfit == 'beret') {
         candidates.add('Our artist hat is ready for a colourful idea.');
-      if (w.outfit == 'explorer')
+      }
+      if (w.outfit == 'explorer') {
         candidates.add('What could we discover in our puzzle box?');
+      }
       // An occasional callback: never recite dates or a detailed activity log.
       if (w.companion.cursor % 3 == 0) {
         for (final kind in ['drawing', 'puzzle', 'story']) {
           final items = w.memories.where((m) => m.kind == kind).toList();
-          if (items.isNotEmpty)
+          if (items.isNotEmpty) {
             candidates.add(
               'Remember our ${items.last.topic}? I loved exploring that with you.',
             );
+          }
         }
       }
       candidates.addAll(
@@ -192,11 +196,13 @@ class StoryEngine {
   String choose(Json story, String position, int choice) {
     final current = scene(story, position);
     final choices = current['choices'] as List;
-    if (choice < 0 || choice >= choices.length)
+    if (choice < 0 || choice >= choices.length) {
       throw RangeError.index(choice, choices);
+    }
     final next = choices[choice]['next'] as String;
-    if (!(story['scenes'] as Map).containsKey(next))
+    if (!(story['scenes'] as Map).containsKey(next)) {
       throw const FormatException('Missing scene');
+    }
     return next;
   }
 }
@@ -213,8 +219,9 @@ class ContentEngine {
     }
     final ids = <String>{};
     for (final type in ['drawings', 'puzzles', 'stories']) {
-      if (pack[type] is! List || (pack[type] as List).length > 200)
+      if (pack[type] is! List || (pack[type] as List).length > 200) {
         throw const FormatException('Invalid catalogue');
+      }
       for (final raw in pack[type]) {
         final item = Map<String, dynamic>.from(raw);
         if (item['id'] is! String ||
@@ -227,19 +234,24 @@ class ContentEngine {
         if (type == 'drawings') {
           if (item['steps'] is! List ||
               (item['steps'] as List).isEmpty ||
-              (item['steps'] as List).length > 64)
+              (item['steps'] as List).length > 64) {
             throw const FormatException('Empty lesson');
+          }
           for (final step in item['steps']) {
             if (step['say'] is! String ||
                 step['points'] is! List ||
                 (step['points'] as List).length < 2 ||
-                (step['points'] as List).length > 2048)
+                (step['points'] as List).length > 2048) {
               throw const FormatException('Invalid stroke');
+            }
             for (final point in step['points']) {
               if (point is! List ||
                   point.length != 2 ||
-                  point.any((v) => v is! num || !v.isFinite || v < 0 || v > 1))
+                  point.any(
+                    (v) => v is! num || !v.isFinite || v < 0 || v > 1,
+                  )) {
                 throw const FormatException('Invalid point');
+              }
             }
           }
         }
@@ -258,31 +270,36 @@ class ContentEngine {
               (item['options'] as List).length < 2 ||
               (item['options'] as List).length > 12 ||
               (item['options'] as List).any((v) => v is! String) ||
-              (item['answer'] as List).length > 8)
+              (item['answer'] as List).length > 8) {
             throw const FormatException('Invalid puzzle');
+          }
           if ((item['answer'] as List).any(
             (v) => !(item['options'] as List).contains(v),
-          ))
+          )) {
             throw const FormatException('Unsolvable puzzle');
+          }
         }
         if (type == 'stories') {
           final scenes = item['scenes'];
           if (scenes is! Map ||
               scenes.length > 100 ||
-              !scenes.containsKey(item['start']))
+              !scenes.containsKey(item['start'])) {
             throw const FormatException('Invalid story');
+          }
           final reachable = <String>{};
           void visit(String id) {
             if (!reachable.add(id)) return;
             final scene = scenes[id];
             if (scene is! Map ||
                 scene['text'] is! String ||
-                scene['choices'] is! List)
+                scene['choices'] is! List) {
               throw const FormatException('Invalid scene');
+            }
             for (final choice in scene['choices']) {
               if (choice['label'] is! String ||
-                  !scenes.containsKey(choice['next']))
+                  !scenes.containsKey(choice['next'])) {
                 throw const FormatException('Broken story branch');
+              }
               visit(choice['next']);
             }
           }
@@ -305,8 +322,9 @@ class ContentEngine {
               }
             }
           }
-          if (canEnd.length != reachable.length)
+          if (canEnd.length != reachable.length) {
             throw const FormatException('Story cannot finish');
+          }
         }
       }
     }

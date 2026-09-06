@@ -39,18 +39,22 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final app = ref.read(controllerProvider);
     try {
       if (step == 1) {
-        if (!consent)
+        if (!consent) {
           throw const FormatException(
             'A grown-up needs to read and agree before we begin.',
           );
-        if (pin.text != confirmPin.text)
+        }
+        if (pin.text != confirmPin.text) {
           throw const FormatException('Those PINs don’t match.');
+        }
         await app.security.setPin(pin.text);
       }
-      if (step == 2 && nickname.text.trim().isEmpty)
+      if (step == 2 && nickname.text.trim().isEmpty) {
         throw const FormatException('Choose a nickname to use here.');
-      if (step == 3 && pet.text.trim().isEmpty)
+      }
+      if (step == 3 && pet.text.trim().isEmpty) {
         throw const FormatException('What shall we call your friend?');
+      }
       if (step == 4) {
         final ok = await app.change((w) {
           w.nickname = nickname.text.trim();
@@ -65,12 +69,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         setState(() => step++);
       }
     } catch (e) {
-      if (mounted)
+      if (mounted) {
         setState(
           () => error = e is FormatException
               ? e.message.toString()
               : 'We couldn’t save the parent PIN. Please try again.',
         );
+      }
     } finally {
       if (mounted) setState(() => busy = false);
     }

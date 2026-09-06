@@ -21,13 +21,14 @@ class _PuzzleScreenState extends ConsumerState<PuzzleScreen> {
   Widget build(BuildContext context) {
     final app = ref.watch(controllerProvider);
     final p = app.content.find('puzzles', widget.id);
-    if (p == null)
+    if (p == null) {
       return const PageShell(
         title: 'Puzzle box',
         child: Center(
           child: Text('This puzzle is unavailable. Try another from our box.'),
         ),
       );
+    }
     final count = (p['answer'] as List).length;
     final order = count > 1;
     final spatial = p['engine'] == 'spatial';
@@ -147,12 +148,13 @@ class _PuzzleScreenState extends ConsumerState<PuzzleScreen> {
                     }
                     setState(() => busy = true);
                     final ok = await app.completePuzzle(p);
-                    if (ok && context.mounted)
+                    if (ok && context.mounted) {
                       await showReward(
                         context,
                         'We figured it out!',
                         'Our ${p['topic']} belongs in the memory book. Your explorer hat is ready.',
                       );
+                    }
                     if (mounted) setState(() => busy = false);
                   },
             child: Text(busy ? 'Keeping our memory…' : 'Let’s try it'),

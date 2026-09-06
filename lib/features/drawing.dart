@@ -70,11 +70,12 @@ class _DrawingScreenState extends ConsumerState<DrawingScreen>
         await db.saveDraft(widget.id, Map<String, dynamic>.from(payload));
         return true;
       } catch (_) {
-        if (mounted)
+        if (mounted) {
           setState(
             () => feedback =
                 'We couldn’t keep the unfinished picture yet. Please use Save before leaving.',
           );
+        }
         return false;
       }
     });
@@ -101,11 +102,12 @@ class _DrawingScreenState extends ConsumerState<DrawingScreen>
           DrawingStroke(color: color, width: width, erase: eraser, points: []),
         );
       }
-      if (strokes.isNotEmpty)
+      if (strokes.isNotEmpty) {
         strokes.last.points.add([
           (p.dx / size.width).clamp(0.0, 1.0).toDouble(),
           (p.dy / size.height).clamp(0.0, 1.0).toDouble(),
         ]);
+      }
     });
   }
 
@@ -146,8 +148,9 @@ class _DrawingScreenState extends ConsumerState<DrawingScreen>
       final ok = await ref
           .read(controllerProvider)
           .remember(memory, draftId: widget.id);
-      if (!ok && mounted)
+      if (!ok && mounted) {
         setState(() => feedback = ref.read(controllerProvider).error);
+      }
       if (ok && mounted) {
         strokes.clear();
         await showReward(
@@ -157,11 +160,12 @@ class _DrawingScreenState extends ConsumerState<DrawingScreen>
         );
       }
     } catch (_) {
-      if (mounted)
+      if (mounted) {
         setState(
           () =>
               feedback = 'Your picture is still here. Please try saving again.',
         );
+      }
     } finally {
       if (mounted) setState(() => saving = false);
     }
@@ -171,7 +175,7 @@ class _DrawingScreenState extends ConsumerState<DrawingScreen>
   Widget build(BuildContext context) {
     final app = ref.watch(controllerProvider);
     final lesson = app.content.find('drawings', widget.id);
-    if (lesson == null && widget.id != 'create')
+    if (lesson == null && widget.id != 'create') {
       return const PageShell(
         title: 'Art corner',
         child: Center(
@@ -180,11 +184,13 @@ class _DrawingScreenState extends ConsumerState<DrawingScreen>
           ),
         ),
       );
+    }
     final steps = lesson?['steps'] as List? ?? [];
     final reduced =
         app.world.reducedMotion || MediaQuery.disableAnimationsOf(context);
-    if (loading)
+    if (loading) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
     if (steps.isNotEmpty) step = step.clamp(0, steps.length - 1).toInt();
     final current = steps.isEmpty
         ? null
@@ -433,11 +439,12 @@ class _DrawingScreenState extends ConsumerState<DrawingScreen>
                                       ],
                                     ),
                                   );
-                                  if (yes == true && mounted)
+                                  if (yes == true && mounted) {
                                     edit(() {
                                       strokes.clear();
                                       undone.clear();
                                     });
+                                  }
                                 },
                         ),
                       ],

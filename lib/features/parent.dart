@@ -36,11 +36,12 @@ class _ParentScreenState extends ConsumerState<ParentScreen> {
         setState(() => error = 'That PIN didn’t match. Please try again.');
       }
     } catch (e) {
-      if (mounted)
+      if (mounted) {
         setState(
           () => error =
               'Please wait a minute before trying again, or check device secure storage.',
         );
+      }
     } finally {
       if (mounted) setState(() => busy = false);
     }
@@ -201,11 +202,12 @@ class _ParentScreenState extends ConsumerState<ParentScreen> {
                               await app.newSession();
                               if (context.mounted) leave();
                             } catch (_) {
-                              if (mounted)
+                              if (mounted) {
                                 setState(
                                   () => error =
                                       'Could not start a session. Please try again.',
                                 );
+                              }
                             }
                           },
                           icon: const Icon(Icons.play_circle_outline_rounded),
@@ -242,19 +244,21 @@ class _ParentScreenState extends ConsumerState<ParentScreen> {
                                   ),
                                   FilledButton(
                                     onPressed: () {
-                                      if (name.text.trim().isNotEmpty)
+                                      if (name.text.trim().isNotEmpty) {
                                         Navigator.pop(ctx, name.text.trim());
+                                      }
                                     },
                                     child: const Text('Save'),
                                   ),
                                 ],
                               ),
                             );
-                            if (result != null)
+                            if (result != null) {
                               await app.change((n) {
                                 n.nickname = result;
                                 return n;
                               });
+                            }
                           },
                         ),
                         const Paper(

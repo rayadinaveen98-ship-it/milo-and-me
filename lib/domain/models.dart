@@ -79,8 +79,9 @@ class CompanionState {
     'firsts': firsts.toList(),
   };
   factory CompanionState.fromJson(Json j) {
-    if (j['schema'] != 1)
+    if (j['schema'] != 1) {
       throw const FormatException('Unsupported companion version');
+    }
     return CompanionState(
       curiosity: j['curiosity'],
       interactions: j['interactions'],

@@ -49,10 +49,12 @@ class SupabaseParentBackend implements ParentBackend {
         )
         .timeout(const Duration(seconds: 15));
     if (response.statusCode == 401) throw StateError('Parent session expired');
-    if (response.statusCode != 200)
+    if (response.statusCode != 200) {
       throw StateError('Parent service unavailable');
-    if (response.bodyBytes.length > 1024 * 1024)
+    }
+    if (response.bodyBytes.length > 1024 * 1024) {
       throw const FormatException('Catalogue response too large');
+    }
     final body = jsonDecode(response.body);
     if (body is! List) throw const FormatException('Invalid response');
     return body.map((r) => Map<String, dynamic>.from(r)).toList();
