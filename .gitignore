@@ -8,3 +8,7 @@ android/key.properties
 *.keystore
 .env
 coverage/
+
+__pycache__/
+*.pyc
+*.bundle
