@@ -145,7 +145,7 @@ class World {
     Set<String>? completedPuzzles,
     Set<String>? completedStories,
     Map<String, String>? storyPositions,
-    Map<String,Json>? activities,
+    Map<String, Json>? activities,
   }) : companion = companion ?? CompanionState(),
        memories = memories ?? [],
        owned = owned ?? {'none', 'scarf'},
@@ -214,7 +214,10 @@ class World {
       completedPuzzles: Set<String>.from(j['completedPuzzles']),
       completedStories: Set<String>.from(j['completedStories']),
       storyPositions: Map<String, String>.from(j['storyPositions']),
-      activities: (j['activities'] as Map? ?? {}).map((key,value)=>MapEntry(key as String,Map<String,dynamic>.from(value))),
+      activities: (j['activities'] as Map? ?? {}).map(
+        (key, value) =>
+            MapEntry(key as String, Map<String, dynamic>.from(value)),
+      ),
     );
   }
   World copy() => World.fromJson(jsonDecode(jsonEncode(toJson())));

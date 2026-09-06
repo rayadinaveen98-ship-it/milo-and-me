@@ -164,11 +164,26 @@ class MemoryEngine {
     }
     next.memories.add(memory);
     next.companion.remember(memory);
-    if(next.memories.where((m)=>m.kind=='drawing').length>=5) next.companion.firsts.add('creativity-five');
-    if(next.memories.where((m)=>m.kind=='puzzle').map((m)=>m.payload['engine']).whereType<String>().toSet().length==5) next.companion.firsts.add('puzzle-explorer');
-    final theme=memory.payload['theme'];
-    if(theme is String && next.memories.where((m)=>m.payload['theme']==theme).length>=3) next.companion.firsts.add('theme:$theme');
-    if(memory.payload['milestone']=='kindness')next.companion.firsts.add('kindness');
+    if (next.memories.where((m) => m.kind == 'drawing').length >= 5) {
+      next.companion.firsts.add('creativity-five');
+    }
+    if (next.memories
+            .where((m) => m.kind == 'puzzle')
+            .map((m) => m.payload['engine'])
+            .whereType<String>()
+            .toSet()
+            .length ==
+        5) {
+      next.companion.firsts.add('puzzle-explorer');
+    }
+    final theme = memory.payload['theme'];
+    if (theme is String &&
+        next.memories.where((m) => m.payload['theme'] == theme).length >= 3) {
+      next.companion.firsts.add('theme:$theme');
+    }
+    if (memory.payload['milestone'] == 'kindness') {
+      next.companion.firsts.add('kindness');
+    }
     next.mood = 'dance';
     next.dialogue = 'Our ${memory.topic}! Let’s keep this lovely memory.';
     next.affection = (next.affection + 5).clamp(0, 100).toInt();
@@ -236,7 +251,16 @@ class ContentEngine {
             !RegExp(r'^[a-z0-9][a-z0-9_-]{0,63}$').hasMatch(item['id'])) {
           throw const FormatException('Missing or duplicate content identity');
         }
-        if(item['theme']!=null && !['Dinosaurs','Space','Ocean','Animals','Nature'].contains(item['theme'])) throw const FormatException('Unknown theme');
+        if (item['theme'] != null &&
+            ![
+              'Dinosaurs',
+              'Space',
+              'Ocean',
+              'Animals',
+              'Nature',
+            ].contains(item['theme'])) {
+          throw const FormatException('Unknown theme');
+        }
         if (type == 'drawings') {
           if (item['steps'] is! List ||
               (item['steps'] as List).isEmpty ||
@@ -301,11 +325,21 @@ class ContentEngine {
                 scene['choices'] is! List) {
               throw const FormatException('Invalid scene');
             }
-            if(scene['interaction']!=null) {
-              final prop=scene['interaction'];
-              if(prop is! Map || ['label','symbol','message'].any((k)=>prop[k] is! String || (prop[k] as String).isEmpty)) throw const FormatException('Invalid story interaction');
+            if (scene['interaction'] != null) {
+              final prop = scene['interaction'];
+              if (prop is! Map ||
+                  ['label', 'symbol', 'message'].any(
+                    (k) => prop[k] is! String || (prop[k] as String).isEmpty,
+                  )) {
+                throw const FormatException('Invalid story interaction');
+              }
             }
-            if(scene['audio']!=null && (scene['audio'] is! String || !(scene['audio'] as String).startsWith('audio/') || (scene['audio'] as String).contains('..'))) throw const FormatException('Invalid audio path');
+            if (scene['audio'] != null &&
+                (scene['audio'] is! String ||
+                    !(scene['audio'] as String).startsWith('audio/') ||
+                    (scene['audio'] as String).contains('..'))) {
+              throw const FormatException('Invalid audio path');
+            }
             for (final choice in scene['choices']) {
               if (choice['label'] is! String ||
                   !scenes.containsKey(choice['next'])) {
