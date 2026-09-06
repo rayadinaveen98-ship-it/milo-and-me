@@ -11,7 +11,9 @@ import 'package:milo_and_me/domain/models.dart';
 
 void main(){
   testWidgets('Fresh install reaches the parent introduction',(tester)async{
-    final db=AppDatabase(NativeDatabase.memory());final content=ContentRepository(db);await content.load();
+    final db=AppDatabase(NativeDatabase.memory());final content=ContentRepository(db);
+    // Asset loading and native SQLite initialization need real asynchronous I/O.
+    await tester.runAsync(content.load);
     final app=AppController(db,content,World(),audioOverride:SilentAudio());
     await tester.pumpWidget(ProviderScope(overrides:[controllerProvider.overrideWith((ref)=>app)],child:const MiloApp()));
     await tester.pump(const Duration(milliseconds:100));
@@ -23,7 +25,9 @@ void main(){
   testWidgets('Child can open art catalogue; parent settings require PIN',(tester)async{
     tester.view.physicalSize=const Size(430,932);tester.view.devicePixelRatio=1;
     addTearDown(tester.view.resetPhysicalSize);addTearDown(tester.view.resetDevicePixelRatio);
-    final db=AppDatabase(NativeDatabase.memory());final content=ContentRepository(db);await content.load();
+    final db=AppDatabase(NativeDatabase.memory());final content=ContentRepository(db);
+    // Asset loading and native SQLite initialization need real asynchronous I/O.
+    await tester.runAsync(content.load);
     final app=AppController(db,content,World(onboarded:true,nickname:'Acorn'),audioOverride:SilentAudio());
     await tester.pumpWidget(ProviderScope(overrides:[controllerProvider.overrideWith((ref)=>app)],child:const MiloApp()));await tester.pump();
     expect(find.text('Milo & Acorn'),findsOneWidget);
