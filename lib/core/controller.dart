@@ -52,6 +52,7 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
     });
     return done.future;
   }
+  Future<bool> suggest() => change((w) => PetEngine().react(w, now:DateTime.now(), sessionMinutes:elapsedSeconds~/60));
   Future<bool> care(String action) => change((w) => PetEngine().care(w, action));
   Future<bool> remember(Memory memory, {String? draftId}) async {
     final ok = await change((w) => MemoryEngine().add(w, memory), removeDraft: draftId);

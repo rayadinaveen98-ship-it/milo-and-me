@@ -16,18 +16,18 @@ class PetView extends StatefulWidget {
 class _PetViewState extends State<PetView> {
   late final PetGame game;
   @override void initState() { super.initState(); game = PetGame(); _configure(); }
-  void _configure() { game.color = widget.color; game.pose = widget.pose; game.outfit = widget.outfit; game.reduced = widget.reducedMotion; }
+  void _configure() { if(game.pose!=widget.pose) game.poseAge=0; game.color = widget.color; game.pose = widget.pose; game.outfit = widget.outfit; game.reduced = widget.reducedMotion; }
   @override void didUpdateWidget(covariant PetView oldWidget) { super.didUpdateWidget(oldWidget); _configure(); }
   @override Widget build(BuildContext context) => Semantics(label: 'Your pet, ${widget.pose}. Tap for a cuddle.', button: widget.onTap != null,
     child: GestureDetector(onTap: widget.onTap, child: GameWidget(game: game)));
 }
 class PetGame extends FlameGame {
-  double clock = 0;
+  double clock = 0, poseAge = 0;
   int color = 0;
   String pose = 'happy', outfit = 'none';
   bool reduced = false;
   @override Color backgroundColor() => Colors.transparent;
-  @override void update(double dt) { super.update(dt); if (!reduced) clock += dt.clamp(0, .05); }
+  @override void update(double dt) { super.update(dt); if (!reduced) { clock += dt.clamp(0, .05); poseAge += dt.clamp(0, .05); } }
   @override void render(Canvas canvas) {
     super.render(canvas);
     if (size.x <= 0 || size.y <= 0) return;
@@ -35,16 +35,21 @@ class PetGame extends FlameGame {
     final scale = math.min(size.x / 300, size.y / 300);
     canvas.translate((size.x - 300 * scale) / 2, (size.y - 300 * scale) / 2);
     canvas.scale(scale);
-    paintPet(canvas, color: Brand.petColors[color.clamp(0, 2).toInt()], pose: pose, outfit: outfit, clock: clock);
+    paintPet(canvas, color: Brand.petColors[color.clamp(0, 2).toInt()], pose: pose=='sleep'?pose:poseAge<4?pose:['happy','look','sit','walk','curious','laugh','surprise','jump'][(clock~/6)%8], outfit: outfit, clock: reduced?0:clock, reduced:reduced);
     canvas.restore();
   }
 }
-void paintPet(Canvas c, {required Color color, String pose = 'happy', String outfit = 'none', double clock = 0}) {
+void paintPet(Canvas c, {required Color color, String pose = 'happy', String outfit = 'none', double clock = 0, bool reduced = false}) {
   final p = Paint()..isAntiAlias = true;
   void oval(Rect r, Color col) { p.color = col; p.style = PaintingStyle.fill; c.drawOval(r, p); }
   void line(Offset a, Offset b, Color col, double w) { p..color = col..style = PaintingStyle.stroke..strokeWidth = w..strokeCap = StrokeCap.round; c.drawLine(a, b, p); p.style = PaintingStyle.fill; }
   oval(const Rect.fromLTWH(59, 264, 184, 19), const Color(0x19000000));
-  c.save(); c.translate(0, pose == 'sleep' ? 8 : math.sin(clock * 2) * 3);
+  c.save();
+  final moving=!reduced;
+  final bounce=moving && ['dance','jump','laugh'].contains(pose)?-math.sin(clock*5).abs()*14:0.0;
+  c.translate(moving && pose=='walk'?math.sin(clock*1.5)*16:0, pose=='sleep'||pose=='sit'?8:bounce+(moving?math.sin(clock*2)*3:0));
+  if(pose=='curious'||pose=='dance') { c.translate(150,200);c.rotate(moving?math.sin(clock*2)*.06:0);c.translate(-150,-200); }
+
   // Leaf-shaped ears and a soft pear silhouette distinguish Milo from a cat or dog.
   c.save(); c.translate(85, 85); c.rotate(-.3); oval(const Rect.fromLTWH(-25, -63, 48, 98), color); oval(const Rect.fromLTWH(-14, -47, 26, 61), Brand.peach); c.restore();
   c.save(); c.translate(210, 85); c.rotate(.5); oval(const Rect.fromLTWH(-25, -63, 48, 98), color); oval(const Rect.fromLTWH(-14, -47, 26, 61), Brand.peach); c.restore();
@@ -57,19 +62,28 @@ void paintPet(Canvas c, {required Color color, String pose = 'happy', String out
   oval(const Rect.fromLTWH(220, 179, 38, 57), color);
   oval(const Rect.fromLTWH(76, 144, 34, 20), Brand.peach);
   oval(const Rect.fromLTWH(194, 144, 34, 20), Brand.peach);
-  final blink = pose == 'sleep' || clock % 5 > 4.8;
+  final blink = pose == 'sleep' || pose=='laugh' || (!reduced && clock % 5 > 4.8);
   if (blink) {
     line(const Offset(104, 128), const Offset(123, 130), Brand.ink, 5);
     line(const Offset(179, 130), const Offset(198, 128), Brand.ink, 5);
   } else {
+    final gaze=pose=='look'&&!reduced?math.sin(clock)*4:0.0;
+    c.save();c.translate(gaze,0);
     oval(const Rect.fromLTWH(105, 114, 18, 26), Brand.ink);
     oval(const Rect.fromLTWH(179, 114, 18, 26), Brand.ink);
     oval(const Rect.fromLTWH(109, 117, 5, 7), Colors.white);
-    oval(const Rect.fromLTWH(183, 117, 5, 7), Colors.white);
+    oval(const Rect.fromLTWH(183, 117, 5, 7), Colors.white);c.restore();
   }
   oval(const Rect.fromLTWH(140, 140, 20, 13), Brand.ink);
   p..color = Brand.ink..style = PaintingStyle.stroke..strokeWidth = 3..strokeCap = StrokeCap.round;
   c.drawArc(const Rect.fromLTWH(131, 146, 38, 21), .15, math.pi - .3, false, p); p.style = PaintingStyle.fill;
+  if(pose=='surprise'||pose=='curious') oval(const Rect.fromLTWH(142,156,15,18),Brand.ink);
+  if(pose=='affection'||pose=='dance') {
+    for(var i=0;i<3;i++) {
+      final heart=TextPainter(text:const TextSpan(text:'♥',style:TextStyle(color:Brand.peach,fontSize:24)),textDirection:TextDirection.ltr)..layout();
+      heart.paint(c,Offset(40+i*98.0,48-(reduced?0:math.sin(clock*2+i)*8)));
+    }
+  }
   // Sprout tuft, the character's signature.
   oval(const Rect.fromLTWH(147, 52, 12, 24), Brand.sage);
   c.save(); c.translate(153, 58); c.rotate(.7); oval(const Rect.fromLTWH(0, -20, 13, 27), Brand.sage); c.restore();

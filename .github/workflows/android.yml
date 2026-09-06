@@ -28,12 +28,14 @@ jobs:
         run: python3 tool/bootstrap_android.py
       - name: Install dependencies
         run: flutter pub get
+      - name: Format Dart source
+        run: dart format lib test
       - name: Retain reproducible dependency and wrapper inputs
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add pubspec.lock android/gradlew android/gradlew.bat android/gradle/wrapper
+          git add lib test pubspec.lock android/gradlew android/gradlew.bat android/gradle/wrapper
           if ! git diff --cached --quiet; then
             git commit -m 'Retain resolved Flutter dependencies and official Gradle wrapper'
             git push origin HEAD:main
@@ -55,12 +57,12 @@ jobs:
           python3 - <<'PY'
           import hashlib, json, os, pathlib, subprocess
           apk = pathlib.Path('build/app/outputs/flutter-apk/app-debug.apk')
-          report = {'commit': subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(), 'run_id': os.environ['GITHUB_RUN_ID'], 'version': '0.1.0+1', 'build_type': 'debug', 'sha256': hashlib.sha256(apk.read_bytes()).hexdigest()}
+          report = {'commit': subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(), 'run_id': os.environ['GITHUB_RUN_ID'], 'version': pathlib.Path('pubspec.yaml').read_text().split('version: ')[1].splitlines()[0], 'build_type': 'debug', 'sha256': hashlib.sha256(apk.read_bytes()).hexdigest()}
           apk.with_name('build-manifest.json').write_text(json.dumps(report, indent=2) + '\n')
           PY
       - uses: actions/upload-artifact@v4
         with:
-          name: milo-and-me-0.1.0-debug-apk-${{ github.sha }}
+          name: milo-and-me-debug-apk-${{ github.sha }}
           path: |
             build/app/outputs/flutter-apk/app-debug.apk
             build/app/outputs/flutter-apk/build-manifest.json
@@ -76,3 +78,23 @@ jobs:
             coverage/lcov.info
           if-no-files-found: warn
           retention-days: 30
+      - name: Publish verified milestone APK
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          python3 - <<'PYCODE'
+          import json,pathlib,subprocess
+          root=pathlib.Path('build/app/outputs/flutter-apk')
+          manifest=json.loads((root/'build-manifest.json').read_text())
+          version=manifest['version'].split('+')[0]
+          tag='v'+version
+          apk=root/('Milo-and-Me-v'+version+'.apk')
+          apk.write_bytes((root/'app-debug.apk').read_bytes())
+          notes=pathlib.Path('milestone-notes.md')
+          notes.write_text('Android debug playtest. Analysis, all tests and APK build passed.\n\nSource: '+manifest['commit']+'\n\nSee docs/RELEASE_NOTES.md for changes and external activation requirements.')
+          if subprocess.run(['gh','release','view',tag],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL).returncode:
+            subprocess.run(['gh','release','create',tag,'--target',manifest['commit'],'--prerelease','--title','Milo & Me '+version,'--notes-file',str(notes)],check=True)
+          subprocess.run(['gh','release','upload',tag,str(apk),str(root/'build-manifest.json'),'--clobber'],check=True)
+          PYCODE

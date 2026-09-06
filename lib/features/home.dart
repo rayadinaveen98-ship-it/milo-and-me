@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../core/brand.dart';
 import '../core/controller.dart';
-import '../domain/engines.dart';
 import '../domain/models.dart';
 import '../ui/common.dart';
 import '../ui/pet.dart';
@@ -44,6 +43,9 @@ class HomeScreen extends ConsumerWidget {
           ]);
         })));
       }),
+      if(w.companion.firsts.isNotEmpty) Padding(padding:const EdgeInsets.only(top:8),child:Row(mainAxisAlignment:MainAxisAlignment.center,children:[
+        for(final kind in ['drawing','puzzle','story']) if(w.companion.firsts.contains(kind)) Padding(padding:const EdgeInsets.all(8),child:Tooltip(message:'Our first $kind keepsake',child:Icon(kind=='drawing'?Icons.local_florist_rounded:kind=='puzzle'?Icons.toys_rounded:Icons.star_rounded,color:Brand.sage,size:32))),
+      ])),
       const SizedBox(height: 12),
       Wrap(alignment: WrapAlignment.center, children: [
         BigAction('Picnic', Icons.apple_rounded, () => app.care('food'), color: Brand.peach),
@@ -51,7 +53,7 @@ class HomeScreen extends ConsumerWidget {
         BigAction(w.mood == 'sleep' ? 'Wake up' : 'Rest', Icons.bedtime_rounded, () => app.care(w.mood == 'sleep' ? 'cuddle' : 'sleep'), color: Brand.lavender),
       ]),
       if (w.memories.isEmpty) Padding(padding: const EdgeInsets.only(top: 12), child: FilledButton.icon(onPressed: () => context.go('/drawing/flower'), icon: const Icon(Icons.local_florist_rounded), label: const Text('Draw our first flower'))),
-      TextButton.icon(onPressed: () => app.change((next) { next.dialogue = PetEngine().suggestion(next, hour: DateTime.now().hour, sessionMinutes: app.elapsedSeconds ~/ 60); return next; }), icon: const Icon(Icons.lightbulb_outline_rounded), label: Text('What shall we do, ${w.petName}?')),
+      TextButton.icon(onPressed: app.suggest, icon: const Icon(Icons.lightbulb_outline_rounded), label: Text('What shall we do, ${w.petName}?')),
     ]));
   }
 }

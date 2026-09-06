@@ -26,3 +26,7 @@ Current version: **0.1.0+1**, CI-verified Android debug playtest. Installed-devi
 First verified build: commit `fc7d2fabfe3f8f955c8c2e2f1a54cfb97456d973`, [green CI](https://github.com/rayadinaveen98-ship-it/milo-and-me/actions/runs/34037468340), [debug APK artifact](https://github.com/rayadinaveen98-ship-it/milo-and-me/actions/runs/34037468340/artifacts/9990702706) (2026-09-06). Analysis, all 28 Flutter tests, 19 offline tests and APK generation passed. The artifact contains `app-debug.apk` and a SHA-256/commit manifest; retention is 30 days. Newer successful runs produce their own matching artifacts.
 
 Next, verify the APK on a device. Do not substitute offline structural checks for Flutter analysis, tests or runtime evidence.
+
+## Approved continuation
+
+The execution contract in `EXECUTION_V02_V07.md` supersedes the earlier milestone numbering: 0.2 companion; 0.3 core engines/content; 0.4 world areas; 0.5 cooking/roleplay; 0.6 science/discovery; 0.7 parent/backend/packs/premium. Proceed sequentially after each green CI/APK gate. Current work: 0.2 implemented, CI pending. User reports the installed 0.1 baseline has no material issues.

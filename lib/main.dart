@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'core/brand.dart';
 import 'core/controller.dart';
 import 'data/database.dart';
+import 'domain/engines.dart';
 import 'data/content_repository.dart';
 import 'features/onboarding.dart';
 import 'features/home.dart';
@@ -28,7 +29,7 @@ class _BootstrapState extends State<Bootstrap>{
   @override void initState(){super.initState();future=load();}
   Future<AppController> load()async{
     final db=await AppDatabase.open();
-    try{final content=ContentRepository(db);await content.load();return AppController(db,content,await db.readWorld(),sessionSeconds:await db.readSession());}
+    try{final content=ContentRepository(db);await content.load();var world=await db.readWorld();if(world.onboarded){world=PetEngine().greet(world,DateTime.now());await db.saveWorld(world);}return AppController(db,content,world,sessionSeconds:await db.readSession());}
     catch(_){await db.close();rethrow;}
   }
   @override Widget build(BuildContext context)=>FutureBuilder<AppController>(future:future,builder:(context,snapshot){

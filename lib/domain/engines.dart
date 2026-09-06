@@ -1,16 +1,59 @@
 import 'models.dart';
 
 class PetEngine {
-  World care(World current, String action) {
+  World care(World current, String action, {DateTime? now}) {
     final next = current.copy();
     next.affection = (next.affection + 4).clamp(0, 100).toInt();
-    switch (action) {
-      case 'food': next.mood = 'eat'; next.dialogue = 'Crunch, crunch! A lovely little picnic.'; break;
-      case 'wash': next.mood = 'wash'; next.dialogue = 'Pop! Those bubbles tickle.'; break;
-      case 'sleep': next.mood = 'sleep'; next.energy = 100; next.dialogue = 'A quiet moment. You can rest too.'; break;
-      default: next.mood = 'happy'; next.dialogue = 'My favourite part is making things with you!';
-    }
+    final lines = switch(action) {
+      'food' => ['Crunch, crunch! A lovely little picnic.', 'A picnic tastes better together.', 'Thank you! Shall we pretend these are moon apples?'],
+      'wash' => ['Pop! Those bubbles tickle.', 'A tiny bubble parade!', 'Look, a round rainbow!'],
+      'sleep' => ['A quiet moment. You can rest too.', 'Our adventures will be here after a rest.', 'Let’s get cosy.'],
+      _ => ['My favourite part is making things with you!', 'A little cuddle, a lovely moment.', 'I’m glad we are friends.'],
+    };
+    next.mood = switch(action) {'food'=>'eat','wash'=>'wash','sleep'=>'sleep',_=>'affection'};
+    next.companion.careState = switch(action) {'food'=>'fed','wash'=>'fresh','sleep'=>'rested',_=>'comfortable'};
+    if(action=='sleep') next.energy=100;
+    _speak(next, lines, now ?? DateTime.now());
     return next;
+  }
+  void _speak(World w, List<String> candidates, DateTime now) {
+    final c=w.companion;
+    final fresh=candidates.where((line)=>!c.recentLines.contains(line)).toList();
+    final pool=fresh.isNotEmpty?fresh:candidates.where((line)=>line!=w.dialogue).toList();
+    w.dialogue=pool.isEmpty?candidates.first:pool[c.cursor%pool.length];
+    c.cursor++; c.interactions++; c.lastInteraction=now;
+    c.recentLines.add(w.dialogue);
+    if(c.recentLines.length>6) c.recentLines.removeAt(0);
+  }
+  World greet(World current, DateTime now) {
+    final w=current.copy(), c=current.companion;
+    final returning=c.lastInteraction!=null && now.difference(c.lastInteraction!).inHours>=6;
+    _speak(w, returning ? ['Welcome back, ${w.nickname}! Our little world is ready.', 'Hello again! Shall we make a new memory?', 'Lovely to see you. A gentle adventure today?'] :
+      ['Hello, ${w.nickname}! What shall we discover?', 'A little time together. What do you fancy?', 'Our play space is ready for imagination.'],now);
+    w.companion.lastSession=now; w.mood='happy';
+    return w;
+  }
+  World react(World current, {required DateTime now, required int sessionMinutes}) {
+    final w=current.copy();
+    final candidates=<String>[];
+    if(sessionMinutes>=w.sessionMinutes) {
+      candidates.addAll(['Shall we draw together on paper?', 'Perhaps we could look for a leaf shape outside with a grown-up.', 'Our adventures can wait. A little stretch together?']);
+    } else {
+      if(w.outfit=='astronaut') candidates.add('Our space helmet is ready. Shall we visit the little star?');
+      if(w.outfit=='beret') candidates.add('Our artist hat is ready for a colourful idea.');
+      if(w.outfit=='explorer') candidates.add('What could we discover in our puzzle box?');
+      // An occasional callback: never recite dates or a detailed activity log.
+      if(w.companion.cursor%3==0) {
+        for(final kind in ['drawing','puzzle','story']) {
+          final items=w.memories.where((m)=>m.kind==kind).toList();
+          if(items.isNotEmpty) candidates.add('Remember our ${items.last.topic}? I loved exploring that with you.');
+        }
+      }
+      candidates.addAll(now.hour>=19 || now.hour<6 ? ['The stars are out. A gentle story together?', 'Our cosy room is a lovely place to imagine.'] :
+        ['Shall we try a new colour at the easel?', 'I wonder what is inside our story book.', 'Shall we solve a little mystery together?', 'We could make something, or just sit together.']);
+    }
+    _speak(w,candidates,now); w.mood=w.companion.cursor%2==0?'curious':'happy';
+    return w;
   }
   String suggestion(World w, {required int hour, required int sessionMinutes}) {
     if (sessionMinutes >= w.sessionMinutes) { return 'What a lovely adventure. Shall we make something on paper now?'; }
@@ -25,7 +68,8 @@ class MemoryEngine {
     final next = current.copy();
     if (next.memories.any((m) => m.id == memory.id)) { return next; }
     next.memories.add(memory);
-    next.mood = 'happy';
+    next.companion.remember(memory);
+    next.mood = 'dance';
     next.dialogue = 'Our ${memory.topic}! Let’s keep this lovely memory.';
     next.affection = (next.affection + 5).clamp(0, 100).toInt();
     if (memory.kind == 'drawing') next.owned.add('beret');
