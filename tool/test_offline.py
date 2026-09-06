@@ -26,7 +26,7 @@ class SqlTests(unittest.TestCase):
  def setUp(self):
   self.db=sqlite3.connect(':memory:')
   src=(ROOT/'lib/data/database.dart').read_text()
-  for sql in re.findall(r"customStatement\('(CREATE TABLE [^']+)'\)",src):self.db.execute(sql)
+  for sql in re.findall(r"customStatement\(\s*'(CREATE TABLE [^']+)'\s*,?\s*\)",src):self.db.execute(sql)
  def tearDown(self):self.db.close()
  def test_world_roundtrip(self):
   payload=json.dumps({'nickname':'Friend','memories':[{'kind':'drawing','title':'Flower'}]})
