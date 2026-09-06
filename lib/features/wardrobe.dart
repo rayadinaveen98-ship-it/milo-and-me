@@ -14,10 +14,10 @@ class WardrobeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final app = ref.watch(controllerProvider), w = app.world;
     const items = {
-      'chef':['Chef hat','Make a pretend recipe'],
-      'doctor':['Toy-care badge','Finish our cosy toy story'],
-      'detective':['Detective cap','Solve the moon-button mystery'],
-      'builder':['Builder helmet','Build our pretend bridge'],
+      'chef': ['Chef hat', 'Make a pretend recipe'],
+      'doctor': ['Toy-care badge', 'Finish our cosy toy story'],
+      'detective': ['Detective cap', 'Solve the moon-button mystery'],
+      'builder': ['Builder helmet', 'Build our pretend bridge'],
       'none': ['Just me', 'Always yours'],
       'scarf': ['Cosy scarf', 'Always yours'],
       'beret': ['Artist beret', 'Make a picture together'],
@@ -43,7 +43,11 @@ class WardrobeScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 18),
-        FilledButton.tonalIcon(onPressed:()=>context.go('/roleplay'),icon:const Icon(Icons.theater_comedy_rounded),label:const Text('Imagine an adventure')),
+          FilledButton.tonalIcon(
+            onPressed: () => context.go('/roleplay'),
+            icon: const Icon(Icons.theater_comedy_rounded),
+            label: const Text('Imagine an adventure'),
+          ),
           for (final e in items.entries)
             Padding(
               padding: const EdgeInsets.only(bottom: 12),

@@ -129,12 +129,31 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
       ),
     );
   });
-  Future<bool> scenarioAction(String kind,Json definition,String choice) => change((w)=>ScenarioEngine().perform(w,kind,definition,choice));
-  Future<bool> finishScenario(String kind,Json definition) => change((w) {
-    if(!ScenarioEngine().complete(definition,ScenarioEngine().progress(w,kind,definition['id'])))throw StateError('Scenario is not finished');
-    return MemoryEngine().add(w,Memory(id:'$kind:${definition['id']}',kind:kind,title:definition['title'],topic:definition['topic'],at:DateTime.now(),payload:{'theme':definition['theme'],'outfit':definition['outfit']}));
+  Future<bool> scenarioAction(String kind, Json definition, String choice) =>
+      change((w) => ScenarioEngine().perform(w, kind, definition, choice));
+  Future<bool> finishScenario(String kind, Json definition) => change((w) {
+    if (!ScenarioEngine().complete(
+      definition,
+      ScenarioEngine().progress(w, kind, definition['id']),
+    )) {
+      throw StateError('Scenario is not finished');
+    }
+    return MemoryEngine().add(
+      w,
+      Memory(
+        id: '$kind:${definition['id']}',
+        kind: kind,
+        title: definition['title'],
+        topic: definition['topic'],
+        at: DateTime.now(),
+        payload: {'theme': definition['theme'], 'outfit': definition['outfit']},
+      ),
+    );
   });
-  Future<bool> replayScenario(String kind,String id) => change((w){w.activities.remove('$kind:$id');return w;});
+  Future<bool> replayScenario(String kind, String id) => change((w) {
+    w.activities.remove('$kind:$id');
+    return w;
+  });
   Future<bool> storyInteract(String id, String scene) => change((w) {
     w.activities['story:$id:$scene'] = {'done': true};
     return w;
