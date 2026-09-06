@@ -14,9 +14,16 @@ import 'package:milo_and_me/features/world.dart';
 // UI routing is synchronous in this fixture. Real SQLite restart/rotation is
 // verified below, and the production controller write queue has its own tests.
 class WorldUiController extends AppController {
-  WorldUiController(super.db,super.content,super.world):super(audioOverride:SilentAudio());
-  @override Future<bool> change(World Function(World) operation,{String? removeDraft}) async {
-    world=operation(world.copy());notifyListeners();return true;
+  WorldUiController(super.db, super.content, super.world)
+    : super(audioOverride: SilentAudio());
+  @override
+  Future<bool> change(
+    World Function(World) operation, {
+    String? removeDraft,
+  }) async {
+    world = operation(world.copy());
+    notifyListeners();
+    return true;
   }
 }
 
@@ -73,7 +80,11 @@ void main() {
       final db = AppDatabase(NativeDatabase.memory());
       final content = ContentRepository(db);
       await tester.runAsync(content.load);
-      final app = WorldUiController(db,content,World(onboarded:true,reducedMotion:true));
+      final app = WorldUiController(
+        db,
+        content,
+        World(onboarded: true, reducedMotion: true),
+      );
       await tester.pumpWidget(
         ProviderScope(
           overrides: [controllerProvider.overrideWith((ref) => app)],
