@@ -47,7 +47,7 @@ class MemoriesScreen extends ConsumerWidget {
                           'puzzle-explorer': 'Five ways to wonder',
                           'kindness': 'A kindness memory',
                         }[first] ??
-                        first.replaceFirst('theme:', 'Our ') + ' discoveries',
+                        "${first.replaceFirst('theme:', 'Our ')} discoveries",
                   ),
                 ),
             ],

@@ -522,8 +522,8 @@ class StrokePainter extends CustomPainter {
     this.guides = const [],
     this.progress = 1,
     this.watch = false,
-    Listenable? repaint,
-  }) : super(repaint: repaint);
+    super.repaint,
+  });
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawRect(Offset.zero & size, Paint()..color = Colors.white);
