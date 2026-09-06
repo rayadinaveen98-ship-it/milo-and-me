@@ -15,8 +15,8 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final app = ref.watch(controllerProvider), w = app.world;
     final night = DateTime.now().hour >= 19 || DateTime.now().hour < 6;
-    final displayed=WorldEngine().displayedPicture(w);
-    final drawings=displayed==null?<Memory>[]:[displayed];
+    final displayed = WorldEngine().displayedPicture(w);
+    final drawings = displayed == null ? <Memory>[] : [displayed];
     return PageShell(
       title: '${w.petName} & ${w.nickname}',
       back: false,
@@ -31,7 +31,11 @@ class HomeScreen extends ConsumerWidget {
             style: const TextStyle(color: Brand.sage, fontSize: 16),
           ),
           const SizedBox(height: 12),
-          FilledButton.tonalIcon(onPressed:()=>context.go('/world'),icon:const Icon(Icons.door_front_door_rounded),label:const Text('Explore our little world')),
+          FilledButton.tonalIcon(
+            onPressed: () => context.go('/world'),
+            icon: const Icon(Icons.door_front_door_rounded),
+            label: const Text('Explore our little world'),
+          ),
           Paper(
             color: Brand.mint,
             padding: const EdgeInsets.all(16),
