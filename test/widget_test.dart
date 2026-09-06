@@ -31,9 +31,9 @@ void main(){
     final app=AppController(db,content,World(onboarded:true,nickname:'Acorn'),audioOverride:SilentAudio());
     await tester.pumpWidget(ProviderScope(overrides:[controllerProvider.overrideWith((ref)=>app)],child:const MiloApp()));await tester.pump();
     expect(find.text('Milo & Acorn'),findsOneWidget);
-    await tester.tap(find.byTooltip('Art corner'));await tester.pump();await tester.pump(const Duration(milliseconds:300));
+    await tester.tap(find.byTooltip('Art corner'));await tester.pump();await tester.pump(const Duration(seconds:1));await tester.pump();
     expect(find.text('The art corner'),findsOneWidget);
-    await tester.tap(find.byTooltip('For grown-ups'));await tester.pump();await tester.pump(const Duration(milliseconds:300));
+    await tester.tap(find.byTooltip('For grown-ups'));await tester.pump();await tester.pump(const Duration(seconds:1));await tester.pump();
     expect(find.text('Parent PIN'),findsOneWidget);expect(find.text('Delete local profile and creations'),findsNothing);
     expect(tester.takeException(),isNull);await tester.pumpWidget(const SizedBox());
   });
