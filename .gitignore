@@ -1,14 +1,45 @@
+# Flutter / Dart generated state. Keep pubspec.lock and official Gradle wrapper.
 .dart_tool/
-build/
 .flutter-plugins*
-android/local.properties
+.packages
+build/
+coverage/
+# Local SDK, Gradle and IDE state
+.gradle/
 android/.gradle/
+android/local.properties
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.DS_Store
+Thumbs.db
+# Credentials, environment overrides and signing identities
+.env
+.env.*
+!.env.example
 android/key.properties
+key.properties
 *.jks
 *.keystore
-.env
-coverage/
-
+*.pem
+*.key
+*.p12
+*.pfx
+*.mobileprovision
+google-services.json
+GoogleService-Info.plist
+# Generated platform state
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+# Local scripts, diagnostics and delivery archives
 __pycache__/
 *.pyc
+*.log
+*.hprof
+*.apk
+*.aab
 *.bundle

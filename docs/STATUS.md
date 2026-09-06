@@ -21,7 +21,7 @@ This is a substantial **uncompiled source milestone**, not a completed product o
 | Release APK / AAB | Not built; signing identity not configured |
 | App screenshots / emulator verification | Not available; no screenshots are presented as app evidence |
 | Hosted Supabase / RLS tests | Not deployed or run |
-| GitHub Actions build | Authored, not dispatched |
+| GitHub Actions build | Authored, not dispatched; upload held because repository currently reports public |
 
 ## Implemented, but awaiting Flutter verification
 
@@ -54,3 +54,7 @@ Entry journey, pet home, shape-based Flame character, care reactions, outfit rew
 5. Normalize local data, add migrations, expand curated content and finish richer pet animation.
 6. Connect a dedicated parent backend, implement verified consent/auth and store receipt verification, and then expose downloads/purchases behind the gate.
 7. Profile, harden, sign, prepare store materials and release. Add iOS after Android acceptance.
+
+## Repository handoff update
+
+The user designated `rayadinaveen98-ship-it/milo-and-me` as authoritative. Initial GitHub metadata returned `private: false` and `visibility: public`. No project upload has occurred. Required foundation, roadmap, safety and content-system documents are prepared locally; original commits are preserved. This is an external visibility blocker, not a completed GitHub/CI milestone.

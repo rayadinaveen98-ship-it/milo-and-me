@@ -1,5 +1,7 @@
 # Milo & Me — 0.1.0 source milestone
 
+Canonical source: **[rayadinaveen98-ship-it/milo-and-me](https://github.com/rayadinaveen98-ship-it/milo-and-me)**. Stable branch: `main`. GitHub Actions is the authoritative Flutter/Android verification environment. Milestone completion requires pushed source, green CI and a generated APK artifact.
+
 A Flutter / Flame companion app for shared creativity, curiosity and gentle play, targeting ages 5–8. Working brand: **Milo & Me**. Original pet: **Milo**.
 
 **This source has not been compiled or run in Flutter. No APK is included.** The creating environment had no Flutter/Dart or Android SDK, and SDK downloads were blocked. Do not treat this as a tested Android release or completed V1. Offline checks passed; Flutter tests and Android CI are provided for the first build-capable runner.
@@ -35,7 +37,7 @@ The bootstrap script obtains the official Gradle wrapper from the installed Flut
 
 Output after a successful build: `build/app/outputs/flutter-apk/app-debug.apk`.
 
-For automatic builds, push this project to a GitHub repository on `main`. The included **Android playtest APK** workflow runs content validation, Flutter analysis, tests and APK generation, then uploads the APK as a workflow artifact. This workflow has been authored, **not run**. No remote repository has been created or connected.
+For automatic builds, push this project to a GitHub repository on `main`. The included **Android playtest APK** workflow runs content validation, Flutter analysis, tests and APK generation, then uploads the APK as a workflow artifact. This workflow has been authored, **not run**. The permanent repository has been created. Initial API inspection reported it public, so uploading is held until its visibility matches the required private setting.
 
 ## Run the available offline checks
 
@@ -63,3 +65,11 @@ The final command checks delimiters and local imports only. It cannot establish 
 | `docs` | Architecture, content formats, release steps, precise limitations |
 
 Read `docs/STATUS.md` before continuing. `docs/PRODUCT_BRIEF.md` preserves the supplied scope. Nothing in this milestone changes that long-term brief.
+
+## Locked project documents
+
+- `docs/PRODUCT_FOUNDATION.md`: philosophy, audience and V1 boundaries.
+- `docs/ARCHITECTURE.md`: Flutter/Flame, Riverpod, navigation, persistence and service boundaries.
+- `docs/ROADMAP.md`: milestones and evidence-based completion gates.
+- `docs/PRIVACY_AND_CHILD_SAFETY.md`: privacy and parental authority rules.
+- `docs/CONTENT_SYSTEM.md`: content schemas and pack activation.

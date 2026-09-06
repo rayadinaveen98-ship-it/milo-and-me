@@ -21,3 +21,7 @@ Sound is behind `AudioService`: quiet generated room audio, effects and an autho
 Brand strings and colours live in `core/brand.dart`. The pet is drawn using production-reproducible primitives; a later Rive adapter can replace `PetView` while retaining its state contract. The first screen meets the pet quickly, then gives the grown-up local storage/PIN setup. Completed artwork appears on the wall, while the room’s easel, books, puzzle box, wardrobe and shelf are tappable destinations.
 
 Navigation uses go_router with an onboarding redirect. Child routes are wrapped in a session-break overlay which preserves the underlying screen until navigation. Parent routes always render the PIN gate until authorized. The architecture follows Flutter’s documented declarative routing approach: [Flutter navigation](https://docs.flutter.dev/ui/navigation).
+
+## Repository and build authority
+
+`rayadinaveen98-ship-it/milo-and-me` on `main` is authoritative. GitHub Actions installs Flutter/Android dependencies, bootstraps the official Gradle wrapper, analyzes, tests and builds the APK. The explicit-SQL Drift implementation requires no Dart code generation. Preserve existing commits; push each meaningful milestone and record actual CI/artifact evidence. Offline local checks are supplementary only.
