@@ -28,3 +28,7 @@ The downloader is implemented as a repository but not exposed through a live cat
 ## Core v0.3 additions
 
 Optional `theme` is one of Dinosaurs/Space/Ocean/Animals/Nature. `access` labels sample/library content for future parent entitlement policy. Stories may include an `interaction` with `label`, `symbol`, `message`; choices are gated until that prop is touched, and the action persists locally. Optional `audio` is a safe bundled audio path. Content expansion is reproducible with `tool/expand_core_content.py`; it retains original IDs.
+
+## Cooking and roleplay
+
+Optional pack arrays `cooking` and `roleplay` share identity/title/topic/theme metadata and a bounded `steps` list. Each step defines `action`, `prompt`, `symbol`, `options`, optional `repeat` (1–6) and pretend `seconds` (1–5). Accepted actions: choose/pour/mix/spread/decorate/assemble/timing/serve/prop/choice. Progress stores index, repetition count, choices and step entry time in `activities`; completion creates one idempotent memory. No real heating, cutting, ingestion or medical procedures.

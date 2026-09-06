@@ -25,7 +25,7 @@ class ContentRepository {
   }
 
   List<Json> list(String type) => [seed, ...installed]
-      .expand((p) => (p[type] as List).map((v) => Map<String, dynamic>.from(v)))
+      .expand((p) => (p[type] as List? ?? []).map((v) => Map<String, dynamic>.from(v)))
       .toList();
   Json? find(String type, String id) {
     for (final item in list(type)) {
@@ -83,12 +83,12 @@ class ContentRepository {
       )) {
         throw const FormatException('Pack is already current');
       }
-      for (final type in ['drawings', 'puzzles', 'stories']) {
+      for (final type in ['drawings', 'puzzles', 'stories','cooking','roleplay']) {
         final otherIds = existing
             .where((p) => p['id'] != pack['id'])
-            .expand((p) => (p[type] as List).map((v) => v['id']))
+            .expand((p) => (p[type] as List? ?? []).map((v) => v['id']))
             .toSet();
-        if ((pack[type] as List).any((v) => otherIds.contains(v['id']))) {
+        if ((pack[type] as List? ?? []).any((v) => otherIds.contains(v['id']))) {
           throw const FormatException('Conflicting content identity');
         }
       }

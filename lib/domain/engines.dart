@@ -1,4 +1,5 @@
 import 'models.dart';
+import 'scenario_engine.dart';
 
 class PetEngine {
   World care(World current, String action, {DateTime? now}) {
@@ -103,6 +104,10 @@ class PetEngine {
           'Our space helmet is ready. Shall we visit the little star?',
         );
       }
+      if(w.outfit=='chef')candidates.add('Our chef hat is ready. Shall we make a pretend picnic?');
+      if(w.outfit=='doctor')candidates.add('Our toy friend would enjoy a cosy story and a blanket.');
+      if(w.outfit=='detective')candidates.add('Shall we look for clues in the moon-button mystery?');
+      if(w.outfit=='builder')candidates.add('Our builder hat is ready for a bridge made of pretend blocks.');
       if (w.outfit == 'beret') {
         candidates.add('Our artist hat is ready for a colourful idea.');
       }
@@ -111,7 +116,7 @@ class PetEngine {
       }
       // An occasional callback: never recite dates or a detailed activity log.
       if (w.companion.cursor % 3 == 0) {
-        for (final kind in ['drawing', 'puzzle', 'story']) {
+        for (final kind in ['drawing', 'puzzle', 'story','cooking','roleplay']) {
           final items = w.memories.where((m) => m.kind == kind).toList();
           if (items.isNotEmpty) {
             candidates.add(
@@ -190,6 +195,8 @@ class MemoryEngine {
     if (memory.kind == 'drawing') next.owned.add('beret');
     if (memory.kind == 'puzzle') next.owned.add('explorer');
     if (memory.kind == 'story') next.owned.add('astronaut');
+    if(memory.kind=='cooking')next.owned.add('chef');
+    if(memory.kind=='roleplay'&&memory.payload['outfit'] is String)next.owned.add(memory.payload['outfit']);
     return next;
   }
 }
@@ -238,7 +245,8 @@ class ContentEngine {
       );
     }
     final ids = <String>{};
-    for (final type in ['drawings', 'puzzles', 'stories']) {
+    for (final type in ['drawings', 'puzzles', 'stories','cooking','roleplay']) {
+      if(['cooking','roleplay'].contains(type)&&pack[type]==null)continue;
       if (pack[type] is! List || (pack[type] as List).length > 200) {
         throw const FormatException('Invalid catalogue');
       }
@@ -261,6 +269,7 @@ class ContentEngine {
             ].contains(item['theme'])) {
           throw const FormatException('Unknown theme');
         }
+        if(type=='cooking'||type=='roleplay')ScenarioEngine.validate(item);
         if (type == 'drawings') {
           if (item['steps'] is! List ||
               (item['steps'] as List).isEmpty ||

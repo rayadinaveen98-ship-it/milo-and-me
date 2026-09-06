@@ -254,6 +254,20 @@ void paintPet(
     p.style = PaintingStyle.fill;
     oval(const Rect.fromLTWH(62, 91, 18, 43), const Color(0x99FFFFFF));
   }
+  if(outfit=='chef') {
+    oval(const Rect.fromLTWH(86,38,130,54),Colors.white);
+    oval(const Rect.fromLTWH(107,20,84,55),Colors.white);
+    line(const Offset(98,80),const Offset(205,80),Brand.cream,12);
+  }
+  if(outfit=='builder'||outfit=='detective') {
+    oval(const Rect.fromLTWH(91,36,122,64),outfit=='builder'?Brand.gold:Brand.sage);
+    line(const Offset(77,86),const Offset(226,86),outfit=='builder'?Brand.gold:Brand.sage,14);
+  }
+  if(outfit=='doctor') {
+    oval(const Rect.fromLTWH(174,192,35,35),Colors.white);
+    line(const Offset(191,199),const Offset(191,220),Brand.sage,5);
+    line(const Offset(181,210),const Offset(201,210),Brand.sage,5);
+  }
   if (pose == 'wash') {
     for (var i = 0; i < 7; i++) {
       oval(

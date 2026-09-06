@@ -160,6 +160,8 @@ class WorldScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: 12),
+          if(area=='care') FilledButton.tonalIcon(onPressed:()=>route('/cooking'),icon:const Icon(Icons.restaurant_rounded),label:const Text('Our pretend kitchen')),
+          if(area=='bedroom') FilledButton.tonalIcon(onPressed:()=>route('/roleplay'),icon:const Icon(Icons.theater_comedy_rounded),label:const Text('Let’s pretend together')),
           LayoutBuilder(
             builder: (context, c) => AspectRatio(
               aspectRatio: c.maxWidth > 650 ? 1.7 : .95,

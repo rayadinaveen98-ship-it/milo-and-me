@@ -12,4 +12,8 @@ Verified in CI run 34042238697; tag v0.2.0 and direct APK published.
 
 ## 0.4.0 — Our little world
 
-Six connected environmental areas, persistent last area and bounded reward decorations. Art studio can rotate saved pictures, with the choice shared by the original home. Existing home, care and activities remain accessible. Responsive phone/tablet rooms; reduced-motion transitions. CI pending.
+Six connected environmental areas, persistent last area and bounded reward decorations. Art studio can rotate saved pictures, with the choice shared by the original home. Existing home, care and activities remain accessible. Responsive phone/tablet rooms; reduced-motion transitions. Verified: CI 34044241950, 41 Flutter tests, tag/APK v0.4.0.
+
+## 0.5.0 — Cooking and roleplay
+
+Reusable stateful scenario engine with persisted steps/choices, repeat actions, bounded pretend timing, props and replay. Five virtual recipes; astronaut, chef, toy doctor, artist, detective and builder scenarios. World/wardrobe entry points, new costumes, pet callbacks and idempotent memories. All cooking and doctor play is explicitly pretend. CI pending.

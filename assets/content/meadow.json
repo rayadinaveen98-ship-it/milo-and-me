@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "id": "meadow",
-  "version": 3,
+  "version": 5,
   "title": "Meadow friends",
   "drawings": [
     {
@@ -10872,5 +10872,702 @@
     "Ocean",
     "Animals",
     "Nature"
+  ],
+  "cooking": [
+    {
+      "id": "pancakes",
+      "title": "Cloud-soft pancakes",
+      "topic": "cloud-soft pancakes",
+      "theme": "Nature",
+      "steps": [
+        {
+          "action": "choose",
+          "prompt": "Choose a pretend flour for our bowl.",
+          "symbol": "○",
+          "options": [
+            "Oat flour",
+            "Wheat flour"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "pour",
+          "prompt": "Pour our pretend milk into the bowl.",
+          "symbol": "◒",
+          "options": [
+            "Pour milk"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "mix",
+          "prompt": "Swirl the pretend batter three times.",
+          "symbol": "◌",
+          "options": [
+            "Mix"
+          ],
+          "repeat": 3
+        },
+        {
+          "action": "timing",
+          "prompt": "Watch our imaginary pancake turn golden.",
+          "symbol": "●",
+          "options": [
+            "Ready"
+          ],
+          "repeat": 1,
+          "seconds": 2
+        },
+        {
+          "action": "decorate",
+          "prompt": "Choose a topping for our picture-perfect pancake.",
+          "symbol": "✦",
+          "options": [
+            "Berries",
+            "Banana stars"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "serve",
+          "prompt": "Serve our imaginary picnic to Milo.",
+          "symbol": "♥",
+          "options": [
+            "Share our pancakes"
+          ],
+          "repeat": 1
+        }
+      ],
+      "subtitle": "Cook in our imagination",
+      "access": "library"
+    },
+    {
+      "id": "sandwich",
+      "title": "A rainbow sandwich",
+      "topic": "a rainbow sandwich",
+      "theme": "Nature",
+      "steps": [
+        {
+          "action": "choose",
+          "prompt": "Choose bread for our pretend sandwich.",
+          "symbol": "▱",
+          "options": [
+            "Triangle bread",
+            "Square bread"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "spread",
+          "prompt": "Swipe or tap to spread our imaginary filling.",
+          "symbol": "▰",
+          "options": [
+            "Spread"
+          ],
+          "repeat": 2
+        },
+        {
+          "action": "assemble",
+          "prompt": "Add a colourful pretend layer.",
+          "symbol": "▤",
+          "options": [
+            "Tomato",
+            "Cucumber"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "assemble",
+          "prompt": "Choose the top of our sandwich.",
+          "symbol": "▱",
+          "options": [
+            "A triangle lid",
+            "A square lid"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "serve",
+          "prompt": "Our pretend sandwich is ready to share.",
+          "symbol": "♥",
+          "options": [
+            "Serve our sandwich"
+          ],
+          "repeat": 1
+        }
+      ],
+      "subtitle": "Cook in our imagination",
+      "access": "library"
+    },
+    {
+      "id": "fruit-bowl",
+      "title": "A fruit constellation",
+      "topic": "a fruit constellation",
+      "theme": "Nature",
+      "steps": [
+        {
+          "action": "choose",
+          "prompt": "Choose a bowl for our pretend fruit.",
+          "symbol": "◡",
+          "options": [
+            "Round bowl",
+            "Star bowl"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "choose",
+          "prompt": "Pick the first imaginary fruit.",
+          "symbol": "●",
+          "options": [
+            "Apple moons",
+            "Banana stars"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "assemble",
+          "prompt": "Add another colour to the bowl.",
+          "symbol": "✦",
+          "options": [
+            "Berry dots",
+            "Melon triangles"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "mix",
+          "prompt": "Turn the pretend fruit gently, twice.",
+          "symbol": "◌",
+          "options": [
+            "Toss gently"
+          ],
+          "repeat": 2
+        },
+        {
+          "action": "decorate",
+          "prompt": "Choose a pattern on top.",
+          "symbol": "★",
+          "options": [
+            "A circle",
+            "A little star"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "serve",
+          "prompt": "Offer Milo a pretend fruit constellation.",
+          "symbol": "♥",
+          "options": [
+            "Share our fruit"
+          ],
+          "repeat": 1
+        }
+      ],
+      "subtitle": "Cook in our imagination",
+      "access": "library"
+    },
+    {
+      "id": "pizza",
+      "title": "A garden pizza",
+      "topic": "a garden pizza",
+      "theme": "Nature",
+      "steps": [
+        {
+          "action": "choose",
+          "prompt": "Choose a shape for our pretend pizza.",
+          "symbol": "○",
+          "options": [
+            "Round",
+            "Heart"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "spread",
+          "prompt": "Spread the imaginary tomato colour.",
+          "symbol": "●",
+          "options": [
+            "Spread sauce"
+          ],
+          "repeat": 2
+        },
+        {
+          "action": "assemble",
+          "prompt": "Place colourful garden shapes.",
+          "symbol": "▲",
+          "options": [
+            "Pepper triangles",
+            "Mushroom moons"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "decorate",
+          "prompt": "Finish with a pattern.",
+          "symbol": "✦",
+          "options": [
+            "A spiral",
+            "A smiling face"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "timing",
+          "prompt": "Our magic pretend oven glows softly. No real heat here.",
+          "symbol": "☀",
+          "options": [
+            "Ready"
+          ],
+          "repeat": 1,
+          "seconds": 2
+        },
+        {
+          "action": "serve",
+          "prompt": "Share our imaginary garden pizza.",
+          "symbol": "♥",
+          "options": [
+            "Serve our pizza"
+          ],
+          "repeat": 1
+        }
+      ],
+      "subtitle": "Cook in our imagination",
+      "access": "library"
+    },
+    {
+      "id": "cake",
+      "title": "A friendship cake",
+      "topic": "a friendship cake",
+      "theme": "Nature",
+      "steps": [
+        {
+          "action": "choose",
+          "prompt": "Choose a pretend cake flavour.",
+          "symbol": "○",
+          "options": [
+            "Vanilla cloud",
+            "Berry dream"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "pour",
+          "prompt": "Pour the imaginary mixture into our bowl.",
+          "symbol": "◒",
+          "options": [
+            "Pour"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "mix",
+          "prompt": "Mix three friendly circles.",
+          "symbol": "◌",
+          "options": [
+            "Mix"
+          ],
+          "repeat": 3
+        },
+        {
+          "action": "assemble",
+          "prompt": "Stack two soft pretend cake layers.",
+          "symbol": "▤",
+          "options": [
+            "Add a layer"
+          ],
+          "repeat": 2
+        },
+        {
+          "action": "spread",
+          "prompt": "Cover the imaginary cake in a colour you like.",
+          "symbol": "▰",
+          "options": [
+            "Peach icing",
+            "Sky icing"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "decorate",
+          "prompt": "Add a friendship decoration.",
+          "symbol": "♥",
+          "options": [
+            "Hearts",
+            "Stars",
+            "Flowers"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "serve",
+          "prompt": "Every friend can imagine a slice.",
+          "symbol": "♥",
+          "options": [
+            "Share our cake"
+          ],
+          "repeat": 1
+        }
+      ],
+      "subtitle": "Cook in our imagination",
+      "access": "library"
+    }
+  ],
+  "roleplay": [
+    {
+      "id": "astronaut-mission",
+      "title": "The tiny moon mission",
+      "topic": "moon rescue",
+      "outfit": "astronaut",
+      "theme": "Space",
+      "subtitle": "A pretend adventure",
+      "access": "library",
+      "steps": [
+        {
+          "action": "choose",
+          "prompt": "Choose our pretend spacecraft.",
+          "symbol": "△",
+          "options": [
+            "A moon boat",
+            "A star rocket"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "prop",
+          "prompt": "Take a useful imaginary tool.",
+          "symbol": "✦",
+          "options": [
+            "A star map",
+            "A listening radio"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "choice",
+          "prompt": "A little robot has lost its way. How can we help?",
+          "symbol": "◇",
+          "options": [
+            "Ask where it wants to go",
+            "Look at the map together"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "assemble",
+          "prompt": "Make a safe pretend landing place.",
+          "symbol": "▤",
+          "options": [
+            "Lay down soft moon blocks"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "serve",
+          "prompt": "Welcome our robot friend home.",
+          "symbol": "♥",
+          "options": [
+            "Share the moon story"
+          ],
+          "repeat": 1
+        }
+      ]
+    },
+    {
+      "id": "chef-picnic",
+      "title": "The chef’s cosy picnic",
+      "topic": "shared picnic",
+      "outfit": "chef",
+      "theme": "Nature",
+      "subtitle": "A pretend adventure",
+      "access": "library",
+      "steps": [
+        {
+          "action": "choose",
+          "prompt": "Who shall our pretend picnic welcome?",
+          "symbol": "♥",
+          "options": [
+            "Milo and a fox",
+            "Milo and a dinosaur"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "prop",
+          "prompt": "Choose a picnic prop.",
+          "symbol": "▤",
+          "options": [
+            "A blanket",
+            "A basket"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "assemble",
+          "prompt": "Make room for every pretend guest.",
+          "symbol": "○",
+          "options": [
+            "Set a place"
+          ],
+          "repeat": 3
+        },
+        {
+          "action": "choice",
+          "prompt": "One friend likes a different flavour.",
+          "symbol": "✦",
+          "options": [
+            "Offer another choice",
+            "Ask what they enjoy"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "serve",
+          "prompt": "Invite everyone to our imaginary picnic.",
+          "symbol": "♥",
+          "options": [
+            "Welcome, friends!"
+          ],
+          "repeat": 1
+        }
+      ]
+    },
+    {
+      "id": "doctor-toy",
+      "title": "A cosy place for Teddy",
+      "topic": "caring for a toy",
+      "outfit": "doctor",
+      "theme": "Animals",
+      "subtitle": "A pretend adventure",
+      "access": "library",
+      "steps": [
+        {
+          "action": "choose",
+          "prompt": "We are pretending with toys, not giving real medical advice. Choose a toy friend.",
+          "symbol": "♥",
+          "options": [
+            "Teddy",
+            "Toy rabbit"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "prop",
+          "prompt": "Which comforting prop shall we bring?",
+          "symbol": "▤",
+          "options": [
+            "A little blanket",
+            "A story book"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "choice",
+          "prompt": "Our toy would like a quiet moment.",
+          "symbol": "☾",
+          "options": [
+            "Listen softly",
+            "Sit nearby"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "assemble",
+          "prompt": "Make a cosy pretend resting place.",
+          "symbol": "▱",
+          "options": [
+            "Add a cushion",
+            "Add a soft blanket"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "serve",
+          "prompt": "Tell our toy it can rest as long as it likes.",
+          "symbol": "♥",
+          "options": [
+            "Enjoy your cosy rest"
+          ],
+          "repeat": 1
+        }
+      ]
+    },
+    {
+      "id": "artist-gallery",
+      "title": "The gallery of surprises",
+      "topic": "dream gallery",
+      "outfit": "beret",
+      "theme": "Nature",
+      "subtitle": "A pretend adventure",
+      "access": "library",
+      "steps": [
+        {
+          "action": "choose",
+          "prompt": "Choose a theme for our imaginary gallery.",
+          "symbol": "✦",
+          "options": [
+            "Dream gardens",
+            "Funny planets"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "prop",
+          "prompt": "Pick a pretend artist’s tool.",
+          "symbol": "▰",
+          "options": [
+            "A wide brush",
+            "A tiny brush"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "decorate",
+          "prompt": "Make an imaginary mark. Every mark is welcome.",
+          "symbol": "◌",
+          "options": [
+            "A swirl",
+            "A zigzag",
+            "A dot"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "assemble",
+          "prompt": "Find a place for a friend’s picture too.",
+          "symbol": "▤",
+          "options": [
+            "Leave a space on the wall"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "serve",
+          "prompt": "Open our pretend gallery without choosing a winner.",
+          "symbol": "♥",
+          "options": [
+            "Everyone’s picture belongs"
+          ],
+          "repeat": 1
+        }
+      ]
+    },
+    {
+      "id": "detective-button",
+      "title": "The mystery of the moon button",
+      "topic": "moon button mystery",
+      "outfit": "detective",
+      "theme": "Dinosaurs",
+      "subtitle": "A pretend adventure",
+      "access": "library",
+      "steps": [
+        {
+          "action": "prop",
+          "prompt": "Take a pretend detective tool.",
+          "symbol": "○",
+          "options": [
+            "A magnifying glass",
+            "A notebook"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "choice",
+          "prompt": "A moon button is missing from our costume box. Where shall we look?",
+          "symbol": "☾",
+          "options": [
+            "Under the pretend rug",
+            "Beside the story book"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "prop",
+          "prompt": "We find a thread and a little round mark.",
+          "symbol": "◌",
+          "options": [
+            "Look closely"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "choice",
+          "prompt": "How could we find out more without blaming anyone?",
+          "symbol": "✦",
+          "options": [
+            "Ask a friendly question",
+            "Look for another clue"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "serve",
+          "prompt": "The button was tucked inside the folded scarf. Mystery solved kindly!",
+          "symbol": "♥",
+          "options": [
+            "Return the moon button"
+          ],
+          "repeat": 1
+        }
+      ]
+    },
+    {
+      "id": "builder-bridge",
+      "title": "A bridge for little feet",
+      "topic": "welcoming bridge",
+      "outfit": "builder",
+      "theme": "Nature",
+      "subtitle": "A pretend adventure",
+      "access": "library",
+      "steps": [
+        {
+          "action": "choose",
+          "prompt": "Choose pretend building blocks.",
+          "symbol": "■",
+          "options": [
+            "Wooden-looking blocks",
+            "Cloud blocks"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "assemble",
+          "prompt": "Place two steady supports.",
+          "symbol": "▤",
+          "options": [
+            "Place a support"
+          ],
+          "repeat": 2
+        },
+        {
+          "action": "assemble",
+          "prompt": "Lay a broad pretend path.",
+          "symbol": "▰",
+          "options": [
+            "Add a path piece"
+          ],
+          "repeat": 3
+        },
+        {
+          "action": "choice",
+          "prompt": "A tiny toy needs smaller steps.",
+          "symbol": "▲",
+          "options": [
+            "Add a middle step",
+            "Make a gentle slope"
+          ],
+          "repeat": 1
+        },
+        {
+          "action": "serve",
+          "prompt": "Invite different pretend friends to cross at their own pace.",
+          "symbol": "♥",
+          "options": [
+            "Our bridge welcomes everyone"
+          ],
+          "repeat": 1
+        }
+      ]
+    }
   ]
 }
