@@ -1,10 +1,10 @@
-# Milo & Me — 0.1.0 source milestone
+# Milo & Me — 0.1.0 Android playtest
 
 Canonical source: **[rayadinaveen98-ship-it/milo-and-me](https://github.com/rayadinaveen98-ship-it/milo-and-me)**. Stable branch: `main`. GitHub Actions is the authoritative Flutter/Android verification environment. Milestone completion requires pushed source, green CI and a generated APK artifact.
 
 A Flutter / Flame companion app for shared creativity, curiosity and gentle play, targeting ages 5–8. Working brand: **Milo & Me**. Original pet: **Milo**.
 
-**This source has not been compiled or run in Flutter. No APK is included.** The creating environment had no Flutter/Dart or Android SDK, and SDK downloads were blocked. Do not treat this as a tested Android release or completed V1. Offline checks passed; Flutter tests and Android CI are provided for the first build-capable runner.
+**GitHub CI is green and the Android debug APK is available.** Flutter analysis and all 28 Flutter tests pass in GitHub Actions. The local environment has no Flutter/Android SDK; CI is the build authority. This is an early playtest slice, with device acceptance and full V1 scope still pending. See `docs/STATUS.md` for evidence and limitations.
 
 Implemented source flows:
 
@@ -33,11 +33,15 @@ macOS/Linux:
 ./tool/build.sh
 ```
 
-The bootstrap script obtains the official Gradle wrapper from the installed Flutter SDK without overwriting application source. Dependency resolution creates `pubspec.lock`; commit it after the first successful build. No Drift code generation is needed.
+The bootstrap script obtains the official Gradle wrapper from the installed Flutter SDK without overwriting application source. The official wrapper and resolved `pubspec.lock` are committed; retain lockfile changes when intentionally updating dependencies. No Drift code generation is needed.
 
 Output after a successful build: `build/app/outputs/flutter-apk/app-debug.apk`.
 
-For automatic builds, push this project to a GitHub repository on `main`. The included **Android playtest APK** workflow runs content validation, Flutter analysis, tests and APK generation, then uploads the APK as a workflow artifact. This workflow has been authored, **not run**. The permanent public repository is authorized by the owner. Original history and complete source were integrated in commit `79ff254`. GitHub Actions verification is in progress.
+Every push to `main` runs the **Android playtest APK** workflow: dependency installation, content validation, Flutter analysis, all Flutter tests, debug APK build and artifact upload. It can also be started manually from the [Actions page](https://github.com/rayadinaveen98-ship-it/milo-and-me/actions/workflows/android.yml). Download the `milo-and-me-0.1.0-debug-apk-…` artifact from a successful run and extract `app-debug.apk`. The artifact includes a commit/checksum manifest and is retained for 30 days. Debug APKs are for supervised testing; production signing is separate.
+
+The owner authorized the public repository. The original source and Git history were preserved; each meaningful milestone must be committed and pushed.
+
+First verified build: commit `fc7d2fabfe3f8f955c8c2e2f1a54cfb97456d973`, [green CI](https://github.com/rayadinaveen98-ship-it/milo-and-me/actions/runs/34037468340), [debug APK artifact](https://github.com/rayadinaveen98-ship-it/milo-and-me/actions/runs/34037468340/artifacts/9990702706) (2026-09-06). Analysis, all 28 Flutter tests, 19 offline tests and APK generation passed. The artifact contains `app-debug.apk` and a SHA-256/commit manifest; retention is 30 days. Newer successful runs produce their own matching artifacts.
 
 ## Run the available offline checks
 

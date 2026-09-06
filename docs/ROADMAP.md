@@ -1,12 +1,12 @@
 # Roadmap and milestone gates
 
-Current source: **0.1.0+1**. This is not yet a verified Android release.
+Current version: **0.1.0+1**, CI-verified Android debug playtest. Installed-device acceptance and store release remain pending.
 
 | Milestone | Scope | Status |
 | --- | --- | --- |
-| 0 — Foundation | Brand, modules, engines, local schema, content definitions | Source implemented; Flutter verification pending |
+| 0 — Foundation | Brand, modules, engines, local schema, content definitions | Implemented; analysis/tests pass |
 | 1 — Vertical slice | Welcome/setup → pet home → drawing/puzzle/story → memory/reward | Source implemented; installed-device acceptance pending |
-| Repository / CI bootstrap | Preserve original commits, public GitHub main, analysis/tests, debug APK artifact | Source/history published at `79ff254`; CI/APK gate running |
+| Repository / CI bootstrap | Preserve original commits, public GitHub main, analysis/tests, debug APK artifact | Complete: original history preserved; CI green and debug APK uploaded |
 | 2 — Pet core | Richer animation, memory, care, wardrobe and progression | Baseline source implemented; polish/validation pending |
 | 3 — Activity engines | Harden drawing, varied puzzle interaction, story playback | Baseline source implemented; hardening pending |
 | 4 — Curated content | About 24 drawings, 50–60 puzzles, 10–12 stories, recorded voice | Starter content: 8 / 15 / 3; expansion pending |
@@ -23,4 +23,6 @@ Current source: **0.1.0+1**. This is not yet a verified Android release.
 4. The installable debug APK is retained as a GitHub Actions artifact, with its commit identity and checksum.
 5. Inspect failures, fix and push, then rerun until green or a genuine external blocker is documented.
 
-After that build gate, verify the APK on a device. Do not substitute offline structural checks for Flutter analysis, tests or runtime evidence. Record CI run, commit and artifact links here once they actually exist.
+First verified build: commit `fc7d2fabfe3f8f955c8c2e2f1a54cfb97456d973`, [green CI](https://github.com/rayadinaveen98-ship-it/milo-and-me/actions/runs/34037468340), [debug APK artifact](https://github.com/rayadinaveen98-ship-it/milo-and-me/actions/runs/34037468340/artifacts/9990702706) (2026-09-06). Analysis, all 28 Flutter tests, 19 offline tests and APK generation passed. The artifact contains `app-debug.apk` and a SHA-256/commit manifest; retention is 30 days. Newer successful runs produce their own matching artifacts.
+
+Next, verify the APK on a device. Do not substitute offline structural checks for Flutter analysis, tests or runtime evidence.

@@ -1,9 +1,9 @@
 # Android release preparation
 
-No installable build was produced in the creating environment. The supplied workflow is the first build gate, not evidence that the gate passed.
+GitHub Actions is the authoritative build environment. Analysis, all Flutter tests and debug APK generation pass; see `STATUS.md` for the green run and artifact. Store release and installed-device acceptance are separate gates.
 
 1. Run `tool/build.ps1` or `tool/build.sh`, or push to a GitHub repository with the included workflow. Fix dependency/analysis/test/build failures before claiming the slice works.
-2. On the first successful runner, run `dart format lib test`, retain `pubspec.lock`, and commit the official generated Gradle wrapper. Pin CI actions to audited commit SHAs before production use.
+2. Run `dart format lib test` when editing Dart and retain intentional dependency updates. `pubspec.lock` and the official Gradle wrapper are committed. Pin CI actions to audited commit SHAs before production use.
 3. Install the debug APK on a representative phone and tablet. Complete setup, art, a puzzle and a story; close/reopen and verify the pet’s memory, artwork, draft, story resume and settings.
 4. Run TalkBack, large-text and reduced-motion checks. Observe a supervised child using environmental navigation. Profile drawing, memory growth and animation on mid-range Android hardware.
 5. Use the current store requirements to select the final target SDK and distribution settings. Check Android’s native-library page-size requirements using the actual packaged libraries. This source has not passed those release checks.
@@ -14,7 +14,6 @@ No installable build was produced in the creating environment. The supplied work
 
 ## External configuration still needed
 
-- A working Flutter/Android build environment or connected repository with a build runner.
 - A dedicated Supabase project if hosted features are desired; project URL and publishable key alone do not implement parent auth or legal consent.
 - A trusted object-storage origin/catalogue and appropriate authorization for premium downloads.
 - Google Play / Apple developer accounts, products, receipt-verification services and production signing identities.
