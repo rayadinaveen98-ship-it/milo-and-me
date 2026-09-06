@@ -46,7 +46,8 @@ jobs:
       - name: Flutter static analysis
         run: flutter analyze
       - name: All Flutter tests
-        run: flutter test --coverage
+        timeout-minutes: 5
+        run: flutter test --coverage --reporter expanded --timeout 90s
       - name: Build Android debug APK
         run: flutter build apk --debug
       - name: Record APK identity
