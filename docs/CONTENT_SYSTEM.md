@@ -1,6 +1,6 @@
 # Content system
 
-Authors edit versioned JSON, not Dart screens. Current included pack: `assets/content/meadow.json` (8 drawings, 15 puzzles, 3 original stories).
+Authors edit versioned JSON, not Dart screens. Current included pack: `assets/content/meadow.json` (24 drawings, 55 puzzles, 12 original stories).
 
 | Definition | Required fields | Meaning |
 | --- | --- | --- |
@@ -24,3 +24,7 @@ Run `python3 tool/validate_content.py assets/content/meadow.json`. Dart `Content
 Remote packs are bounded JSON documents (currently 8 MiB), not executable scripts or extracted archives. A trusted parent catalogue supplies HTTPS URL, SHA-256, expected ID and version. Verify bytes and content before a transaction activates the pack. Reject collisions and non-increasing versions. Failed downloads must leave existing content intact.
 
 The downloader is implemented as a repository but not exposed through a live catalogue yet. Media/voice archives, signing, premium authorization, removal and rollback require further work. `CONTENT.md` has authoring detail; `tool/make_seed.py` regenerates original seed content and intentionally overwrites manual seed edits.
+
+## Core v0.3 additions
+
+Optional `theme` is one of Dinosaurs/Space/Ocean/Animals/Nature. `access` labels sample/library content for future parent entitlement policy. Stories may include an `interaction` with `label`, `symbol`, `message`; choices are gated until that prop is touched, and the action persists locally. Optional `audio` is a safe bundled audio path. Content expansion is reproducible with `tool/expand_core_content.py`; it retains original IDs.

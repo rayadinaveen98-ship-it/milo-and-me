@@ -7,7 +7,7 @@ from validate_content import validate
 ROOT=Path(__file__).resolve().parents[1]
 PACK=json.loads((ROOT/'assets/content/meadow.json').read_text())
 class PackTests(unittest.TestCase):
- def test_original_pack(self):self.assertEqual(validate(PACK),{'drawings':8,'puzzles':15,'stories':3})
+ def test_original_pack(self):self.assertEqual(validate(PACK),{'drawings':24,'puzzles':55,'stories':12})
  def bad(self,edit):
   p=copy.deepcopy(PACK);edit(p)
   with self.assertRaises(ValueError):validate(p)

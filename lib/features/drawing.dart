@@ -17,6 +17,7 @@ class DrawingScreen extends ConsumerStatefulWidget {
 
 class _DrawingScreenState extends ConsumerState<DrawingScreen>
     with SingleTickerProviderStateMixin {
+  final paintRevision=ValueNotifier<int>(0);
   final List<DrawingStroke> strokes = [], undone = [];
   int color = 0xFF344A46, step = 0;
   double width = .014;
@@ -89,26 +90,19 @@ class _DrawingScreenState extends ConsumerState<DrawingScreen>
 
   @override
   void dispose() {
+    paintRevision.dispose();
     guide.dispose();
     super.dispose();
   }
 
   void point(Offset p, Size size, {bool start = false}) {
     if (mode == 'Watch' || saving || loading) return;
-    setState(() {
-      if (start) {
-        undone.clear();
-        strokes.add(
-          DrawingStroke(color: color, width: width, erase: eraser, points: []),
-        );
-      }
-      if (strokes.isNotEmpty) {
-        strokes.last.points.add([
-          (p.dx / size.width).clamp(0.0, 1.0).toDouble(),
-          (p.dy / size.height).clamp(0.0, 1.0).toDouble(),
-        ]);
-      }
-    });
+    if(start) setState(() { undone.clear(); strokes.add(DrawingStroke(color:color,width:width,erase:eraser,points:[])); });
+    if(strokes.isEmpty)return;
+    final point=[(p.dx/size.width).clamp(0.0,1.0).toDouble(),(p.dy/size.height).clamp(0.0,1.0).toDouble()];
+    final points=strokes.last.points;
+    if(points.isNotEmpty && (point[0]-points.last[0]).abs()+(point[1]-points.last[1]).abs()<.001)return;
+    points.add(point);paintRevision.value++;
   }
 
   Future<void> leave() async {
@@ -143,6 +137,7 @@ class _DrawingScreenState extends ConsumerState<DrawingScreen>
           'strokes': strokes.map((s) => s.toJson()).toList(),
           'thumbnail': base64Encode(bytes.buffer.asUint8List()),
           'lesson': widget.id,
+          'theme':lesson?['theme'],
         },
       );
       final ok = await ref
@@ -233,6 +228,7 @@ class _DrawingScreenState extends ConsumerState<DrawingScreen>
                                   : (_) {
                                       setState(() => mode = m);
                                       guide.forward(from: 0);
+                              keepDraft();
                                     },
                             ),
                           )
@@ -273,7 +269,7 @@ class _DrawingScreenState extends ConsumerState<DrawingScreen>
                               builder: (context, child) => CustomPaint(
                                 size: c.biggest,
                                 painter: StrokePainter(
-                                  strokes: strokes,
+                                  repaint:paintRevision, strokes: strokes,
                                   guides: mode == 'Create'
                                       ? []
                                       : steps
@@ -304,6 +300,7 @@ class _DrawingScreenState extends ConsumerState<DrawingScreen>
                               ? () {
                                   setState(() => step--);
                                   guide.forward(from: 0);
+                              keepDraft();
                                 }
                               : null,
                         ),
@@ -319,12 +316,17 @@ class _DrawingScreenState extends ConsumerState<DrawingScreen>
                               ? () {
                                   setState(() => step++);
                                   guide.forward(from: 0);
+                              keepDraft();
                                 }
                               : null,
                         ),
                       ],
                     ),
-                  if (mode != 'Watch') ...[
+                  if(mode!='Create') Wrap(alignment:WrapAlignment.center,children:[
+            BigAction(guide.isAnimating?'Pause':'Continue',guide.isAnimating?Icons.pause_rounded:Icons.play_arrow_rounded,()=>setState(() {if(guide.isAnimating){guide.stop();}else{guide.forward(from:guide.value==1?0:guide.value);}})),
+            if(current?['audio']!=null) BigAction('Listen',Icons.volume_up_rounded,()=>app.audio.narrate(current!['audio'])),
+          ]),
+          if (mode != 'Watch') ...[
                     Wrap(
                       alignment: WrapAlignment.center,
                       children:
@@ -481,7 +483,8 @@ class StrokePainter extends CustomPainter {
     this.guides = const [],
     this.progress = 1,
     this.watch = false,
-  });
+    Listenable? repaint,
+  }) : super(repaint:repaint);
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawRect(Offset.zero & size, Paint()..color = Colors.white);
@@ -507,6 +510,7 @@ class StrokePainter extends CustomPainter {
         );
         return;
       }
+      if(portion==1) {canvas.drawPath(path,pen);return;}
       for (final metric in path.computeMetrics()) {
         canvas.drawPath(metric.extractPath(0, metric.length * portion), pen);
       }

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../core/brand.dart';
+import '../core/version.dart';
 import '../core/controller.dart';
 import '../ui/common.dart';
 
@@ -331,7 +332,7 @@ class _ParentScreenState extends ConsumerState<ParentScreen> {
                         ),
                         const SizedBox(height: 18),
                         const Text(
-                          'Milo & Me · 0.1.0\nSupervised playtest edition. English content.\nNo medical, developmental or learning outcome claims.',
+                          'Milo & Me · $appVersion\nSupervised playtest edition. English content.\nNo medical, developmental or learning outcome claims.',
                           textAlign: TextAlign.center,
                         ),
                       ],

@@ -31,6 +31,8 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
         app.world.storyPositions[widget.id] ?? story['start'] as String;
     final scene = StoryEngine().scene(story, position);
     final choices = scene['choices'] as List;
+    final interaction=scene['interaction'] as Map?;
+    final interacted=app.world.activities['story:${widget.id}:$position']?['done']==true;
     final backgrounds = {
       'space': Brand.lavender,
       'ocean': Brand.sky,
@@ -86,12 +88,18 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
             'Read together • Your place is saved after each choice',
             style: TextStyle(color: Brand.sage),
           ),
+          if(interaction!=null) Padding(padding:const EdgeInsets.symmetric(vertical:16),child:FilledButton.tonalIcon(
+            icon:Text(interacted?'✓':interaction['symbol'],style:const TextStyle(fontSize:32)),
+            label:Text(interacted?interaction['message']:interaction['label']),
+            onPressed:busy||interacted?null:()async{setState(()=>busy=true);await app.storyInteract(widget.id,position);if(mounted)setState(()=>busy=false);},
+          )),
+          if(scene['audio']!=null) TextButton.icon(onPressed:()=>app.audio.narrate(scene['audio']),icon:const Icon(Icons.volume_up_rounded),label:const Text('Hear this part')),
           const SizedBox(height: 20),
           for (var i = 0; i < choices.length; i++)
             Padding(
               padding: const EdgeInsets.only(bottom: 12),
               child: FilledButton.tonal(
-                onPressed: busy
+                onPressed: busy || (interaction!=null&&!interacted)
                     ? null
                     : () async {
                         setState(() => busy = true);
@@ -104,7 +112,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
             ),
           if (choices.isEmpty)
             FilledButton.icon(
-              onPressed: busy
+              onPressed: busy || (interaction!=null&&!interacted)
                   ? null
                   : () async {
                       setState(() => busy = true);

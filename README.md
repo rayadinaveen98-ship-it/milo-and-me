@@ -1,17 +1,17 @@
-# Milo & Me — 0.1.0 Android playtest
+# Milo & Me — 0.3.0 development
 
 Canonical source: **[rayadinaveen98-ship-it/milo-and-me](https://github.com/rayadinaveen98-ship-it/milo-and-me)**. Stable branch: `main`. GitHub Actions is the authoritative Flutter/Android verification environment. Milestone completion requires pushed source, green CI and a generated APK artifact.
 
 A Flutter / Flame companion app for shared creativity, curiosity and gentle play, targeting ages 5–8. Working brand: **Milo & Me**. Original pet: **Milo**.
 
-**GitHub CI is green and the Android debug APK is available.** Flutter analysis and all 28 Flutter tests pass in GitHub Actions. The local environment has no Flutter/Android SDK; CI is the build authority. This is an early playtest slice, with device acceptance and full V1 scope still pending. See `docs/STATUS.md` for evidence and limitations.
+**Last delivered milestone: v0.2.0, with 33 passing Flutter tests and a direct APK on GitHub Releases.** v0.3.0 content/engine changes are awaiting CI. The local environment has no Flutter/Android SDK; CI is the build authority. This is an early playtest slice, with device acceptance and full V1 scope still pending. See `docs/STATUS.md` for evidence and limitations.
 
 Implemented source flows:
 
 - Welcome → parent introduction and six-digit PIN → nickname → pet naming/colour → bonding → illustrated pet room.
 - Tappable pet, feeding, bubbles, sleep/wake and five wardrobe looks with activity unlocks.
 - Drawing Watch/Together/Create modes, normalized strokes, animated guides, colour, brush size, eraser, undo/redo, draft persistence, PNG thumbnails and saved room artwork.
-- 8 drawing lessons, 15 puzzles across five categories and 3 original branching stories.
+- 24 drawing lessons, 55 puzzles across five categories and 12 original branching stories.
 - Story resume, puzzle completion, memory scrapbook and contextual pet suggestions.
 - Local SQLite persistence through Drift, atomic memory saves, serialized world changes and reset.
 - Parent PIN gate with PBKDF2 and retry lockout, sound/music/reduced-motion controls, session limits and profile deletion.

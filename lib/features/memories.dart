@@ -26,6 +26,7 @@ class MemoriesScreen extends ConsumerWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
+          Wrap(spacing:8,runSpacing:8,children:[for(final first in w.companion.firsts.where((s)=>s.contains('theme:')||['creativity-five','puzzle-explorer','kindness'].contains(s))) Chip(avatar:const Icon(Icons.auto_awesome_rounded),label:Text({'creativity-five':'Our little art gallery','puzzle-explorer':'Five ways to wonder','kindness':'A kindness memory'}[first]??first.replaceFirst('theme:','Our ')+' discoveries'))]),
           if (w.memories.isEmpty)
             const Paper(
               color: Brand.lavender,

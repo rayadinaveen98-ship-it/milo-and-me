@@ -122,6 +122,7 @@ class World {
   CompanionState companion;
   Set<String> owned, completedPuzzles, completedStories;
   Map<String, String> storyPositions;
+  Map<String, Json> activities;
   World({
     this.nickname = '',
     this.petName = 'Milo',
@@ -144,12 +145,14 @@ class World {
     Set<String>? completedPuzzles,
     Set<String>? completedStories,
     Map<String, String>? storyPositions,
+    Map<String,Json>? activities,
   }) : companion = companion ?? CompanionState(),
        memories = memories ?? [],
        owned = owned ?? {'none', 'scarf'},
        completedPuzzles = completedPuzzles ?? {},
        completedStories = completedStories ?? {},
-       storyPositions = storyPositions ?? {};
+       storyPositions = storyPositions ?? {},
+       activities = activities ?? {};
   Json toJson() => {
     'schema': 2,
     'companion': companion.toJson(),
@@ -173,6 +176,7 @@ class World {
     'completedPuzzles': completedPuzzles.toList(),
     'completedStories': completedStories.toList(),
     'storyPositions': storyPositions,
+    'activities': activities,
   };
   factory World.fromJson(Json j) {
     if (j['schema'] != 1 && j['schema'] != 2) {
@@ -210,6 +214,7 @@ class World {
       completedPuzzles: Set<String>.from(j['completedPuzzles']),
       completedStories: Set<String>.from(j['completedStories']),
       storyPositions: Map<String, String>.from(j['storyPositions']),
+      activities: (j['activities'] as Map? ?? {}).map((key,value)=>MapEntry(key as String,Map<String,dynamic>.from(value))),
     );
   }
   World copy() => World.fromJson(jsonDecode(jsonEncode(toJson())));

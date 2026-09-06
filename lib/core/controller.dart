@@ -123,10 +123,12 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
         kind: 'puzzle',
         title: puzzle['title'],
         topic: puzzle['topic'],
+        payload:{'theme':puzzle['theme'],'engine':puzzle['engine']},
         at: DateTime.now(),
       ),
     );
   });
+  Future<bool> storyInteract(String id,String scene) => change((w) { w.activities['story:$id:$scene']={'done':true};return w; });
   Future<bool> storyPosition(String id, String scene) => change((w) {
     w.storyPositions[id] = scene;
     return w;
@@ -141,6 +143,7 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
         kind: 'story',
         title: story['title'],
         topic: story['topic'],
+        payload:{'theme':story['theme'],'milestone':story['milestone']},
         at: DateTime.now(),
       ),
     );
