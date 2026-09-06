@@ -25,3 +25,7 @@ Navigation uses go_router with an onboarding redirect. Child routes are wrapped 
 ## Repository and build authority
 
 `rayadinaveen98-ship-it/milo-and-me` on `main` is authoritative. GitHub Actions installs Flutter/Android dependencies, bootstraps the official Gradle wrapper, analyzes, tests and builds the APK. The explicit-SQL Drift implementation requires no Dart code generation. Preserve existing commits; push each meaningful milestone and record actual CI/artifact evidence. Offline local checks are supplementary only.
+
+## Companion and world continuation
+
+World payload schema 2 migrates schema 1 while preserving memories and progress. Companion data stores bounded recent dialogue, local favourites/firsts, last interaction/session and three display slots. Reusable `WorldEngine` owns six allowed areas, picture rotation and bounded reward decoration. The original home and expanded world share the same saved picture selection. Story interaction checkpoints use the optional `activities` map, allowing old schema-2 saves to load with an empty map.

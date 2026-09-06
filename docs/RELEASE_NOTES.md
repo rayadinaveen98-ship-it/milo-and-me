@@ -8,4 +8,8 @@ Verified in CI run 34042238697; tag v0.2.0 and direct APK published.
 
 ## 0.3.0 — Core engines and content
 
-24 drawings, 55 puzzles, 12 original branching stories across Dinosaurs, Space, Ocean, Animals and Nature. Lazy themed catalogues with lesson previews; drawing pause/resume and cheaper live-stroke repaint; drag/tap puzzle answer spaces; persistent interactive story props; creativity/theme/kindness keepsakes. Full bundled library remains available in the offline playtest. CI pending.
+24 drawings, 55 puzzles, 12 original branching stories across Dinosaurs, Space, Ocean, Animals and Nature. Lazy themed catalogues with lesson previews; drawing pause/resume and cheaper live-stroke repaint; drag/tap puzzle answer spaces; persistent interactive story props; creativity/theme/kindness keepsakes. Full bundled library remains available in the offline playtest. Verified: CI 34043370987, 38 Flutter tests, tag/APK v0.3.0.
+
+## 0.4.0 — Our little world
+
+Six connected environmental areas, persistent last area and bounded reward decorations. Art studio can rotate saved pictures, with the choice shared by the original home. Existing home, care and activities remain accessible. Responsive phone/tablet rooms; reduced-motion transitions. CI pending.
