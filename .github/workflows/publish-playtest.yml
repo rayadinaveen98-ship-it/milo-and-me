@@ -1,0 +1,62 @@
+name: Publish verified v0.1.0 APK
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/publish-playtest.yml]
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: write
+concurrency:
+  group: publish-v0.1.0-playtest
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      VERIFIED_RUN: '34037945279'
+      VERIFIED_COMMIT: '62c102a6567711b975f64d2c3d2b87bc94be1efe'
+    steps:
+      - name: Confirm successful build identity
+        run: |
+          gh api "repos/$GH_REPO/actions/runs/$VERIFIED_RUN" > run.json
+          python3 - <<'PY'
+          import json, os
+          run = json.load(open('run.json'))
+          assert run['conclusion'] == 'success'
+          assert run['head_sha'] == os.environ['VERIFIED_COMMIT']
+          assert run['head_branch'] == 'main'
+          PY
+      - name: Retrieve verified APK artifact
+        run: gh run download "$VERIFIED_RUN" --name "milo-and-me-0.1.0-debug-apk-$VERIFIED_COMMIT" --dir apk
+      - name: Verify APK checksum and prepare direct download
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib
+          root = pathlib.Path('apk')
+          manifest = json.loads((root / 'build-manifest.json').read_text())
+          apk = root / 'app-debug.apk'
+          assert manifest['commit'] == os.environ['VERIFIED_COMMIT']
+          assert manifest['run_id'] == os.environ['VERIFIED_RUN']
+          assert manifest['build_type'] == 'debug'
+          assert hashlib.sha256(apk.read_bytes()).hexdigest() == manifest['sha256']
+          apk.rename(root / 'Milo-and-Me-v0.1.0.apk')
+          pathlib.Path('release-notes.md').write_text(
+            'Milo & Me v0.1.0 Android debug playtest.\n\n'
+            'Download Milo-and-Me-v0.1.0.apk directly below and install it on Android.\n\n'
+            'Built from ' + manifest['commit'] + '. Flutter analysis, all 28 Flutter tests, '
+            '19 offline tests and the Android APK build passed in GitHub Actions run '
+            + manifest['run_id'] + '.\n\n'
+            'This is a debug playtest, with installed-device acceptance and full V1 still pending. '
+            'The attached build manifest records the APK SHA-256.\n'
+          )
+          PY
+      - name: Publish APK as a prerelease asset
+        run: |
+          if ! gh release view v0.1.0-playtest >/dev/null 2>&1; then
+            gh release create v0.1.0-playtest --target "$VERIFIED_COMMIT" --prerelease --title 'Milo & Me v0.1.0 — Android playtest' --notes-file release-notes.md
+          fi
+          gh release upload v0.1.0-playtest apk/Milo-and-Me-v0.1.0.apk apk/build-manifest.json --clobber
