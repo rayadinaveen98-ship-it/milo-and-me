@@ -29,7 +29,10 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
       - name: Format Dart source
-        run: dart format lib test
+        run: |
+          dart format lib test
+          dart fix --apply --code=curly_braces_in_flow_control_structures
+          dart format lib test
       - name: Retain reproducible dependency and wrapper inputs
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
