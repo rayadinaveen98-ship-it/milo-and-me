@@ -37,7 +37,7 @@ The bootstrap script obtains the official Gradle wrapper from the installed Flut
 
 Output after a successful build: `build/app/outputs/flutter-apk/app-debug.apk`.
 
-For automatic builds, push this project to a GitHub repository on `main`. The included **Android playtest APK** workflow runs content validation, Flutter analysis, tests and APK generation, then uploads the APK as a workflow artifact. This workflow has been authored, **not run**. The permanent public repository is authorized by the owner. Source publication and the first GitHub Actions verification are in progress.
+For automatic builds, push this project to a GitHub repository on `main`. The included **Android playtest APK** workflow runs content validation, Flutter analysis, tests and APK generation, then uploads the APK as a workflow artifact. This workflow has been authored, **not run**. The permanent public repository is authorized by the owner. Original history and complete source were integrated in commit `79ff254`. GitHub Actions verification is in progress.
 
 ## Run the available offline checks
 

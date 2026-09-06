@@ -8,7 +8,7 @@ import '../domain/models.dart';
 
 // Drift-managed SQLite, with explicit SQL migrations and no generated source.
 class AppDatabase extends GeneratedDatabase {
-  AppDatabase(QueryExecutor executor) : super(executor);
+  AppDatabase(super.executor);
   static Future<AppDatabase> open() async {
     final directory = await getApplicationSupportDirectory();
     return AppDatabase(NativeDatabase.createInBackground(File(p.join(directory.path, 'milo.sqlite'))));

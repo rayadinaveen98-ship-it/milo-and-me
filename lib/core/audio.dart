@@ -22,7 +22,7 @@ class AudioDirector implements AudioService {
   AudioDirector() {
     _voice.onPlayerComplete.listen((_) { if (music) _music.setVolume(.18); });
   }
-  Future<void> configure({required bool musicOn, required bool effectsOn, required bool voiceOn}) async {
+  @override Future<void> configure({required bool musicOn, required bool effectsOn, required bool voiceOn}) async {
     music = musicOn; effects = effectsOn; voice = voiceOn;
     if (!music) { await _music.stop(); }
     else if (_music.state != PlayerState.playing) {
@@ -33,12 +33,12 @@ class AudioDirector implements AudioService {
     if (!effects) await _effects.stop();
     if (!voice) await _voice.stop();
   }
-  Future<void> reward() async { if (effects) await _effects.play(AssetSource('audio/reward.wav'), volume: .3); }
-  Future<void> narrate(String asset) async {
+  @override Future<void> reward() async { if (effects) await _effects.play(AssetSource('audio/reward.wav'), volume: .3); }
+  @override Future<void> narrate(String asset) async {
     if (!voice) return;
     await _music.setVolume(.04);
     try { await _voice.play(AssetSource(asset)); } catch (_) { if (music) await _music.setVolume(.18); }
   }
-  Future<void> pause() async { await _music.pause(); await _voice.stop(); await _effects.stop(); }
-  void dispose() { _music.dispose(); _effects.dispose(); _voice.dispose(); }
+  @override Future<void> pause() async { await _music.pause(); await _voice.stop(); await _effects.stop(); }
+  @override void dispose() { _music.dispose(); _effects.dispose(); _voice.dispose(); }
 }

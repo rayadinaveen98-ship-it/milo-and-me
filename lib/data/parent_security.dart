@@ -33,7 +33,7 @@ class ParentSecurity {
     final raw = await storage.read(key: 'parent.pin');
     if (raw == null) return false;
     final record = jsonDecode(raw);
-    final actual = base64Decode(await compute(derivePin, [pin, record['salt']]));
+    final actual = base64Decode(await compute<List<String>, String>(derivePin, [pin, record['salt'] as String]));
     final expected = base64Decode(record['hash']);
     var difference = actual.length ^ expected.length;
     for (var i = 0; i < actual.length && i < expected.length; i++) { difference |= actual[i] ^ expected[i]; }

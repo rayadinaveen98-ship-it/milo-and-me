@@ -6,7 +6,7 @@ Current source: **0.1.0+1**. This is not yet a verified Android release.
 | --- | --- | --- |
 | 0 — Foundation | Brand, modules, engines, local schema, content definitions | Source implemented; Flutter verification pending |
 | 1 — Vertical slice | Welcome/setup → pet home → drawing/puzzle/story → memory/reward | Source implemented; installed-device acceptance pending |
-| Repository / CI bootstrap | Preserve original commits, public GitHub main, analysis/tests, debug APK artifact | In progress; public visibility explicitly authorized |
+| Repository / CI bootstrap | Preserve original commits, public GitHub main, analysis/tests, debug APK artifact | Source/history published at `79ff254`; CI/APK gate running |
 | 2 — Pet core | Richer animation, memory, care, wardrobe and progression | Baseline source implemented; polish/validation pending |
 | 3 — Activity engines | Harden drawing, varied puzzle interaction, story playback | Baseline source implemented; hardening pending |
 | 4 — Curated content | About 24 drawings, 50–60 puzzles, 10–12 stories, recorded voice | Starter content: 8 / 15 / 3; expansion pending |
