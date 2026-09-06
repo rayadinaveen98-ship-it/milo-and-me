@@ -11,6 +11,15 @@ import 'package:milo_and_me/domain/models.dart';
 import 'package:milo_and_me/domain/world_engine.dart';
 import 'package:milo_and_me/features/world.dart';
 
+// UI routing is synchronous in this fixture. Real SQLite restart/rotation is
+// verified below, and the production controller write queue has its own tests.
+class WorldUiController extends AppController {
+  WorldUiController(super.db,super.content,super.world):super(audioOverride:SilentAudio());
+  @override Future<bool> change(World Function(World) operation,{String? removeDraft}) async {
+    world=operation(world.copy());notifyListeners();return true;
+  }
+}
+
 void main() {
   test(
     'Area and selected picture survive restart; decorations remain bounded',
@@ -64,12 +73,7 @@ void main() {
       final db = AppDatabase(NativeDatabase.memory());
       final content = ContentRepository(db);
       await tester.runAsync(content.load);
-      final app = AppController(
-        db,
-        content,
-        World(onboarded: true, reducedMotion: true),
-        audioOverride: SilentAudio(),
-      );
+      final app = WorldUiController(db,content,World(onboarded:true,reducedMotion:true));
       await tester.pumpWidget(
         ProviderScope(
           overrides: [controllerProvider.overrideWith((ref) => app)],
@@ -79,10 +83,7 @@ void main() {
       for (final area in WorldEngine.areas) {
         final button = find.byTooltip(WorldScreen.names[area]!);
         await tester.ensureVisible(button);
-        await tester.runAsync(() async {
-          await tester.tap(button);
-          await app.change((w) => w);
-        });
+        await tester.tap(button);
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 300));
         expect(app.world.companion.area, area);
