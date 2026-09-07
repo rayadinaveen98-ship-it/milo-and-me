@@ -17,7 +17,7 @@ void main() {
     () {
       expect((pack['cooking'] as List).length, 5);
       expect((pack['roleplay'] as List).length, 6);
-      for (final kind in ['cooking', 'roleplay'])
+      for (final kind in ['cooking', 'roleplay']) {
         for (final raw in pack[kind]) {
           final definition = Map<String, dynamic>.from(raw);
           ScenarioEngine.validate(definition);
@@ -52,6 +52,7 @@ void main() {
             reason: definition['id'],
           );
         }
+      }
       ContentEngine.validate(pack);
     },
   );
