@@ -56,6 +56,7 @@ class WorldEngine {
     if (w.companion.firsts.contains('puzzle')) 'blocks',
     if (w.companion.firsts.contains('story')) 'star',
     if (w.companion.firsts.contains('creativity-five')) 'garland',
+    if (w.companion.firsts.contains('science')) 'leaf',
     if (w.companion.firsts.contains('kindness')) 'heart',
   ].reversed.take(3).toList();
 }

@@ -25,3 +25,5 @@ Prefer authored local audio. Voice input, if introduced, needs parent choice, su
 Optional cloud services are parent-owned: auth, consent, entitlement, catalogue/version and backup metadata. Never send child creations by default. Optional backup requires an explicit reviewed encryption/key-recovery design. Enable RLS and narrow grants for every exposed table; test cross-parent access denial. Local reset must delete the world, creations/drafts, progress and downloaded packs. Cloud deletion must be implemented before cloud accounts are offered.
 
 Before release, review Google Play Families, Apple Kids Category, applicable Indian privacy rules and COPPA-style obligations for actual distribution territories and data flows. Current source is a supervised playtest milestone, not a store-ready compliance claim.
+
+Science v0.6: A digital only; B optional seated observation; C adult-selected leaves or paper outlines. C requires a scoped 15-minute parent PIN permit, revoked on background and screen exit. Adult stays throughout. No camera, location, uploads, proof or ingestion. Downloaded content cannot introduce an unreviewed real-world template.

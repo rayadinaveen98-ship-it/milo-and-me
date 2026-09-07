@@ -32,3 +32,5 @@ Optional `theme` is one of Dinosaurs/Space/Ocean/Animals/Nature. `access` labels
 ## Cooking and roleplay
 
 Optional pack arrays `cooking` and `roleplay` share identity/title/topic/theme metadata and a bounded `steps` list. Each step defines `action`, `prompt`, `symbol`, `options`, optional `repeat` (1–6) and pretend `seconds` (1–5). Accepted actions: choose/pour/mix/spread/decorate/assemble/timing/serve/prop/choice. Progress stores index, repetition count, choices and step entry time in `activities`; completion creates one idempotent memory. No real heating, cutting, ingestion or medical procedures.
+
+Science: optional `science[]`, `safety` A/B/C, reviewed `template`, and bounded `rounds[{prompt,options,responses}]`. A renders digital cause/effect choices. B/C instructions and choices come from reviewed code templates, never downloaded prose; C requires temporary scoped parent permission. Progress is local `activities[science:id]`; completion is idempotent.

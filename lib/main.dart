@@ -10,6 +10,7 @@ import 'features/onboarding.dart';
 import 'features/home.dart';
 import 'features/world.dart';
 import 'features/scenarios.dart';
+import 'features/science.dart';
 import 'features/catalogues.dart';
 import 'features/drawing.dart';
 import 'features/puzzle.dart';
@@ -132,6 +133,8 @@ class _MiloAppState extends ConsumerState<MiloApp> {
         GoRoute(path: '/', builder: (c, s) => const OnboardingScreen()),
         GoRoute(path: '/home', builder: (c, s) => child(const HomeScreen())),
         GoRoute(path: '/world', builder: (c, s) => child(const WorldScreen())),
+        GoRoute(path: '/science', builder: (c, s) => child(const ScienceCatalogue())),
+        GoRoute(path: '/science/:id', builder: (c, s) => child(ScienceScreen(key: ValueKey(s.pathParameters['id']), id: s.pathParameters['id']!))),
         for (final kind in ['cooking', 'roleplay']) ...[
           GoRoute(
             path: '/$kind',

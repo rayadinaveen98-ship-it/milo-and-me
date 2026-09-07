@@ -7,6 +7,7 @@ import '../data/parent_security.dart';
 import '../domain/models.dart';
 import '../domain/engines.dart';
 import '../domain/scenario_engine.dart';
+import '../domain/science_engine.dart';
 import 'audio.dart';
 
 final controllerProvider = ChangeNotifierProvider<AppController>(
@@ -18,6 +19,7 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
   final ContentRepository content;
   final ParentSecurity security = ParentSecurity();
   final AudioService audio;
+  final adultActivity = AdultActivityPermit();
   World world;
   String? error;
   bool parentUnlocked = false;
@@ -64,6 +66,7 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
     foreground = state == AppLifecycleState.resumed;
     if (!foreground) {
       parentUnlocked = false;
+      adultActivity.revoke();
       persistSession();
       audio.pause();
     } else {
@@ -93,6 +96,14 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
     return done.future;
   }
 
+  Future<bool> authorizeScience(String id, String pin) async {
+    final ok = await adultActivity.authorize(id, () => security.verify(pin));
+    notifyListeners();
+    return ok;
+  }
+  Future<bool> observeScience(Json d, String choice) => change((w) =>
+      ScienceEngine().observe(w, d, choice, adultPresent: adultActivity.allows(d['id'])));
+  void endScience() { adultActivity.revoke(); }
   Future<bool> suggest() => change(
     (w) => PetEngine().react(
       w,

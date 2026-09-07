@@ -92,6 +92,7 @@ class ContentRepository {
         'stories',
         'cooking',
         'roleplay',
+        'science',
       ]) {
         final otherIds = existing
             .where((p) => p['id'] != pack['id'])

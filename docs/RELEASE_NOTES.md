@@ -16,4 +16,8 @@ Six connected environmental areas, persistent last area and bounded reward decor
 
 ## 0.5.0 — Cooking and roleplay
 
-Reusable stateful scenario engine with persisted steps/choices, repeat actions, bounded pretend timing, props and replay. Five virtual recipes; astronaut, chef, toy doctor, artist, detective and builder scenarios. World/wardrobe entry points, new costumes, pet callbacks and idempotent memories. All cooking and doctor play is explicitly pretend. CI pending.
+Reusable stateful scenario engine with persisted steps/choices, repeat actions, bounded pretend timing, props and replay. Five virtual recipes; astronaut, chef, toy doctor, artist, detective and builder scenarios. World/wardrobe entry points, new costumes, pet callbacks and idempotent memories. All cooking and doctor play is explicitly pretend. Verified: CI 34077648721, 46 Flutter tests, tag/APK v0.5.0.
+
+## 0.6.0 — Little discoveries
+
+Seven reusable digital science themes; two optional seated observation activities and one parent-assisted leaf/paper-outline flow. Reviewed offline instructions, scoped PIN permission revoked on background/exit, no sensitive permissions or proof collection. Local progress, memories and explorer keepsake; gentle optional paper/block suggestions. CI pending.

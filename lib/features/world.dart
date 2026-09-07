@@ -160,6 +160,8 @@ class WorldScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: 12),
+          if (area == 'garden')
+            FilledButton.tonalIcon(onPressed: () => route('/science'), icon: const Icon(Icons.search_rounded), label: const Text('Discover with Milo')),
           if (area == 'care')
             FilledButton.tonalIcon(
               onPressed: () => route('/cooking'),
@@ -264,6 +266,7 @@ class WorldScreen extends ConsumerWidget {
                                           'blocks': Icons.toys_rounded,
                                           'star': Icons.star_rounded,
                                           'garland': Icons.celebration_rounded,
+                                          'leaf': Icons.eco_rounded,
                                           'heart': Icons.favorite_rounded,
                                         }[decor],
                                         color: Brand.sage,

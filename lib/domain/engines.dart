@@ -1,5 +1,6 @@
 import 'models.dart';
 import 'scenario_engine.dart';
+import 'science_engine.dart';
 
 class PetEngine {
   World care(World current, String action, {DateTime? now}) {
@@ -136,6 +137,7 @@ class PetEngine {
           'story',
           'cooking',
           'roleplay',
+          'science',
         ]) {
           final items = w.memories.where((m) => m.kind == kind).toList();
           if (items.isNotEmpty) {
@@ -212,6 +214,7 @@ class MemoryEngine {
     next.mood = 'dance';
     next.dialogue = 'Our ${memory.topic}! Let’s keep this lovely memory.';
     next.affection = (next.affection + 5).clamp(0, 100).toInt();
+    if (memory.kind == 'science') next.owned.add('explorer');
     if (memory.kind == 'drawing') next.owned.add('beret');
     if (memory.kind == 'puzzle') next.owned.add('explorer');
     if (memory.kind == 'story') next.owned.add('astronaut');
@@ -273,8 +276,9 @@ class ContentEngine {
       'stories',
       'cooking',
       'roleplay',
+      'science',
     ]) {
-      if (['cooking', 'roleplay'].contains(type) && pack[type] == null) {
+      if (['cooking', 'roleplay', 'science'].contains(type) && pack[type] == null) {
         continue;
       }
       if (pack[type] is! List || (pack[type] as List).length > 200) {
@@ -299,6 +303,7 @@ class ContentEngine {
             ].contains(item['theme'])) {
           throw const FormatException('Unknown theme');
         }
+        if (type == 'science') { ScienceEngine.validate(item); }
         if (type == 'cooking' || type == 'roleplay') {
           ScenarioEngine.validate(item);
         }

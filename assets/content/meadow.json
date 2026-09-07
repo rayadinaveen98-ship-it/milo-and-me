@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "id": "meadow",
-  "version": 5,
+  "version": 6,
   "title": "Meadow friends",
   "drawings": [
     {
@@ -11566,6 +11566,438 @@
             "Our bridge welcomes everyone"
           ],
           "repeat": 1
+        }
+      ]
+    }
+  ],
+  "science": [
+    {
+      "id": "colour-lab",
+      "title": "Milo’s colour puddles",
+      "topic": "milo’s colour puddles",
+      "theme": "Nature",
+      "safety": "A",
+      "template": "colour",
+      "rounds": [
+        {
+          "prompt": "Add a pretend paint colour to yellow.",
+          "options": [
+            "Red",
+            "Blue"
+          ],
+          "responses": {
+            "Red": "Red and yellow paint can make orange.",
+            "Blue": "Blue and yellow paint can make green."
+          }
+        },
+        {
+          "prompt": "Now add a pretend paint colour to blue.",
+          "options": [
+            "Red",
+            "Yellow"
+          ],
+          "responses": {
+            "Red": "Red and blue paint can make purple.",
+            "Yellow": "Yellow and blue paint can make green."
+          }
+        },
+        {
+          "prompt": "How light shall our pretend green become?",
+          "options": [
+            "A little white",
+            "More white"
+          ],
+          "responses": {
+            "A little white": "White paint makes a lighter green.",
+            "More white": "More white paint makes a paler green."
+          }
+        }
+      ]
+    },
+    {
+      "id": "shadow-lab",
+      "title": "A shadow for Milo",
+      "topic": "a shadow for milo",
+      "theme": "Nature",
+      "safety": "A",
+      "template": "shadow",
+      "rounds": [
+        {
+          "prompt": "Move our pretend light. Watch the shadow stretch.",
+          "options": [
+            "Near",
+            "Far"
+          ],
+          "responses": {
+            "Near": "With our light nearer the object, its shadow grows.",
+            "Far": "Moving our light farther away makes this shadow smaller."
+          }
+        },
+        {
+          "prompt": "Where shall our pretend light shine from?",
+          "options": [
+            "Left",
+            "Right"
+          ],
+          "responses": {
+            "Left": "The shadow falls away from the light, to the right.",
+            "Right": "The shadow falls to the left."
+          }
+        },
+        {
+          "prompt": "Can light pass through our pretend object?",
+          "options": [
+            "Clear glass",
+            "Cardboard"
+          ],
+          "responses": {
+            "Clear glass": "Clear glass lets much of the light through.",
+            "Cardboard": "Cardboard blocks light and makes a dark shadow."
+          }
+        }
+      ]
+    },
+    {
+      "id": "float-lab",
+      "title": "The pretend pond",
+      "topic": "the pretend pond",
+      "theme": "Nature",
+      "safety": "A",
+      "template": "float",
+      "rounds": [
+        {
+          "prompt": "Choose something for our digital pond.",
+          "options": [
+            "Cork",
+            "Stone"
+          ],
+          "responses": {
+            "Cork": "Our cork floats. It is less dense than water.",
+            "Stone": "Our solid stone sinks. It is denser than water."
+          }
+        },
+        {
+          "prompt": "Try two shapes made from the same pretend clay.",
+          "options": [
+            "Ball",
+            "Hollow boat"
+          ],
+          "responses": {
+            "Ball": "The solid clay ball sinks.",
+            "Hollow boat": "A wide hollow clay boat can float by pushing aside enough water."
+          }
+        },
+        {
+          "prompt": "What might change our pretend boat?",
+          "options": [
+            "Add weight",
+            "Keep it empty"
+          ],
+          "responses": {
+            "Add weight": "Enough extra weight makes our boat sink.",
+            "Keep it empty": "Our empty boat keeps floating."
+          }
+        }
+      ]
+    },
+    {
+      "id": "plant-lab",
+      "title": "A tiny digital seed",
+      "topic": "a tiny digital seed",
+      "theme": "Nature",
+      "safety": "A",
+      "template": "plant",
+      "rounds": [
+        {
+          "prompt": "Give our pretend seed a little water.",
+          "options": [
+            "A few drops",
+            "Notice the seed"
+          ],
+          "responses": {
+            "A few drops": "Water helps a seed begin to grow.",
+            "Notice the seed": "A seed holds the beginning of a plant."
+          }
+        },
+        {
+          "prompt": "Our seed has roots and a shoot. Look closely.",
+          "options": [
+            "Roots",
+            "Shoot"
+          ],
+          "responses": {
+            "Roots": "Roots take up water and hold the plant in place.",
+            "Shoot": "The shoot grows towards the light."
+          }
+        },
+        {
+          "prompt": "Our pretend leaves have opened.",
+          "options": [
+            "Light",
+            "Time"
+          ],
+          "responses": {
+            "Light": "Green leaves use light to help the plant make food.",
+            "Time": "Real plants grow slowly. Our pretend garden skips ahead."
+          }
+        }
+      ]
+    },
+    {
+      "id": "magnet-lab",
+      "title": "Milo’s digital magnet",
+      "topic": "milo’s digital magnet",
+      "theme": "Nature",
+      "safety": "A",
+      "template": "magnet",
+      "rounds": [
+        {
+          "prompt": "Choose an object for our digital magnet.",
+          "options": [
+            "Iron nail",
+            "Wood"
+          ],
+          "responses": {
+            "Iron nail": "Iron is attracted to our magnet. This nail stays on screen.",
+            "Wood": "Wood is not attracted to the magnet."
+          }
+        },
+        {
+          "prompt": "Try another pretend material.",
+          "options": [
+            "Steel clip",
+            "Plastic"
+          ],
+          "responses": {
+            "Steel clip": "Many steel clips are attracted to magnets.",
+            "Plastic": "Plastic is not attracted to our magnet."
+          }
+        },
+        {
+          "prompt": "Bring two pretend magnet ends together.",
+          "options": [
+            "Same poles",
+            "Opposite poles"
+          ],
+          "responses": {
+            "Same poles": "Matching poles push apart.",
+            "Opposite poles": "Opposite poles pull together."
+          }
+        }
+      ]
+    },
+    {
+      "id": "water-lab",
+      "title": "A water drop’s journey",
+      "topic": "a water drop’s journey",
+      "theme": "Nature",
+      "safety": "A",
+      "template": "water",
+      "rounds": [
+        {
+          "prompt": "Where can our pretend puddle water go?",
+          "options": [
+            "Into the air",
+            "Stay a while"
+          ],
+          "responses": {
+            "Into the air": "Some liquid water becomes water vapour in the air.",
+            "Stay a while": "Some water stays in the puddle while other water evaporates."
+          }
+        },
+        {
+          "prompt": "Higher up, water vapour cools.",
+          "options": [
+            "Make droplets",
+            "Look at clouds"
+          ],
+          "responses": {
+            "Make droplets": "Tiny liquid droplets can gather into clouds.",
+            "Look at clouds": "Clouds contain tiny water droplets or ice crystals."
+          }
+        },
+        {
+          "prompt": "The cloud’s drops grow heavier.",
+          "options": [
+            "Rain",
+            "Follow a stream"
+          ],
+          "responses": {
+            "Rain": "Water falls as rain and gathers again.",
+            "Follow a stream": "Streams can carry water towards lakes and the sea."
+          }
+        }
+      ]
+    },
+    {
+      "id": "pattern-lab",
+      "title": "Nature’s repeating shapes",
+      "topic": "nature’s repeating shapes",
+      "theme": "Nature",
+      "safety": "A",
+      "template": "pattern",
+      "rounds": [
+        {
+          "prompt": "Leaf, pebble, leaf, pebble… what could come next?",
+          "options": [
+            "Leaf",
+            "Flower"
+          ],
+          "responses": {
+            "Leaf": "A leaf continues our repeating pair.",
+            "Flower": "A flower starts a new pattern. We can invent one too."
+          }
+        },
+        {
+          "prompt": "Look at our pretend butterfly wings.",
+          "options": [
+            "Left wing",
+            "Right wing"
+          ],
+          "responses": {
+            "Left wing": "The two sides have matching shapes.",
+            "Right wing": "Many butterfly wing patterns are roughly symmetrical."
+          }
+        },
+        {
+          "prompt": "Make a pattern with Milo.",
+          "options": [
+            "Big, small",
+            "Round, long"
+          ],
+          "responses": {
+            "Big, small": "Big, small, big, small: a repeating size pattern.",
+            "Round, long": "Round, long, round, long: a repeating shape pattern."
+          }
+        }
+      ]
+    },
+    {
+      "id": "red-noticing",
+      "title": "Three red things",
+      "topic": "three red things",
+      "theme": "Nature",
+      "safety": "B",
+      "template": "red-objects",
+      "rounds": [
+        {
+          "prompt": "Reviewed observation",
+          "options": [
+            "I noticed it",
+            "Imagine it instead"
+          ],
+          "responses": {
+            "I noticed it": "Noticing is lovely.",
+            "Imagine it instead": "Imagining is lovely."
+          }
+        },
+        {
+          "prompt": "Reviewed observation",
+          "options": [
+            "I noticed it",
+            "Imagine it instead"
+          ],
+          "responses": {
+            "I noticed it": "Noticing is lovely.",
+            "Imagine it instead": "Imagining is lovely."
+          }
+        },
+        {
+          "prompt": "Reviewed observation",
+          "options": [
+            "I noticed it",
+            "Imagine it instead"
+          ],
+          "responses": {
+            "I noticed it": "Noticing is lovely.",
+            "Imagine it instead": "Imagining is lovely."
+          }
+        }
+      ]
+    },
+    {
+      "id": "pattern-noticing",
+      "title": "Patterns from our seat",
+      "topic": "patterns from our seat",
+      "theme": "Nature",
+      "safety": "B",
+      "template": "room-patterns",
+      "rounds": [
+        {
+          "prompt": "Reviewed observation",
+          "options": [
+            "I noticed it",
+            "Imagine it instead"
+          ],
+          "responses": {
+            "I noticed it": "Noticing is lovely.",
+            "Imagine it instead": "Imagining is lovely."
+          }
+        },
+        {
+          "prompt": "Reviewed observation",
+          "options": [
+            "I noticed it",
+            "Imagine it instead"
+          ],
+          "responses": {
+            "I noticed it": "Noticing is lovely.",
+            "Imagine it instead": "Imagining is lovely."
+          }
+        },
+        {
+          "prompt": "Reviewed observation",
+          "options": [
+            "I noticed it",
+            "Imagine it instead"
+          ],
+          "responses": {
+            "I noticed it": "Noticing is lovely.",
+            "Imagine it instead": "Imagining is lovely."
+          }
+        }
+      ]
+    },
+    {
+      "id": "leaf-noticing",
+      "title": "Leaf shapes together",
+      "topic": "leaf shapes together",
+      "theme": "Nature",
+      "safety": "C",
+      "template": "leaf-shapes",
+      "rounds": [
+        {
+          "prompt": "Reviewed observation",
+          "options": [
+            "I noticed it",
+            "Imagine it instead"
+          ],
+          "responses": {
+            "I noticed it": "Noticing is lovely.",
+            "Imagine it instead": "Imagining is lovely."
+          }
+        },
+        {
+          "prompt": "Reviewed observation",
+          "options": [
+            "I noticed it",
+            "Imagine it instead"
+          ],
+          "responses": {
+            "I noticed it": "Noticing is lovely.",
+            "Imagine it instead": "Imagining is lovely."
+          }
+        },
+        {
+          "prompt": "Reviewed observation",
+          "options": [
+            "I noticed it",
+            "Imagine it instead"
+          ],
+          "responses": {
+            "I noticed it": "Noticing is lovely.",
+            "Imagine it instead": "Imagining is lovely."
+          }
         }
       ]
     }
