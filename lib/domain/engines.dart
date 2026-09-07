@@ -278,7 +278,8 @@ class ContentEngine {
       'roleplay',
       'science',
     ]) {
-      if (['cooking', 'roleplay', 'science'].contains(type) && pack[type] == null) {
+      if (['cooking', 'roleplay', 'science'].contains(type) &&
+          pack[type] == null) {
         continue;
       }
       if (pack[type] is! List || (pack[type] as List).length > 200) {
@@ -303,7 +304,9 @@ class ContentEngine {
             ].contains(item['theme'])) {
           throw const FormatException('Unknown theme');
         }
-        if (type == 'science') { ScienceEngine.validate(item); }
+        if (type == 'science') {
+          ScienceEngine.validate(item);
+        }
         if (type == 'cooking' || type == 'roleplay') {
           ScenarioEngine.validate(item);
         }

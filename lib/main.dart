@@ -133,8 +133,19 @@ class _MiloAppState extends ConsumerState<MiloApp> {
         GoRoute(path: '/', builder: (c, s) => const OnboardingScreen()),
         GoRoute(path: '/home', builder: (c, s) => child(const HomeScreen())),
         GoRoute(path: '/world', builder: (c, s) => child(const WorldScreen())),
-        GoRoute(path: '/science', builder: (c, s) => child(const ScienceCatalogue())),
-        GoRoute(path: '/science/:id', builder: (c, s) => child(ScienceScreen(key: ValueKey(s.pathParameters['id']), id: s.pathParameters['id']!))),
+        GoRoute(
+          path: '/science',
+          builder: (c, s) => child(const ScienceCatalogue()),
+        ),
+        GoRoute(
+          path: '/science/:id',
+          builder: (c, s) => child(
+            ScienceScreen(
+              key: ValueKey(s.pathParameters['id']),
+              id: s.pathParameters['id']!,
+            ),
+          ),
+        ),
         for (final kind in ['cooking', 'roleplay']) ...[
           GoRoute(
             path: '/$kind',

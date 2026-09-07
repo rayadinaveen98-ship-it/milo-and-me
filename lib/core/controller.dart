@@ -101,9 +101,19 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
     notifyListeners();
     return ok;
   }
-  Future<bool> observeScience(Json d, String choice) => change((w) =>
-      ScienceEngine().observe(w, d, choice, adultPresent: adultActivity.allows(d['id'])));
-  void endScience() { adultActivity.revoke(); }
+
+  Future<bool> observeScience(Json d, String choice) => change(
+    (w) => ScienceEngine().observe(
+      w,
+      d,
+      choice,
+      adultPresent: adultActivity.allows(d['id']),
+    ),
+  );
+  void endScience() {
+    adultActivity.revoke();
+  }
+
   Future<bool> suggest() => change(
     (w) => PetEngine().react(
       w,

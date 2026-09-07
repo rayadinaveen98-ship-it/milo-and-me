@@ -161,7 +161,11 @@ class WorldScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 12),
           if (area == 'garden')
-            FilledButton.tonalIcon(onPressed: () => route('/science'), icon: const Icon(Icons.search_rounded), label: const Text('Discover with Milo')),
+            FilledButton.tonalIcon(
+              onPressed: () => route('/science'),
+              icon: const Icon(Icons.search_rounded),
+              label: const Text('Discover with Milo'),
+            ),
           if (area == 'care')
             FilledButton.tonalIcon(
               onPressed: () => route('/cooking'),
