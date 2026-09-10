@@ -3,11 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../core/brand.dart';
 import '../core/controller.dart';
-import '../domain/models.dart';
 import '../domain/world_engine.dart';
 import '../ui/common.dart';
 import '../ui/pet.dart';
-import 'drawing.dart';
+import '../ui/creation_preview.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -116,21 +115,7 @@ class HomeScreen extends ConsumerWidget {
                                       color: Brand.gold,
                                       borderRadius: BorderRadius.circular(9),
                                     ),
-                                    child: CustomPaint(
-                                      painter: StrokePainter(
-                                        strokes:
-                                            (drawings.last.payload['strokes']
-                                                    as List)
-                                                .map(
-                                                  (s) => DrawingStroke.fromJson(
-                                                    Map<String, dynamic>.from(
-                                                      s,
-                                                    ),
-                                                  ),
-                                                )
-                                                .toList(),
-                                      ),
-                                    ),
+                                    child: CreationPreview(memory: drawings.last),
                                   ),
                                 ),
                               ),

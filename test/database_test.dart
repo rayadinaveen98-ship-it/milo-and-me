@@ -63,7 +63,7 @@ void main() {
       await db.close();
       db = AppDatabase(NativeDatabase(file));
       final version = await db.customSelect('PRAGMA user_version').getSingle();
-      expect(version.data.values.single, 1);
+      expect(version.data.values.single, 2);
       expect((await db.readWorld()).petName, 'Sprout');
       await db.close();
       await dir.delete(recursive: true);

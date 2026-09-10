@@ -1,79 +1,39 @@
-# Milo & Me — 0.3.0 development
+# Milo & Me · 0.7.0
 
-Canonical source: **[rayadinaveen98-ship-it/milo-and-me](https://github.com/rayadinaveen98-ship-it/milo-and-me)**. Stable branch: `main`. GitHub Actions is the authoritative Flutter/Android verification environment. Milestone completion requires pushed source, green CI and a generated APK artifact.
+A child's virtual best friend for ages roughly 5–8. Milo and the child draw, solve puzzles, share stories, care, imagine, cook pretend recipes and discover together. Local-first; no child login, ads, public chat, behavioural analytics or runtime AI chat.
 
-A Flutter / Flame companion app for shared creativity, curiosity and gentle play, targeting ages 5–8. Working brand: **Milo & Me**. Original pet: **Milo**.
+[Download verified APKs](https://github.com/rayadinaveen98-ship-it/milo-and-me/releases) · [Android CI](https://github.com/rayadinaveen98-ship-it/milo-and-me/actions/workflows/android.yml)
 
-**Last delivered milestone: v0.2.0, with 33 passing Flutter tests and a direct APK on GitHub Releases.** v0.3.0 content/engine changes are awaiting CI. The local environment has no Flutter/Android SDK; CI is the build authority. This is an early playtest slice, with device acceptance and full V1 scope still pending. See `docs/STATUS.md` for evidence and limitations.
+The approved v0.1 experience and original Git history are preserved. v0.2–v0.6 are delivered. v0.7 source is implemented and awaiting its CI gate; see [roadmap](docs/ROADMAP.md) and [release notes](docs/RELEASE_NOTES.md).
 
-Implemented source flows:
+## Stack and structure
 
-- Welcome → parent introduction and six-digit PIN → nickname → pet naming/colour → bonding → illustrated pet room.
-- Tappable pet, feeding, bubbles, sleep/wake and five wardrobe looks with activity unlocks.
-- Drawing Watch/Together/Create modes, normalized strokes, animated guides, colour, brush size, eraser, undo/redo, draft persistence, PNG thumbnails and saved room artwork.
-- 24 drawing lessons, 55 puzzles across five categories and 12 original branching stories.
-- Story resume, puzzle completion, memory scrapbook and contextual pet suggestions.
-- Local SQLite persistence through Drift, atomic memory saves, serialized world changes and reset.
-- Parent PIN gate with PBKDF2 and retry lockout, sound/music/reduced-motion controls, session limits and profile deletion.
-- Validated content-pack download repository and an optional Supabase REST adapter. Neither is connected to a hosted catalogue in this edition.
+Flutter 3.35.7 / Dart, Flame for Milo, Riverpod, go_router, Drift/SQLite, secure storage, audioplayers and Flutter in-app purchase adapters.
 
-## Build an APK
+- `lib/domain`: deterministic pet, memory, activity, access and content rules.
+- `lib/core`: controller, services/configuration, audio and version.
+- `lib/data`: SQLite migrations, verified packs, parent auth and purchase adapters.
+- `lib/features`, `lib/ui`: approved child experience, parent controls and lazy previews.
+- `assets/content`: 24 drawings, 55 puzzles, 12 stories, 5 recipes, 6 roleplays, 10 discoveries.
+- `supabase`: server API, schema, CLI-generated migration and ownership tests.
+- `test`, `tool`: Flutter suites, portable server tests and offline content checks.
 
-Requirements: Flutter **3.35.7**, Java 17, Android SDK/toolchain accepted and configured, Python 3, network access to official build dependencies.
+## Development and Android build
 
-Windows:
-
-```powershell
-.\tool\build.ps1
+```sh
+python3 tool/bootstrap_android.py
+flutter pub get
+flutter analyze
+flutter test
+flutter build apk --debug
 ```
 
-macOS/Linux:
+Use Java 17 and the pinned Flutter version. Explicit SQL Drift requires no Dart code generation. On a fresh checkout, the bootstrap script obtains the official Android wrapper from Flutter without regenerating app source. CI retains the dependency lock, wrapper and CLI-generated migration, runs PostgreSQL ownership/server tests, content checks, analysis and all Flutter tests, then builds and publishes the APK plus a source/checksum manifest. GitHub Actions is authoritative because the editing environment has no Flutter/Android SDK.
 
-```bash
-./tool/build.sh
-```
+Default builds are offline playtests with the full included library. Real parent services require public build configuration and server-only credentials; [activation guide](docs/BACKEND_ACTIVATION.md) lists exact steps. No live billing is simulated as a real purchase. Release signing must be configured externally; debug APKs are for supervised playtesting, and separately generated debug keys may prevent in-place upgrades.
 
-The bootstrap script obtains the official Gradle wrapper from the installed Flutter SDK without overwriting application source. The official wrapper and resolved `pubspec.lock` are committed; retain lockfile changes when intentionally updating dependencies. No Drift code generation is needed.
+## Product and technical contracts
 
-Output after a successful build: `build/app/outputs/flutter-apk/app-debug.apk`.
+[Product foundation](docs/PRODUCT_FOUNDATION.md) · [Architecture](docs/ARCHITECTURE.md) · [Content schemas](docs/CONTENT_SYSTEM.md) · [Privacy and child safety](docs/PRIVACY_AND_CHILD_SAFETY.md) · [Execution contract](docs/EXECUTION_V02_V07.md)
 
-Every push to `main` runs the **Android playtest APK** workflow: dependency installation, content validation, Flutter analysis, all Flutter tests, debug APK build and artifact upload. It can also be started manually from the [Actions page](https://github.com/rayadinaveen98-ship-it/milo-and-me/actions/workflows/android.yml). Download the `milo-and-me-0.1.0-debug-apk-…` artifact from a successful run and extract `app-debug.apk`. The artifact includes a commit/checksum manifest and is retained for 30 days. Debug APKs are for supervised testing; production signing is separate.
-
-The owner authorized the public repository. The original source and Git history were preserved; each meaningful milestone must be committed and pushed.
-
-First verified build: commit `fc7d2fabfe3f8f955c8c2e2f1a54cfb97456d973`, [green CI](https://github.com/rayadinaveen98-ship-it/milo-and-me/actions/runs/34037468340), [debug APK artifact](https://github.com/rayadinaveen98-ship-it/milo-and-me/actions/runs/34037468340/artifacts/9990702706) (2026-09-06). Analysis, all 28 Flutter tests, 19 offline tests and APK generation passed. The artifact contains `app-debug.apk` and a SHA-256/commit manifest; retention is 30 days. Newer successful runs produce their own matching artifacts.
-
-## Run the available offline checks
-
-```bash
-python3 tool/validate_content.py assets/content/meadow.json
-python3 tool/test_offline.py
-python3 tool/check_source.py
-```
-
-The final command checks delimiters and local imports only. It cannot establish Dart type correctness, package compatibility, successful compilation or visual quality.
-
-## Project map
-
-| Directory | Purpose |
-| --- | --- |
-| `lib/domain` | World, memories, drawing data, deterministic activity/content rules |
-| `lib/data` | Drift SQLite, pack integrity, secure PIN, optional parent backend |
-| `lib/core` | Brand, Riverpod controller, session handling, audio abstraction |
-| `lib/features` | Onboarding, room, activities, parent controls, wardrobe, memories |
-| `lib/ui` | Shape-rendered Flame pet and shared UI |
-| `assets/content` | Original JSON starter pack |
-| `assets/brand` | App icons and wordmark |
-| `test` | Flutter engine, repository, controller, security and widget tests |
-| `supabase/schema.sql` | Unapplied candidate cloud schema |
-| `docs` | Architecture, content formats, release steps, precise limitations |
-
-Read `docs/STATUS.md` before continuing. `docs/PRODUCT_BRIEF.md` preserves the supplied scope. Nothing in this milestone changes that long-term brief.
-
-## Locked project documents
-
-- `docs/PRODUCT_FOUNDATION.md`: philosophy, audience and V1 boundaries.
-- `docs/ARCHITECTURE.md`: Flutter/Flame, Riverpod, navigation, persistence and service boundaries.
-- `docs/ROADMAP.md`: milestones and evidence-based completion gates.
-- `docs/PRIVACY_AND_CHILD_SAFETY.md`: privacy and parental authority rules.
-- `docs/CONTENT_SYSTEM.md`: content schemas and pack activation.
+`main` in `rayadinaveen98-ship-it/milo-and-me` is authoritative. A milestone is complete only after pushed source, passing CI and a published APK. Keep credentials, signing files, private child information and build output out of Git.

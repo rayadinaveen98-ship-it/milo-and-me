@@ -9,6 +9,9 @@ import '../domain/engines.dart';
 import '../domain/scenario_engine.dart';
 import '../domain/science_engine.dart';
 import 'audio.dart';
+import 'service_config.dart';
+import '../domain/access_policy.dart';
+import '../data/parent_services.dart';
 
 final controllerProvider = ChangeNotifierProvider<AppController>(
   (ref) => throw UnimplementedError('Override at bootstrap'),
@@ -19,6 +22,8 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
   final ContentRepository content;
   final ParentSecurity security = ParentSecurity();
   final AudioService audio;
+  final access = AccessPolicy(playtest: !ServiceConfig.live);
+  late final ParentServices parentServices;
   final adultActivity = AdultActivityPermit();
   World world;
   String? error;
@@ -34,7 +39,10 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
     this.world, {
     int sessionSeconds = 0,
     AudioService? audioOverride,
-  }) : audio = audioOverride ?? AudioDirector() {
+  }) : audio = audioOverride ?? AudioDirector(sourceResolver: content.audioSource) {
+    parentServices = ParentServices(authorized: () => parentUnlocked, access: access);
+    parentServices.addListener(notifyListeners);
+    unawaited(parentServices.cachedAccess().then((_) => notifyListeners()));
     elapsedSeconds = sessionSeconds;
     WidgetsBinding.instance.addObserver(this);
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
@@ -82,7 +90,7 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
       try {
         final next = operation(world.copy());
         await db.saveWorld(next, removeDraft: removeDraft);
-        world = next;
+        world = await db.readWorld();
         error = null;
         notifyListeners();
         done.complete(true);
@@ -233,7 +241,9 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
     if (!parentUnlocked) return false;
     await _writes;
     try {
+      content.invalidateDownloads();
       await db.reset();
+      adultActivity.revoke();
       world = World();
       elapsedSeconds = 0;
       error = null;
@@ -257,6 +267,8 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
     _disposed = true;
     _timer?.cancel();
     WidgetsBinding.instance.removeObserver(this);
+    parentServices.removeListener(notifyListeners);
+    parentServices.dispose();
     audio.dispose();
     unawaited(_writes.whenComplete(db.close));
     super.dispose();

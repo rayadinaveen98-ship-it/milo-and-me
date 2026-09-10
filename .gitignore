@@ -43,3 +43,8 @@ __pycache__/
 *.apk
 *.aab
 *.bundle
+
+# Local backend tooling
+node_modules/
+supabase/.temp/
+supabase/.branches/

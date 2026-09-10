@@ -3,11 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../core/brand.dart';
 import '../core/controller.dart';
-import '../domain/models.dart';
 import '../domain/world_engine.dart';
 import '../ui/common.dart';
 import '../ui/pet.dart';
-import 'drawing.dart';
+import '../ui/creation_preview.dart';
 import 'home.dart';
 
 class WorldScreen extends ConsumerWidget {
@@ -160,19 +159,19 @@ class WorldScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: 12),
-          if (area == 'garden')
+          if (area == 'garden' && app.access.premium)
             FilledButton.tonalIcon(
               onPressed: () => route('/science'),
               icon: const Icon(Icons.search_rounded),
               label: const Text('Discover with Milo'),
             ),
-          if (area == 'care')
+          if (area == 'care' && app.access.premium)
             FilledButton.tonalIcon(
               onPressed: () => route('/cooking'),
               icon: const Icon(Icons.restaurant_rounded),
               label: const Text('Our pretend kitchen'),
             ),
-          if (area == 'bedroom')
+          if (area == 'bedroom' && app.access.premium)
             FilledButton.tonalIcon(
               onPressed: () => route('/roleplay'),
               icon: const Icon(Icons.theater_comedy_rounded),
@@ -236,20 +235,7 @@ class WorldScreen extends ConsumerWidget {
                                   child: Container(
                                     padding: const EdgeInsets.all(7),
                                     color: Brand.gold,
-                                    child: CustomPaint(
-                                      painter: StrokePainter(
-                                        strokes:
-                                            (picture.payload['strokes'] as List)
-                                                .map(
-                                                  (s) => DrawingStroke.fromJson(
-                                                    Map<String, dynamic>.from(
-                                                      s,
-                                                    ),
-                                                  ),
-                                                )
-                                                .toList(),
-                                      ),
-                                    ),
+                                    child: CreationPreview(memory: picture),
                                   ),
                                 ),
                               ),

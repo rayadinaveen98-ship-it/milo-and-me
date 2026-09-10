@@ -34,3 +34,11 @@ Optional `theme` is one of Dinosaurs/Space/Ocean/Animals/Nature. `access` labels
 Optional pack arrays `cooking` and `roleplay` share identity/title/topic/theme metadata and a bounded `steps` list. Each step defines `action`, `prompt`, `symbol`, `options`, optional `repeat` (1–6) and pretend `seconds` (1–5). Accepted actions: choose/pour/mix/spread/decorate/assemble/timing/serve/prop/choice. Progress stores index, repetition count, choices and step entry time in `activities`; completion creates one idempotent memory. No real heating, cutting, ingestion or medical procedures.
 
 Science: optional `science[]`, `safety` A/B/C, reviewed `template`, and bounded `rounds[{prompt,options,responses}]`. A renders digital cause/effect choices. B/C instructions and choices come from reviewed code templates, never downloaded prose; C requires temporary scoped parent permission. Progress is local `activities[science:id]`; completion is idempotent.
+
+## v0.7 delivery and media
+
+Pack JSON remains schema 1; optional `manifest` is `{schema:1,id,version,language:"en"}` and must agree with the pack. `media[]` entries contain `id`, `mime` (`image/png`, `audio/wav`, `audio/mpeg`), `bytes`, `sha256`, and base64 `data`. Limits: 8 MiB whole response, 64 assets, 2 MiB per asset, 5 MiB decoded media total, PNG dimensions at most 2048×2048. `pack:pack-id:asset-id` references supply authored audio and story `backgroundAsset`. Asset kinds and references validate before activation. Optional reward metadata lists supported outfit IDs; engines retain their established milestone rules.
+
+The parent-owned catalogue supplies immutable HTTPS URL, expected identity/version, tier and SHA-256. Downloads reject redirects, corruption, downgrades and conflicting IDs. One SQLite transaction activates definitions plus media. Active metadata excludes media bytes; previews/narration load those lazily and recheck hashes. Invalid downloaded metadata is quarantined, with bundled fallback. Parent removal retains child memories. Reset invalidates in-flight downloads.
+
+`access: "sample"` marks live free content; the remaining bundled library is premium in configured live builds. The default supervised playtest opens all included content. Only English packs currently activate.

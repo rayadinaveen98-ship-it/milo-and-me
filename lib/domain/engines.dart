@@ -1,6 +1,7 @@
 import 'models.dart';
 import 'scenario_engine.dart';
 import 'science_engine.dart';
+import 'pack_media.dart';
 
 class PetEngine {
   World care(World current, String action, {DateTime? now}) {
@@ -269,6 +270,7 @@ class ContentEngine {
         'This pack needs a newer app or has invalid metadata.',
       );
     }
+    PackMedia.validate(pack);
     final ids = <String>{};
     for (final type in [
       'drawings',
@@ -385,7 +387,7 @@ class ContentEngine {
             }
             if (scene['audio'] != null &&
                 (scene['audio'] is! String ||
-                    !(scene['audio'] as String).startsWith('audio/') ||
+                    !((scene['audio'] as String).startsWith('audio/') || (scene['audio'] as String).startsWith('pack:')) ||
                     (scene['audio'] as String).contains('..'))) {
               throw const FormatException('Invalid audio path');
             }

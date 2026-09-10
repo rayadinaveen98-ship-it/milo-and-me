@@ -1,29 +1,21 @@
-# Privacy and child safety rules
+# Privacy and child safety
 
-These are engineering/product rules, not a certification of legal compliance.
+No ads, behavioural analytics, public chat, child accounts, unrestricted AI conversation, pressure to purchase, streak-loss or absence guilt. Child play stays useful offline. No camera, microphone, location, contacts or advertising identifier permission. Android automatic backup is disabled.
 
-## Local by default
+| Data | Storage and purpose | Deletion |
+| --- | --- | --- |
+| Nickname, Milo state, activity progress, drawings, memories | Private on-device SQLite; local play only | Parent local reset or app removal |
+| PIN hash/salt and retry lockout | Platform secure storage; temporary parent gate | Replaced during setup; retained by local-profile reset |
+| Optional adult auth tokens and bounded entitlement cache | Platform secure storage | Sign-out/account deletion clears local credentials |
+| Optional adult email | Supabase Auth only when live services are configured and parent opts in | Parent cloud account deletion |
+| Consent, entitlement, catalogue | Owner-scoped server records; server-only sensitive writes | Account records cascade on deletion |
+| Purchase receipt token | Server-only AES-GCM ciphertext and unique hash | Cascades with parent account |
+| Downloaded content/media | Validated on-device pack tables | Parent pack removal or local reset |
 
-Keep nickname, pet profile/state, drawings, memories, progress, preferences and local history in app-private storage. No child login, email, phone or social account. No ads, behavioural advertising, analytics of every child tap, public chat or stranger interaction. Do not request location, contacts, camera or microphone for the current app. Android automatic backup is disabled. The permission manifest must reflect actual features.
+Default playtests enable no live account or billing. Test-store controls explicitly say simulation/no charge. Configured purchases occur only in parent controls and require server verification for both purchase and restore. Child routes never show purchase requests. Store subscriptions must be cancelled through Google Play separately from deleting the cloud account.
 
-## Parent authority
+The parent PIN is a gate, not a claim of verified legal identity. Live account consent records the confirmed adult email plus explicit guardian declaration and policy version. Production operators must configure and review applicable store/privacy requirements before launch. No child voice or creations are uploaded; cloud backup is not enabled.
 
-Use a parent gate for settings, purchases, permissions, downloads, cloud accounts and data deletion. The current six-digit PIN is salted/PBKDF2 hashed in platform secure storage, with persisted retry throttling and foreground-only authorization. It is not proof of adult identity or verified legal consent. Verify any legally required consent before enabling relevant collection or services.
+Science A is digital only; B uses optional seated observation; C uses adult-selected leaves or paper outlines. C requires a scoped 15-minute PIN permit revoked on background and screen exit. The adult stays throughout. No ingestion, heat, sharp tools, chemicals or electrical experiments. Real-world instructions come only from reviewed templates. No photos, location or proof is requested.
 
-No purchases or subscription prompts in child flows. Store entitlements must be validated server-side; a client cannot grant itself premium access. Never commit tokens, API secrets, parent data, signing keys, test-device exports or production database dumps.
-
-## Healthy emotional design
-
-No absence punishment, sickness caused by leaving, guilt, streak-loss pressure, artificial scarcity, loot boxes, paid energy or rankings. Offer calm breaks and offline play. Feedback should encourage another try. Screen-time controls support parents; do not market them as an OS-level security boundary.
-
-## Voice and content
-
-Prefer authored local audio. Voice input, if introduced, needs parent choice, supported on-device processing and tap alternatives. Do not save raw child recordings by default. No unrestricted cloud chatbot in V1. Validate downloaded content, branch targets, identities and checksums before activation; retain installed content on failure. Editorially review age suitability and factual/offline-activity safety.
-
-## Cloud boundary and deletion
-
-Optional cloud services are parent-owned: auth, consent, entitlement, catalogue/version and backup metadata. Never send child creations by default. Optional backup requires an explicit reviewed encryption/key-recovery design. Enable RLS and narrow grants for every exposed table; test cross-parent access denial. Local reset must delete the world, creations/drafts, progress and downloaded packs. Cloud deletion must be implemented before cloud accounts are offered.
-
-Before release, review Google Play Families, Apple Kids Category, applicable Indian privacy rules and COPPA-style obligations for actual distribution territories and data flows. Current source is a supervised playtest milestone, not a store-ready compliance claim.
-
-Science v0.6: A digital only; B optional seated observation; C adult-selected leaves or paper outlines. C requires a scoped 15-minute parent PIN permit, revoked on background and screen exit. Adult stays throughout. No camera, location, uploads, proof or ingestion. Downloaded content cannot introduce an unreviewed real-world template.
+Local reset clears world, drawings, drafts, session, packs and media, and invalidates pending downloads. Cloud deletion revokes sessions before deleting the parent account and dependent records. It preserves on-device creations. No sensitive request bodies or tokens are echoed in server errors or logs.

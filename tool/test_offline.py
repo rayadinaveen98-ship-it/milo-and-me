@@ -41,7 +41,7 @@ class SqlTests(unittest.TestCase):
  def test_draft_table_present(self):
   self.db.execute('INSERT INTO drawing_drafts VALUES(?,?)',('flower','{"strokes":[]}'))
   self.assertEqual(self.db.execute('SELECT COUNT(*) FROM drawing_drafts').fetchone()[0],1)
- def test_all_local_tables_created(self):self.assertEqual({r[0] for r in self.db.execute("SELECT name FROM sqlite_master WHERE type='table'")},{'world','packs','drawing_drafts','session'})
+ def test_all_local_tables_created(self):self.assertEqual({r[0] for r in self.db.execute("SELECT name FROM sqlite_master WHERE type='table'")},{'world','packs','drawing_drafts','session','creations','pack_media'})
 class DeliveryTests(unittest.TestCase):
  def test_no_sensitive_permissions(self):
   text=(ROOT/'android/app/src/main/AndroidManifest.xml').read_text()

@@ -27,7 +27,7 @@ class WorldEngine {
 
   Memory? displayedPicture(World w) {
     final drawings = w.memories.where(
-      (m) => m.kind == 'drawing' && m.payload['strokes'] is List,
+      (m) => m.kind == 'drawing' && (m.payload['strokes'] is List || m.payload['creationId'] is String),
     );
     if (drawings.isEmpty) return null;
     final selected = w.companion.displaySlots['picture'];
@@ -40,7 +40,7 @@ class WorldEngine {
   World rotatePicture(World current) {
     final w = current.copy();
     final drawings = w.memories
-        .where((m) => m.kind == 'drawing' && m.payload['strokes'] is List)
+        .where((m) => m.kind == 'drawing' && (m.payload['strokes'] is List || m.payload['creationId'] is String))
         .toList();
     if (drawings.isEmpty) return w;
     final index = drawings.indexWhere(

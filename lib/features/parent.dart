@@ -6,6 +6,7 @@ import '../core/brand.dart';
 import '../core/version.dart';
 import '../core/controller.dart';
 import '../ui/common.dart';
+import 'parent_cloud.dart';
 
 class ParentScreen extends ConsumerStatefulWidget {
   const ParentScreen({super.key});
@@ -126,7 +127,7 @@ class _ParentScreenState extends ConsumerState<ParentScreen> {
                         Paper(
                           color: Brand.mint,
                           child: Text(
-                            '${w.memories.where((m) => m.kind == 'drawing').length} pictures made\n${w.completedPuzzles.length} puzzles explored\n${w.completedStories.length} stories shared\n\nProgress belongs to your child. There are no rankings.',
+                            '${w.memories.where((m) => m.kind == 'drawing').length} pictures made\n${w.completedPuzzles.length} puzzles explored\n${w.completedStories.length} stories shared\n${w.memories.where((m) => m.kind == 'science').length} discoveries\n${w.companion.favourites.keys.join(', ')} explored\n\nProgress belongs to your child. There are no rankings.',
                           ),
                         ),
                         const SizedBox(height: 22),
@@ -167,6 +168,9 @@ class _ParentScreenState extends ConsumerState<ParentScreen> {
                             return n;
                           }),
                         ),
+                        SwitchListTile(title: const Text('Story and drawing narration'), subtitle: const Text('Plays authored recordings where available. No microphone or cloud voice service.'), value: w.voice, onChanged: (v) async { if (!app.parentUnlocked) return; await app.change((n) { n.voice = v; return n; }); await app.configureAudio(); }),
+                        const ListTile(
+                          leading: Icon(Icons.language_rounded), title: Text('Language: English'), subtitle: Text('Current bundled content and controls use English. Downloaded packs declare their language.')),
                         const ListTile(
                           leading: Icon(Icons.record_voice_over_outlined),
                           title: Text('Read-together stories'),
@@ -264,7 +268,7 @@ class _ParentScreenState extends ConsumerState<ParentScreen> {
                         ),
                         const Paper(
                           child: Text(
-                            'Your child’s nickname, pet, artwork, progress and memories are stored in this app’s private space on this device. No child account, ads, tracking or cloud upload is enabled. No microphone, camera, contacts or location permission is requested. Android automatic backup is disabled.\n\nLocal-storage agreement was recorded during setup. Deleting the app may permanently remove creations. This is not a cloud backup service.',
+                            'Your child’s nickname, pet, artwork, progress and memories are stored in this app’s private space on this device. No child account, ads, tracking or child-data cloud upload is enabled. No microphone, camera, contacts or location permission is requested. Android automatic backup is disabled.\n\nLocal-storage agreement was recorded during setup. Deleting the app may permanently remove creations. This is not a cloud backup service.',
                           ),
                         ),
                         const SizedBox(height: 24),
@@ -280,8 +284,10 @@ class _ParentScreenState extends ConsumerState<ParentScreen> {
                           ),
                         ),
                         const Text(
-                          'More downloadable packs, parent accounts and purchases are not enabled in this edition. All included activities are free. No subscription is active.',
+                          'Included content is stored on this device. Manage optional parent services below.',
                         ),
+                        const Divider(height: 36),
+                        const ParentCloudPanel(),
                         const Divider(height: 36),
                         Text(
                           'Manage this device',
@@ -330,6 +336,7 @@ class _ParentScreenState extends ConsumerState<ParentScreen> {
                             'Delete local profile and creations',
                           ),
                         ),
+                        const ListTile(leading: Icon(Icons.help_outline_rounded), title: Text('Help & accessibility'), subtitle: Text('Tap Milo for a reaction. Activities save on this device; use the memory book to revisit creations. Use Android text size and screen reader settings, plus reduced motion above. A parent PIN is required for adult controls. For support, use the repository issue tracker and omit child names, pictures and personal information.')),
                         const SizedBox(height: 18),
                         const Text(
                           'Milo & Me · $appVersion\nSupervised playtest edition. English content.\nNo medical, developmental or learning outcome claims.',

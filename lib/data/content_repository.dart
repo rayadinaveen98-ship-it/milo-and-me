@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'dart:typed_data';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:crypto/crypto.dart';
 import '../domain/models.dart';
 import '../domain/engines.dart';
+import '../domain/pack_media.dart';
 import 'database.dart';
 
 class ContentRepository {
@@ -13,17 +16,36 @@ class ContentRepository {
     : clientFactory = clientFactory ?? http.Client.new;
   late Json seed;
   List<Json> installed = [];
+  int _epoch = 0;
+  void invalidateDownloads() { _epoch++; installed.clear(); }
   Future<void> load() async {
     seed = jsonDecode(
       await rootBundle.loadString('assets/content/meadow.json'),
     );
     ContentEngine.validate(seed);
-    installed = await db.packs();
-    for (final p in installed) {
-      ContentEngine.validate(p);
+    installed = [];
+    for (final p in await db.packs()) {
+      try { ContentEngine.validate(p); installed.add(p); }
+      catch (_) { /* Retain bundled fallback for quarantined content. */ }
     }
   }
 
+  Future<Uint8List?> mediaBytes(String reference) async {
+    final parts = reference.split(':');
+    if (parts.length != 3 || parts.first != 'pack') return null;
+    final raw = await db.readMedia(parts[1], parts[2]);
+    if (raw == null) return null;
+    final bytes = base64Decode(raw['data']);
+    if (bytes.length != raw['bytes'] || sha256.convert(bytes).toString() != raw['sha256']) throw const FormatException('Media integrity failed');
+    return bytes;
+  }
+  Future<Source> audioSource(String reference) async {
+    if (!reference.startsWith('pack:')) return AssetSource(reference);
+    final bytes = await mediaBytes(reference);
+    if (bytes == null) throw StateError('Narration unavailable');
+    return BytesSource(bytes);
+  }
+  Future<void> uninstall(String id) async { await db.removePack(id); installed.removeWhere((p) => p['id'] == id); }
   List<Json> list(String type) => [seed, ...installed]
       .expand(
         (p) =>
@@ -46,6 +68,7 @@ class ContentRepository {
     required int expectedVersion,
     required void Function(int received, int? total) progress,
   }) async {
+    final epoch = _epoch;
     if (url.scheme != 'https' ||
         !RegExp(r'^[a-f0-9]{64}$').hasMatch(expectedHash)) {
       throw const FormatException('Invalid pack source');
@@ -76,6 +99,7 @@ class ContentRepository {
       }
       final pack = Map<String, dynamic>.from(jsonDecode(utf8.decode(bytes)));
       ContentEngine.validate(pack);
+      PackMedia.validate(pack, requireData: true);
       if (pack['id'] != expectedId || pack['version'] != expectedVersion) {
         throw const FormatException('Pack identity mismatch');
       }
@@ -104,8 +128,10 @@ class ContentRepository {
           throw const FormatException('Conflicting content identity');
         }
       }
+      if (epoch != _epoch) throw StateError('Download cancelled by data reset');
       await db.storePack(pack);
-      installed = await db.packs();
+      final active = await db.packs();
+      if (epoch == _epoch) installed = active;
     } finally {
       client.close();
     }

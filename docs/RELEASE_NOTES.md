@@ -20,4 +20,10 @@ Reusable stateful scenario engine with persisted steps/choices, repeat actions, 
 
 ## 0.6.0 — Little discoveries
 
-Seven reusable digital science themes; two optional seated observation activities and one parent-assisted leaf/paper-outline flow. Reviewed offline instructions, scoped PIN permission revoked on background/exit, no sensitive permissions or proof collection. Local progress, memories and explorer keepsake; gentle optional paper/block suggestions. CI pending.
+Seven reusable digital science themes; two optional seated observation activities and one parent-assisted leaf/paper-outline flow. Reviewed offline instructions, scoped PIN permission revoked on background/exit, no sensitive permissions or proof collection. Local progress, memories and explorer keepsake; gentle optional paper/block suggestions. Verified: CI 34078295263, 52 Flutter tests, tag/APK v0.6.0.
+
+## 0.7.0 — Parent services and dependable local play
+
+Protected parent account/library/store controls, explicit account consent, OTP token storage, configurable Google Play products and server-verified purchase/restore. Owner-isolated Supabase schema and server API, encrypted receipt tokens, PostgreSQL and portable server tests. Atomic versioned media packs, corruption fallback, lazy media/gallery, real schema-1 artwork migration and reliable local reset. Full offline playtest remains the default; live free/premium policy also protects direct routes. CI pending.
+
+External activation requirements: Supabase/SMTP and deployed credentials, published catalogue/storage, Play Console products/service account/testers, and stable signing. See BACKEND_ACTIVATION.md. No live store or device acceptance is claimed by CI.

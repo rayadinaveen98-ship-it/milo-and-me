@@ -35,7 +35,8 @@ class AudioDirector implements AudioService {
   final _effects = AudioPlayer();
   final _voice = AudioPlayer();
   bool music = false, effects = true, voice = true;
-  AudioDirector() {
+  final Future<Source> Function(String)? sourceResolver;
+  AudioDirector({this.sourceResolver}) {
     _voice.onPlayerComplete.listen((_) {
       if (music) _music.setVolume(.18);
     });
@@ -72,7 +73,7 @@ class AudioDirector implements AudioService {
     if (!voice) return;
     await _music.setVolume(.04);
     try {
-      await _voice.play(AssetSource(asset));
+      await _voice.play(await (sourceResolver?.call(asset) ?? Future.value(AssetSource(asset))));
     } catch (_) {
       if (music) await _music.setVolume(.18);
     }

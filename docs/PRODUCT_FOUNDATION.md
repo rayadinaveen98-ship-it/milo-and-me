@@ -20,7 +20,7 @@ The child's home is a room: easel for art, book for stories, puzzle box for play
 - Wardrobe and cosmetic rewards, memory scrapbook, local profile, content packs, accessibility, sound settings and parent session controls.
 - Parent-owned accounts, verified consent where required, entitlements, versioned downloads and optional backup architecture. Paid features remain behind the parent gate.
 
-Cooking, science, deep roleplay, new worlds and free-form AI conversation are not deep V1 implementations. Preserve extension boundaries without adding runtime LLM dependency.
+The subsequently approved `EXECUTION_V02_V07.md` extends this V1 baseline through six world areas, virtual cooking, structured roleplay, safe science, parent services and premium architecture. These extensions preserve the north star; unrestricted AI conversation and child cloud accounts remain excluded.
 
 ## Trust rules
 
