@@ -30,9 +30,9 @@ class _ParentScreenState extends ConsumerState<ParentScreen> {
       error = null;
     });
     try {
-      final ok = await ref.read(controllerProvider).security.verify(pin.text);
+      final ok = await ref.read(controllerProvider).verifyParentPin(pin.text);
+      if (!mounted) return;
       if (ok) {
-        ref.read(controllerProvider).unlockParent();
         pin.clear();
       } else {
         setState(() => error = 'That PIN didn’t match. Please try again.');

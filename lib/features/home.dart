@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../core/brand.dart';
 import '../core/controller.dart';
 import '../domain/world_engine.dart';
+import '../domain/models.dart';
 import '../ui/common.dart';
 import '../ui/pet.dart';
 import '../ui/creation_preview.dart';

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -148,7 +147,11 @@ class ContentRepository {
       if (epoch != _epoch) throw StateError('Download cancelled by data reset');
       await db.storePack(pack);
       final active = await db.packs();
-      if (epoch == _epoch) installed = active;
+      if (epoch == _epoch) {
+        installed = active.where((p) {
+          try { ContentEngine.validate(p); return true; } catch (_) { return false; }
+        }).toList();
+      }
     } finally {
       client.close();
     }

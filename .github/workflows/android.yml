@@ -2,6 +2,7 @@ name: Android playtest APK
 on:
   push:
     branches: [main]
+    paths-ignore: ['docs/**', 'README.md']
   pull_request:
   workflow_dispatch:
 permissions:
@@ -39,6 +40,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: 'v2.9.6'
+      - name: Check Edge Function entry point
+        run: deno check supabase/functions/parent-api/index.ts
       - uses: supabase/setup-cli@v1
         with:
           version: '2.116.0'

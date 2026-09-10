@@ -35,7 +35,7 @@ export async function googleAccessToken(account, fetcher = fetch) {
   if (typeof d.access_token !== 'string') throw new Error('Invalid store authentication');
   return d.access_token;
 }
-export function createParentHandler({env, fetcher = fetch, googleLookup}) {
+export function createParentHandler({env, fetcher = fetch, googleLookup = undefined}) {
   const base = env.SUPABASE_URL;
   const service = env.SUPABASE_SERVICE_ROLE_KEY;
   const headers = {'apikey': service, 'Authorization': `Bearer ${service}`, 'Content-Type':'application/json'};

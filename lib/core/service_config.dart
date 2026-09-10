@@ -9,5 +9,5 @@ class ServiceConfig {
   static const annual = String.fromEnvironment('MILO_ANNUAL_PRODUCT');
   static bool get live => mode == 'live';
   static bool get configured => url.startsWith('https://') && key.isNotEmpty;
-  static Set<String> get products => {monthly, annual}..remove('');
+  static Set<String> get products => [monthly, annual].where((id) => id.isNotEmpty).toSet();
 }

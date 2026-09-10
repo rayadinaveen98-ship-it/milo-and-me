@@ -28,6 +28,7 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
   World world;
   String? error;
   bool parentUnlocked = false;
+  int _parentGeneration = 0;
   bool foreground = true;
   bool _disposed = false;
   int elapsedSeconds = 0;
@@ -78,6 +79,7 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
     foreground = state == AppLifecycleState.resumed;
     if (!foreground) {
       parentUnlocked = false;
+      _parentGeneration++;
       adultActivity.revoke();
       persistSession();
       audio.pause();
@@ -215,12 +217,20 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
     notifyListeners();
   }
 
+  Future<bool> verifyParentPin(String pin) async {
+    final generation = _parentGeneration;
+    final ok = await security.verify(pin);
+    if (!ok || !foreground || _disposed || generation != _parentGeneration) return false;
+    unlockParent();
+    return true;
+  }
   void unlockParent() {
     parentUnlocked = true;
     notifyListeners();
   }
 
   void lockParent() {
+    _parentGeneration++;
     parentUnlocked = false;
     notifyListeners();
   }

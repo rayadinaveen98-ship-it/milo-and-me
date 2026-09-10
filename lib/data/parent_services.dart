@@ -242,8 +242,10 @@ class ParentServices extends ChangeNotifier {
   Future<void> signOut() async {
     guard();
     try {
-      if (auth != null) await auth!.signOut();
+      if (live && ServiceConfig.configured) await _auth().signOut();
     } finally {
+      await secure.delete(key: 'parent.session');
+      auth = null;
       await _deliver(null);
       catalogue = [];
       report('Signed out on this device.');
