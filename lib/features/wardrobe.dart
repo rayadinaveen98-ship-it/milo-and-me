@@ -43,12 +43,23 @@ class WardrobeScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 18),
-          if (app.access.premium) FilledButton.tonalIcon(
-            onPressed: () => context.go('/roleplay'),
-            icon: const Icon(Icons.theater_comedy_rounded),
-            label: const Text('Imagine an adventure'),
-          ),
-          for (final e in items.entries.where((e) => app.access.premium || ['none','scarf','beret','explorer','astronaut'].contains(e.key)))
+          if (app.access.premium)
+            FilledButton.tonalIcon(
+              onPressed: () => context.go('/roleplay'),
+              icon: const Icon(Icons.theater_comedy_rounded),
+              label: const Text('Imagine an adventure'),
+            ),
+          for (final e in items.entries.where(
+            (e) =>
+                app.access.premium ||
+                [
+                  'none',
+                  'scarf',
+                  'beret',
+                  'explorer',
+                  'astronaut',
+                ].contains(e.key),
+          ))
             Padding(
               padding: const EdgeInsets.only(bottom: 12),
               child: ListTile(

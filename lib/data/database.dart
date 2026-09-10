@@ -51,17 +51,38 @@ class AppDatabase extends GeneratedDatabase {
     },
   );
   Future<void> _createLargePayloadTables() async {
-    await customStatement('CREATE TABLE creations (id TEXT PRIMARY KEY, payload TEXT NOT NULL)');
-    await customStatement('CREATE TABLE pack_media (pack_id TEXT NOT NULL, id TEXT NOT NULL, payload TEXT NOT NULL, PRIMARY KEY(pack_id,id))');
+    await customStatement(
+      'CREATE TABLE creations (id TEXT PRIMARY KEY, payload TEXT NOT NULL)',
+    );
+    await customStatement(
+      'CREATE TABLE pack_media (pack_id TEXT NOT NULL, id TEXT NOT NULL, payload TEXT NOT NULL, PRIMARY KEY(pack_id,id))',
+    );
   }
+
   Future<Json?> readCreation(String id) async {
-    final rows = await customSelect('SELECT payload FROM creations WHERE id=?', variables: [Variable<String>(id)]).get();
-    return rows.isEmpty ? null : Map<String,dynamic>.from(jsonDecode(rows.single.read<String>('payload')));
+    final rows = await customSelect(
+      'SELECT payload FROM creations WHERE id=?',
+      variables: [Variable<String>(id)],
+    ).get();
+    return rows.isEmpty
+        ? null
+        : Map<String, dynamic>.from(
+            jsonDecode(rows.single.read<String>('payload')),
+          );
   }
+
   Future<Json?> readMedia(String packId, String id) async {
-    final rows = await customSelect('SELECT payload FROM pack_media WHERE pack_id=? AND id=?', variables: [Variable<String>(packId), Variable<String>(id)]).get();
-    return rows.isEmpty ? null : Map<String,dynamic>.from(jsonDecode(rows.single.read<String>('payload')));
+    final rows = await customSelect(
+      'SELECT payload FROM pack_media WHERE pack_id=? AND id=?',
+      variables: [Variable<String>(packId), Variable<String>(id)],
+    ).get();
+    return rows.isEmpty
+        ? null
+        : Map<String, dynamic>.from(
+            jsonDecode(rows.single.read<String>('payload')),
+          );
   }
+
   Future<void> removePack(String id) => transaction(() async {
     await customStatement('DELETE FROM packs WHERE id=?', [id]);
     await customStatement('DELETE FROM pack_media WHERE pack_id=?', [id]);
@@ -86,9 +107,15 @@ class AppDatabase extends GeneratedDatabase {
     final json = world.toJson();
     for (final m in json['memories']) {
       if (m['kind'] == 'drawing' && m['payload']['strokes'] is List) {
-        final payload = Map<String,dynamic>.from(m['payload']);
-        await customStatement('INSERT INTO creations(id,payload) VALUES(?,?) ON CONFLICT(id) DO UPDATE SET payload=excluded.payload', [m['id'], jsonEncode(payload)]);
-        m['payload'] = {'creationId': m['id'], if (payload['theme'] != null) 'theme': payload['theme']};
+        final payload = Map<String, dynamic>.from(m['payload']);
+        await customStatement(
+          'INSERT INTO creations(id,payload) VALUES(?,?) ON CONFLICT(id) DO UPDATE SET payload=excluded.payload',
+          [m['id'], jsonEncode(payload)],
+        );
+        m['payload'] = {
+          'creationId': m['id'],
+          if (payload['theme'] != null) 'theme': payload['theme'],
+        };
       }
     }
     await customStatement(
@@ -137,12 +164,17 @@ class AppDatabase extends GeneratedDatabase {
     );
   });
   Future<void> storePack(Json pack) => transaction(() async {
-    final stored = Map<String,dynamic>.from(pack);
-    await customStatement('DELETE FROM pack_media WHERE pack_id=?', [pack['id']]);
+    final stored = Map<String, dynamic>.from(pack);
+    await customStatement('DELETE FROM pack_media WHERE pack_id=?', [
+      pack['id'],
+    ]);
     stored['media'] = <Json>[];
     for (final raw in (pack['media'] as List? ?? [])) {
-      final media = Map<String,dynamic>.from(raw);
-      await customStatement('INSERT INTO pack_media(pack_id,id,payload) VALUES(?,?,?)', [pack['id'], media['id'], jsonEncode(media)]);
+      final media = Map<String, dynamic>.from(raw);
+      await customStatement(
+        'INSERT INTO pack_media(pack_id,id,payload) VALUES(?,?,?)',
+        [pack['id'], media['id'], jsonEncode(media)],
+      );
       media.remove('data');
       (stored['media'] as List).add(media);
     }
@@ -154,8 +186,13 @@ class AppDatabase extends GeneratedDatabase {
   Future<List<Json>> packs() async {
     final result = <Json>[];
     for (final r in await customSelect('SELECT payload FROM packs').get()) {
-      try { result.add(Map<String,dynamic>.from(jsonDecode(r.read<String>('payload')))); }
-      catch (_) { /* Quarantine malformed downloaded rows; bundled play survives. */ }
+      try {
+        result.add(
+          Map<String, dynamic>.from(jsonDecode(r.read<String>('payload'))),
+        );
+      } catch (_) {
+        /* Quarantine malformed downloaded rows; bundled play survives. */
+      }
     }
     return result;
   }

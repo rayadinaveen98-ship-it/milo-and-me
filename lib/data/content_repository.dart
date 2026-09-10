@@ -17,7 +17,11 @@ class ContentRepository {
   late Json seed;
   List<Json> installed = [];
   int _epoch = 0;
-  void invalidateDownloads() { _epoch++; installed.clear(); }
+  void invalidateDownloads() {
+    _epoch++;
+    installed.clear();
+  }
+
   Future<void> load() async {
     seed = jsonDecode(
       await rootBundle.loadString('assets/content/meadow.json'),
@@ -25,8 +29,12 @@ class ContentRepository {
     ContentEngine.validate(seed);
     installed = [];
     for (final p in await db.packs()) {
-      try { ContentEngine.validate(p); installed.add(p); }
-      catch (_) { /* Retain bundled fallback for quarantined content. */ }
+      try {
+        ContentEngine.validate(p);
+        installed.add(p);
+      } catch (_) {
+        /* Retain bundled fallback for quarantined content. */
+      }
     }
   }
 
@@ -36,16 +44,25 @@ class ContentRepository {
     final raw = await db.readMedia(parts[1], parts[2]);
     if (raw == null) return null;
     final bytes = base64Decode(raw['data']);
-    if (bytes.length != raw['bytes'] || sha256.convert(bytes).toString() != raw['sha256']) throw const FormatException('Media integrity failed');
+    if (bytes.length != raw['bytes'] ||
+        sha256.convert(bytes).toString() != raw['sha256']) {
+      throw const FormatException('Media integrity failed');
+    }
     return bytes;
   }
+
   Future<Source> audioSource(String reference) async {
     if (!reference.startsWith('pack:')) return AssetSource(reference);
     final bytes = await mediaBytes(reference);
     if (bytes == null) throw StateError('Narration unavailable');
     return BytesSource(bytes);
   }
-  Future<void> uninstall(String id) async { await db.removePack(id); installed.removeWhere((p) => p['id'] == id); }
+
+  Future<void> uninstall(String id) async {
+    await db.removePack(id);
+    installed.removeWhere((p) => p['id'] == id);
+  }
+
   List<Json> list(String type) => [seed, ...installed]
       .expand(
         (p) =>

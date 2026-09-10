@@ -168,9 +168,28 @@ class _ParentScreenState extends ConsumerState<ParentScreen> {
                             return n;
                           }),
                         ),
-                        SwitchListTile(title: const Text('Story and drawing narration'), subtitle: const Text('Plays authored recordings where available. No microphone or cloud voice service.'), value: w.voice, onChanged: (v) async { if (!app.parentUnlocked) return; await app.change((n) { n.voice = v; return n; }); await app.configureAudio(); }),
+                        SwitchListTile(
+                          title: const Text('Story and drawing narration'),
+                          subtitle: const Text(
+                            'Plays authored recordings where available. No microphone or cloud voice service.',
+                          ),
+                          value: w.voice,
+                          onChanged: (v) async {
+                            if (!app.parentUnlocked) return;
+                            await app.change((n) {
+                              n.voice = v;
+                              return n;
+                            });
+                            await app.configureAudio();
+                          },
+                        ),
                         const ListTile(
-                          leading: Icon(Icons.language_rounded), title: Text('Language: English'), subtitle: Text('Current bundled content and controls use English. Downloaded packs declare their language.')),
+                          leading: Icon(Icons.language_rounded),
+                          title: Text('Language: English'),
+                          subtitle: Text(
+                            'Current bundled content and controls use English. Downloaded packs declare their language.',
+                          ),
+                        ),
                         const ListTile(
                           leading: Icon(Icons.record_voice_over_outlined),
                           title: Text('Read-together stories'),
@@ -336,7 +355,13 @@ class _ParentScreenState extends ConsumerState<ParentScreen> {
                             'Delete local profile and creations',
                           ),
                         ),
-                        const ListTile(leading: Icon(Icons.help_outline_rounded), title: Text('Help & accessibility'), subtitle: Text('Tap Milo for a reaction. Activities save on this device; use the memory book to revisit creations. Use Android text size and screen reader settings, plus reduced motion above. A parent PIN is required for adult controls. For support, use the repository issue tracker and omit child names, pictures and personal information.')),
+                        const ListTile(
+                          leading: Icon(Icons.help_outline_rounded),
+                          title: Text('Help & accessibility'),
+                          subtitle: Text(
+                            'Tap Milo for a reaction. Activities save on this device; use the memory book to revisit creations. Use Android text size and screen reader settings, plus reduced motion above. A parent PIN is required for adult controls. For support, use the repository issue tracker and omit child names, pictures and personal information.',
+                          ),
+                        ),
                         const SizedBox(height: 18),
                         const Text(
                           'Milo & Me · $appVersion\nSupervised playtest edition. English content.\nNo medical, developmental or learning outcome claims.',

@@ -39,8 +39,12 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
     this.world, {
     int sessionSeconds = 0,
     AudioService? audioOverride,
-  }) : audio = audioOverride ?? AudioDirector(sourceResolver: content.audioSource) {
-    parentServices = ParentServices(authorized: () => parentUnlocked, access: access);
+  }) : audio =
+           audioOverride ?? AudioDirector(sourceResolver: content.audioSource) {
+    parentServices = ParentServices(
+      authorized: () => parentUnlocked,
+      access: access,
+    );
     parentServices.addListener(notifyListeners);
     unawaited(parentServices.cachedAccess().then((_) => notifyListeners()));
     elapsedSeconds = sessionSeconds;

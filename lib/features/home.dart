@@ -115,7 +115,9 @@ class HomeScreen extends ConsumerWidget {
                                       color: Brand.gold,
                                       borderRadius: BorderRadius.circular(9),
                                     ),
-                                    child: CreationPreview(memory: drawings.last),
+                                    child: CreationPreview(
+                                      memory: drawings.last,
+                                    ),
                                   ),
                                 ),
                               ),

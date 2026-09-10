@@ -18,7 +18,10 @@ class _CatalogueState extends ConsumerState<CatalogueScreen> {
   @override
   Widget build(BuildContext context) {
     final app = ref.watch(controllerProvider), kind = widget.kind;
-    final all = app.content.list(kind).where((d) => app.access.allows(kind, d)).toList();
+    final all = app.content
+        .list(kind)
+        .where((d) => app.access.allows(kind, d))
+        .toList();
     final items = all
         .where((item) => theme == 'All' || item['theme'] == theme)
         .toList();

@@ -73,7 +73,9 @@ class AudioDirector implements AudioService {
     if (!voice) return;
     await _music.setVolume(.04);
     try {
-      await _voice.play(await (sourceResolver?.call(asset) ?? Future.value(AssetSource(asset))));
+      await _voice.play(
+        await (sourceResolver?.call(asset) ?? Future.value(AssetSource(asset))),
+      );
     } catch (_) {
       if (music) await _music.setVolume(.18);
     }

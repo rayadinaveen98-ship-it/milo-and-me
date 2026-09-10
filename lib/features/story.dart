@@ -46,7 +46,8 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
       child: ListView(
         padding: const EdgeInsets.all(24),
         children: [
-          if (scene['backgroundAsset'] is String) PackBackground(reference: scene['backgroundAsset']),
+          if (scene['backgroundAsset'] is String)
+            PackBackground(reference: scene['backgroundAsset']),
           Container(
             height: 260,
             decoration: BoxDecoration(
