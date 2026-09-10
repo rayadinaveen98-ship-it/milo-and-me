@@ -31,6 +31,7 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
   int _parentGeneration = 0;
   bool foreground = true;
   bool _disposed = false;
+  bool _resetting = false;
   int elapsedSeconds = 0;
   Timer? _timer;
   Future<void> _writes = Future.value();
@@ -91,6 +92,7 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
 
   // Serialize read-modify-write and publish only after the SQLite commit succeeds.
   Future<bool> change(World Function(World) operation, {String? removeDraft}) {
+    if (_resetting) return Future.value(false);
     final done = Completer<bool>();
     _writes = _writes.then((_) async {
       try {
@@ -239,6 +241,7 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
   }
 
   Future<void> persistSession() async {
+    if (_resetting) return;
     try {
       await db.saveSession(elapsedSeconds);
     } catch (_) {
@@ -255,7 +258,8 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
   }
 
   Future<bool> reset() async {
-    if (!parentUnlocked) return false;
+    if (!parentUnlocked || _resetting) return false;
+    _resetting = true;
     await _writes;
     try {
       content.invalidateDownloads();
@@ -271,6 +275,8 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
       error = 'Your data could not be deleted. Please try again.';
       notifyListeners();
       return false;
+    } finally {
+      _resetting = false;
     }
   }
 
