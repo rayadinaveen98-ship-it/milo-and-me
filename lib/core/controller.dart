@@ -220,10 +220,13 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
   Future<bool> verifyParentPin(String pin) async {
     final generation = _parentGeneration;
     final ok = await security.verify(pin);
-    if (!ok || !foreground || _disposed || generation != _parentGeneration) return false;
+    if (!ok || !foreground || _disposed || generation != _parentGeneration) {
+      return false;
+    }
     unlockParent();
     return true;
   }
+
   void unlockParent() {
     parentUnlocked = true;
     notifyListeners();

@@ -149,7 +149,12 @@ class ContentRepository {
       final active = await db.packs();
       if (epoch == _epoch) {
         installed = active.where((p) {
-          try { ContentEngine.validate(p); return true; } catch (_) { return false; }
+          try {
+            ContentEngine.validate(p);
+            return true;
+          } catch (_) {
+            return false;
+          }
         }).toList();
       }
     } finally {
