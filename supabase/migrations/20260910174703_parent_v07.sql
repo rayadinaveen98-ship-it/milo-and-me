@@ -74,6 +74,8 @@ create index purchase_parent_idx on public.purchase_tokens(parent_id);
 alter table public.purchase_tokens enable row level security;
 revoke all on public.purchase_tokens from anon, authenticated;
 grant all on public.purchase_tokens to service_role;
+grant usage on schema auth to service_role;
+grant select(id,user_id) on auth.sessions to service_role;
 -- Security invoker: caller must already have service privileges. No client RPC.
 create function public.parent_session_valid(p_parent uuid, p_session uuid)
 returns boolean language sql stable security invoker set search_path = '' as $$

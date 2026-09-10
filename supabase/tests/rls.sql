@@ -1,5 +1,6 @@
 \set ON_ERROR_STOP on
 insert into auth.users values ('00000000-0000-0000-0000-000000000001'),('00000000-0000-0000-0000-000000000002');
+insert into auth.sessions values ('00000000-0000-0000-0000-000000000003','00000000-0000-0000-0000-000000000001');
 insert into public.parent_accounts(id) select id from auth.users;
 insert into public.consent_records(parent_id,policy_version,verification_method) select id,'2026-09-v1','fixture' from auth.users;
 insert into public.entitlements(parent_id,product_id,status,expires_at,store) select id,'monthly','active',now()+interval '1 day','google' from auth.users;
@@ -19,6 +20,10 @@ select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-000000000002'
 do $$begin if (select id from public.parent_accounts)<>'00000000-0000-0000-0000-000000000002'::uuid then raise exception 'Other parent visible'; end if; end$$;
 reset role;
 set role service_role;
+do $$begin
+ if not public.parent_session_valid('00000000-0000-0000-0000-000000000001','00000000-0000-0000-0000-000000000003') then raise exception 'Valid session rejected'; end if;
+ if public.parent_session_valid('00000000-0000-0000-0000-000000000002','00000000-0000-0000-0000-000000000003') then raise exception 'Session owner mismatch accepted'; end if;
+end$$;
 select public.retain_verified_purchase('00000000-0000-0000-0000-000000000001',repeat('c',64),'encrypted-fixture','monthly','active',now()+interval '1 day');
 do $$begin
  begin
