@@ -10886,36 +10886,42 @@
           ]
         },
         "tree": {
+          "audio": "audio/moonlight-tree.mp3",
           "text": "A firefly is tangled in a curled leaf. Tap the leaf to help it unfold.",
           "background": "moonlight", "emotion": "gently worried", "symbol": "❧",
           "interaction": {"label": "Unfold the leaf", "symbol": "❧", "message": "The firefly is free!", "x": 0.22, "y": 0.38},
           "choices": [{"label": "Follow our firefly friend", "next": "firefly", "picture": "garden"}]
         },
         "pond": {
+          "audio": "audio/moonlight-pond.mp3",
           "text": "The pond holds a tiny silver shimmer. Touch the water gently to find its source.",
           "background": "moonlight", "emotion": "thinking", "symbol": "≈",
           "interaction": {"label": "Touch the shimmer", "symbol": "≈", "message": "Ripples point toward the clouds!", "x": 0.76, "y": 0.49},
           "choices": [{"label": "Look up at the clouds", "next": "cloud", "picture": "moonlight"}]
         },
         "firefly": {
+          "audio": "audio/moonlight-firefly.mp3",
           "text": "Our new friend lights a path to the hill. The moon is hiding behind a cloud!",
           "background": "moonlight", "emotion": "exploring", "symbol": "✦",
           "interaction": {"label": "Find the hidden moon", "symbol": "☾", "message": "There you are!", "x": 0.55, "y": 0.16},
           "choices": [{"label": "Wave hello together", "next": "tree-ending", "picture": "moonlight"}]
         },
         "cloud": {
+          "audio": "audio/moonlight-cloud.mp3",
           "text": "A soft cloud floats across the moon. Trace a breeze with your finger, or tap the cloud.",
           "background": "moonlight", "emotion": "concentrating", "symbol": "☁",
           "interaction": {"label": "Make a gentle breeze", "symbol": "☁", "message": "The clouds drift apart!", "x": 0.52, "y": 0.18},
           "choices": [{"label": "Watch the silver path return", "next": "pond-ending", "picture": "moonlight"}]
         },
         "tree-ending": {
+          "audio": "audio/moonlight-tree-ending.mp3",
           "text": "Moonlight fills the garden. We found the moon—and made a firefly friend. Let’s keep a glowing memory.",
           "background": "moonlight", "emotion": "celebrating", "symbol": "★",
           "interaction": {"label": "Catch a pretend sparkle", "symbol": "✦", "message": "Our firefly lantern keepsake", "x": 0.3, "y": 0.52},
           "choices": []
         },
         "pond-ending": {
+          "audio": "audio/moonlight-pond-ending.mp3",
           "text": "A silver path sparkles across the pond. We looked carefully and found our answer together.",
           "background": "moonlight", "emotion": "proud", "symbol": "★",
           "interaction": {"label": "Keep a pretend moonbeam", "symbol": "✦", "message": "Our silver moonbeam keepsake", "x": 0.75, "y": 0.48},

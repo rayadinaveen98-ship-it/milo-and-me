@@ -233,6 +233,7 @@ class _DrawingScreenState extends ConsumerState<DrawingScreen>
                       children: ['Watch', 'Together', 'Create']
                           .map(
                             (m) => ChoiceChip(
+                              avatar: Icon(m == 'Watch' ? Icons.play_circle_rounded : m == 'Together' ? Icons.gesture_rounded : Icons.palette_rounded),
                               label: Padding(
                                 padding: const EdgeInsets.all(10),
                                 child: Text(m),

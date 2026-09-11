@@ -3,14 +3,21 @@ import 'dart:ui' as ui;
 import '../core/brand.dart';
 import 'pet.dart';
 
+String artForTheme(dynamic theme) => switch (theme) {
+  'Space' => 'space', 'Dinosaurs' => 'dinosaurs', 'Ocean' => 'ocean',
+  'Animals' => 'garden', _ => 'studio',
+};
+
 class ArtObject extends StatelessWidget {
   final int index;
-  const ArtObject(this.index, {super.key});
+  final String atlas;
+  final int columns, rows;
+  const ArtObject(this.index, {super.key, this.atlas = 'props', this.columns = 4, this.rows = 3});
   @override
   Widget build(BuildContext context) => FutureBuilder<ui.Image>(
-    future: PetGame.texture('props'),
+    future: PetGame.texture(atlas),
     builder: (context, snapshot) => snapshot.hasData
-        ? CustomPaint(painter: _AtlasPainter(snapshot.data!, index))
+          ? CustomPaint(painter: _AtlasPainter(snapshot.data!, index, columns, rows))
         : const SizedBox(),
   );
 }
@@ -18,13 +25,14 @@ class ArtObject extends StatelessWidget {
 class _AtlasPainter extends CustomPainter {
   final ui.Image image;
   final int index;
-  _AtlasPainter(this.image, this.index);
+  final int columns, rows;
+  _AtlasPainter(this.image, this.index, this.columns, this.rows);
   @override
   void paint(Canvas canvas, Size size) {
-    final w = image.width / 4, h = image.height / 3;
+    final w = image.width / columns, h = image.height / rows;
     canvas.drawImageRect(
       image,
-      Rect.fromLTWH((index % 4) * w, (index ~/ 4) * h, w, h),
+      Rect.fromLTWH((index % columns) * w, (index ~/ columns) * h, w, h),
       Offset.zero & size,
       Paint()..filterQuality = FilterQuality.medium,
     );

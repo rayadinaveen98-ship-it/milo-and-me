@@ -1,0 +1,85 @@
+import 'dart:io';
+import 'dart:ui' as ui;
+import 'package:drift/native.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:milo_and_me/core/brand.dart';
+import 'package:milo_and_me/core/controller.dart';
+import 'package:milo_and_me/data/database.dart';
+import 'package:milo_and_me/data/content_repository.dart';
+import 'package:milo_and_me/domain/models.dart';
+import 'package:milo_and_me/features/world.dart';
+import 'package:milo_and_me/features/onboarding.dart';
+import 'package:milo_and_me/features/wardrobe.dart';
+import 'package:milo_and_me/features/catalogues.dart';
+import 'package:milo_and_me/features/drawing.dart';
+import 'package:milo_and_me/features/puzzle.dart';
+import 'package:milo_and_me/features/story.dart';
+import 'package:milo_and_me/features/scenarios.dart';
+import 'package:milo_and_me/features/memories.dart';
+import 'package:milo_and_me/features/parent.dart';
+import 'package:milo_and_me/features/science.dart';
+import 'package:milo_and_me/ui/pet.dart';
+import 'world_test.dart' show WorldUiController;
+
+// Captures are review evidence, not self-approved golden baselines. Any Flutter
+// layout/render exception fails CI. Real persistence is covered separately.
+void main() {
+  const screens = <String, Widget>{
+    'world': WorldScreen(), 'onboarding': OnboardingScreen(),
+    'wardrobe': WardrobeScreen(), 'drawing-library': CatalogueScreen(kind: 'drawings'),
+    'puzzle-library': CatalogueScreen(kind: 'puzzles'), 'story-library': CatalogueScreen(kind: 'stories'),
+    'drawing': DrawingScreen(id: 'flower'), 'puzzle': PuzzleScreen(id: 'leaf-twin'),
+    'moonlight': StoryScreen(id: 'missing-moonlight'),
+    'cooking': ScenarioScreen(kind: 'cooking', id: 'pancakes'),
+    'astronaut': ScenarioScreen(kind: 'roleplay', id: 'astronaut-mission'),
+    'memories': MemoriesScreen(), 'parent': ParentScreen(),
+    'science': ScienceScreen(id: 'colour-lab'),
+  };
+  for (final device in [
+    ('small', const Size(360, 640), 1.0),
+    ('tall', const Size(430, 932), 1.0),
+    ('tablet', const Size(1000, 900), 1.0),
+    ('large-text', const Size(430, 932), 1.5),
+  ]) {
+    testWidgets('Visual review and overflow gate: ${device.$1}', (tester) async {
+      tester.view.physicalSize = device.$2;
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      for (final entry in screens.entries) {
+        final db = AppDatabase(NativeDatabase.memory());
+        final content = ContentRepository(db);
+        await tester.runAsync(() async {
+          await content.load();
+          for (final name in ['milo', 'expressions', 'props', 'food']) {
+            await PetGame.texture(name);
+          }
+        });
+        final app = WorldUiController(db, content, World(onboarded: true, nickname: 'Acorn', reducedMotion: true));
+        final boundaryKey = GlobalKey();
+        await tester.pumpWidget(ProviderScope(
+          overrides: [controllerProvider.overrideWith((ref) => app)],
+          child: MaterialApp(theme: Brand.theme(), home: Builder(builder: (context) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(device.$3)),
+            child: RepaintBoundary(key: boundaryKey, child: entry.value)))),
+        ));
+        await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 350)));
+        await tester.pump(const Duration(milliseconds: 400));
+        expect(tester.takeException(), isNull, reason: '${device.$1}/${entry.key}');
+        await tester.runAsync(() async {
+          final boundary = boundaryKey.currentContext!.findRenderObject()! as RenderRepaintBoundary;
+          final image = await boundary.toImage(pixelRatio: 1);
+          final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
+          final file = File('build/visual-review/${device.$1}-${entry.key}.png');
+          await file.parent.create(recursive: true);
+          await file.writeAsBytes(bytes!.buffer.asUint8List());
+          image.dispose();
+        });
+        await tester.pumpWidget(const SizedBox());
+      }
+    });
+  }
+}

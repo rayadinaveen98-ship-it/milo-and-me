@@ -5,6 +5,7 @@ import '../core/controller.dart';
 import '../domain/engines.dart';
 import '../ui/common.dart';
 import '../ui/pet.dart';
+import '../ui/illustrated.dart';
 
 class PuzzleScreen extends ConsumerStatefulWidget {
   final String id;
@@ -97,13 +98,17 @@ class _PuzzleScreenState extends ConsumerState<PuzzleScreen> {
         padding: const EdgeInsets.all(24),
         children: [
           SizedBox(
-            height: 140,
-            child: PetView(
+            height: 260,
+            child: ClipRRect(borderRadius: BorderRadius.circular(28),
+              child: Stack(children: [
+                Positioned.fill(child: SceneArt(artForTheme(p['theme']), fit: BoxFit.cover)),
+                Positioned(right: 8, bottom: 0, width: 170, height: 190, child: PetView(
               color: app.world.color,
               outfit: app.world.outfit,
               pose: feedback.isEmpty ? 'curious' : 'happy',
               reducedMotion: app.world.reducedMotion,
-            ),
+            )),
+              ])),
           ),
           Paper(
             color: Brand.mint,

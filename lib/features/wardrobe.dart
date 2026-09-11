@@ -145,9 +145,9 @@ class WardrobeScreen extends ConsumerWidget {
                                 return MemoryEngine().add(
                                   next,
                                   Memory(
-                                    id: 'outfit:' + e.key,
+                                    id: 'outfit:${e.key}',
                                     kind: 'outfit',
-                                    title: 'Our ' + e.value.first.toLowerCase(),
+                                    title: 'Our ${e.value.first.toLowerCase()}',
                                     topic: e.value.first.toLowerCase(),
                                     at: DateTime.now(),
                                   ),

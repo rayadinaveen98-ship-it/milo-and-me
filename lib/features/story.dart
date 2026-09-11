@@ -51,10 +51,10 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
     final background = scene['background'] == 'moonlight'
         ? 'moonlight'
         : scene['background'] == 'space'
-        ? 'moonlight'
+        ? 'space'
         : scene['background'] == 'ocean'
-        ? 'garden'
-        : 'garden';
+        ? 'ocean'
+        : artForTheme(story['theme']);
     if (narrated != position) {
       narrated = position;
       WidgetsBinding.instance.addPostFrameCallback((_) async {

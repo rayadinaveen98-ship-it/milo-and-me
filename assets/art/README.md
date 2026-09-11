@@ -9,3 +9,5 @@ Milo prompt: original apricot woodland friend, large leaf-shaped ears, cream muz
 Budgets: rooms 768×1152, mascot 512×768, atlases longest edge 1024. WebP quality 82 rooms / 88 alpha sprites. Preserve transparency. Decode rooms at bounded widths; share Flame textures. Ten initial runtime textures total approximately 1.3 MiB. Replace individual assets without changing domain/persistence schemas.
 
 Validation: source and compressed images visually inspected; CI must verify asset availability and render phone/tablet screens before release. Generated artwork alone is not a verified UI. Physical-device frame-time and memory acceptance remain separate.
+
+Additional original environments: ocean (coral cove, turtle, shells); dinosaurs (fern valley, gentle long-neck, triceratops); space (woodland-style pretend cockpit, purple planet, toy rocket). Food atlas: 3 columns × 2 rows; pancakes, sandwich, fruit bowl / pizza, cake, ingredient tray. Same host-native generator and gouache art direction. Food atlas longest edge 1024; environments 768×1152. These assets supplement the first ten-texture budget.

@@ -8,6 +8,7 @@ import '../domain/models.dart';
 import '../domain/scenario_engine.dart';
 import '../ui/common.dart';
 import '../ui/pet.dart';
+import '../ui/illustrated.dart';
 
 class ScenarioCatalogue extends ConsumerWidget {
   final String kind;
@@ -42,13 +43,10 @@ class ScenarioCatalogue extends ConsumerWidget {
               borderRadius: BorderRadius.circular(24),
               child: ListTile(
                 minVerticalPadding: 24,
-                leading: Icon(
-                  kind == 'cooking'
-                      ? Icons.restaurant_rounded
-                      : Icons.theater_comedy_rounded,
-                  size: 38,
-                  color: Brand.ink,
-                ),
+                leading: SizedBox(width: 70, height: 80, child: kind == 'cooking'
+                  ? ArtObject({'pancakes': 0, 'sandwich': 1, 'fruit-bowl': 2, 'pizza': 3, 'cake': 4}[item['id']] ?? 4,
+                    atlas: 'food', columns: 3, rows: 2)
+                  : ArtObject({'astronaut': 2, 'chef': 3, 'doctor': 11, 'beret': 0, 'detective': 5, 'builder': 4}[item['outfit']] ?? 11)),
                 title: Text(
                   item['title'],
                   style: const TextStyle(
@@ -144,31 +142,27 @@ class _ScenarioState extends ConsumerState<ScenarioScreen> {
           ),
           const SizedBox(height: 12),
           SizedBox(
-            height: 270,
+            height: 360,
             child: Stack(
               children: [
                 Positioned.fill(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(30),
-                    child: CustomPaint(
-                      painter: ScenarioPainter(
-                        cooking: widget.kind == 'cooking',
-                        action: step?['action'] ?? 'serve',
-                        count: p['count'] as int,
-                        index: index,
-                      ),
-                    ),
+                    child: SceneArt(widget.kind == 'cooking' || definition['outfit'] == 'chef' ? 'care'
+                      : definition['outfit'] == 'astronaut' ? 'space'
+                      : definition['outfit'] == 'beret' ? 'studio'
+                      : definition['outfit'] == 'detective' ? 'stories' : 'play', fit: BoxFit.cover),
                   ),
                 ),
                 Positioned(
                   right: 0,
-                  top: 0,
-                  width: 130,
-                  height: 140,
+                  bottom: 0,
+                  width: 170,
+                  height: 230,
                   child: PetView(
                     color: app.world.color,
-                    outfit: app.world.outfit,
-                    pose: done ? 'dance' : 'curious',
+                    outfit: widget.kind == 'cooking' ? 'chef' : definition['outfit'] ?? app.world.outfit,
+                    pose: done ? 'celebrating' : widget.kind == 'cooking' ? 'cooking' : 'curious',
                     reducedMotion: reduced,
                   ),
                 ),
@@ -195,22 +189,22 @@ class _ScenarioState extends ConsumerState<ScenarioScreen> {
                             ? null
                             : () => perform(definition, options.first),
                         child: Container(
-                          height: 120,
+                          height: 180,
                           decoration: BoxDecoration(
                             color: accepted.isEmpty
-                                ? Colors.white.withValues(alpha: .35)
+                                ? Colors.transparent
                                 : Brand.mint,
                             borderRadius: BorderRadius.circular(24),
                           ),
-                          child: Center(
-                            child: Text(
-                              done ? '♥' : step!['symbol'],
-                              style: const TextStyle(
-                                fontSize: 66,
-                                color: Brand.ink,
-                              ),
-                            ),
-                          ),
+                          child: AnimatedSwitcher(duration: Duration(milliseconds: reduced ? 0 : 300),
+                            child: Transform.rotate(key: ValueKey('$index:${p['count']}'),
+                              angle: reduced || step?['action'] != 'mix' ? 0 : (p['count'] as int).isEven ? -.08 : .08,
+                              child: widget.kind == 'cooking'
+                                ? (done || index >= (definition['steps'] as List).length - 2
+                                  ? ArtObject({'pancakes': 0, 'sandwich': 1, 'fruit-bowl': 2, 'pizza': 3, 'cake': 4}[widget.id] ?? 4,
+                                    atlas: 'food', columns: 3, rows: 2)
+                                  : index == 0 ? const ArtObject(5, atlas: 'food', columns: 3, rows: 2) : const ArtObject(8))
+                                : ArtObject({'astronaut': 2, 'chef': 9, 'doctor': 11, 'beret': 0, 'detective': 5, 'builder': 4}[definition['outfit']] ?? 11))),
                         ),
                       ),
                     ),

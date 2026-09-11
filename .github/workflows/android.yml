@@ -112,6 +112,7 @@ jobs:
           path: |
             pubspec.lock
             coverage/lcov.info
+            build/visual-review/
           if-no-files-found: warn
           retention-days: 30
       - name: Publish verified milestone APK
@@ -128,9 +129,14 @@ jobs:
           tag='v'+version
           apk=root/('Milo-and-Me-v'+version+'.apk')
           apk.write_bytes((root/'app-debug.apk').read_bytes())
+          import zipfile
+          visual=root/'visual-review.zip'
+          with zipfile.ZipFile(visual,'w',zipfile.ZIP_DEFLATED) as archive:
+            for image in pathlib.Path('build/visual-review').glob('*.png'):
+              archive.write(image,image.name)
           notes=pathlib.Path('milestone-notes.md')
           notes.write_text('Android debug playtest. Analysis, all tests and APK build passed.\n\nSource: '+manifest['commit']+'\n\nSee docs/RELEASE_NOTES.md for changes and external activation requirements.')
           if subprocess.run(['gh','release','view',tag],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL).returncode:
             subprocess.run(['gh','release','create',tag,'--target',manifest['commit'],'--prerelease','--title','Milo & Me '+version,'--notes-file',str(notes)],check=True)
-          subprocess.run(['gh','release','upload',tag,str(apk),str(root/'build-manifest.json'),'--clobber'],check=True)
+          subprocess.run(['gh','release','upload',tag,str(apk),str(root/'build-manifest.json'),str(visual),'--clobber'],check=True)
           PYCODE

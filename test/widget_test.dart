@@ -8,6 +8,7 @@ import 'package:milo_and_me/core/controller.dart';
 import 'package:milo_and_me/data/database.dart';
 import 'package:milo_and_me/data/content_repository.dart';
 import 'package:milo_and_me/domain/models.dart';
+import 'world_test.dart' show WorldUiController;
 
 void main() {
   testWidgets('Fresh install reaches the parent introduction', (tester) async {
@@ -46,12 +47,7 @@ void main() {
     final content = ContentRepository(db);
     // Asset loading and native SQLite initialization need real asynchronous I/O.
     await tester.runAsync(content.load);
-    final app = AppController(
-      db,
-      content,
-      World(onboarded: true, nickname: 'Acorn'),
-      audioOverride: SilentAudio(),
-    );
+    final app = WorldUiController(db, content, World(onboarded: true, nickname: 'Acorn', reducedMotion: true));
     await tester.pumpWidget(
       ProviderScope(
         overrides: [controllerProvider.overrideWith((ref) => app)],
@@ -60,7 +56,9 @@ void main() {
     );
     await tester.pump();
     expect(find.text('Milo & Acorn'), findsOneWidget);
-    await tester.tap(find.byTooltip('Art corner'));
+    await tester.tap(find.byTooltip('Art studio'));
+    await tester.pump();
+    await tester.tap(find.byTooltip('Make art'));
     await tester.pump();
     await tester.pump(const Duration(seconds: 1));
     await tester.pump();
