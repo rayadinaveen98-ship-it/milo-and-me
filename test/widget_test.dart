@@ -38,11 +38,13 @@ void main() {
     expect(find.text('A little note for grown-ups'), findsOneWidget);
     // Router refresh after setup must open the promised first activity;
     // returning installs still start at home (covered by the next test).
-    await tester.runAsync(() => app.change((w) {
-      w.onboarded = true;
-      w.privacyAccepted = true;
-      return w;
-    }));
+    await tester.runAsync(
+      () => app.change((w) {
+        w.onboarded = true;
+        w.privacyAccepted = true;
+        return w;
+      }),
+    );
     await tester.pump();
     await tester.pump(const Duration(seconds: 1));
     expect(find.byType(DrawingScreen), findsOneWidget);
