@@ -27,6 +27,7 @@ void main() {
       for (final scene in (story['scenes'] as Map).values) {
         expect(scene['interaction'], isA<Map>());
         expect((scene['text'] as String).split(' ').length, lessThan(30));
+        expect(File('assets/${scene['audio']}').lengthSync(), greaterThan(1000));
       }
       expect(engine.choose(story, 'firefly', 0), 'tree-ending');
       expect(engine.choose(story, 'cloud', 0), 'pond-ending');

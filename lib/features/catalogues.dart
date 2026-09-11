@@ -175,16 +175,7 @@ class _CatalogueState extends ConsumerState<CatalogueScreen> {
                                         ),
                                         borderRadius: BorderRadius.circular(16),
                                       ),
-                                      child: Text(
-                                        item['display'],
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          fontSize: 23,
-                                          color: Brand.ink,
-                                        ),
-                                      ),
+                                      child: Center(child: SymbolArt(item['display'], size: 56)),
                                     ),
                                   ),
                                 Positioned(

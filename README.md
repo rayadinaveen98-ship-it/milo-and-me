@@ -1,10 +1,10 @@
-# Milo & Me · 0.7.0
+# Milo & Me · 0.7.5
 
 A child's virtual best friend for ages roughly 5–8. Milo and the child draw, solve puzzles, share stories, care, imagine, cook pretend recipes and discover together. Local-first; no child login, ads, public chat, behavioural analytics or runtime AI chat.
 
 [Download verified APKs](https://github.com/rayadinaveen98-ship-it/milo-and-me/releases) · [Android CI](https://github.com/rayadinaveen98-ship-it/milo-and-me/actions/workflows/android.yml)
 
-The approved v0.1 experience and original Git history are preserved. v0.2–v0.7 are delivered as verified playtest milestones. v0.7 passed CI 34511332749: 62 Flutter tests, 6 server tests, PostgreSQL ownership checks, strict analysis and APK build. See [roadmap](docs/ROADMAP.md) and [release notes](docs/RELEASE_NOTES.md).
+The approved activity engines and original Git history are preserved. v0.7.5 rebuilds the presentation with original illustrated rooms, sprout-eared Milo, visual costumes and props, and the interactive narrated **Milo and the Missing Moonlight** story. See [roadmap](docs/ROADMAP.md), [release notes](docs/RELEASE_NOTES.md) and [visual verification](docs/V075_VISUAL_REVIEW.md) for the release evidence and remaining device checks.
 
 ## Stack and structure
 
@@ -14,7 +14,8 @@ Flutter 3.35.7 / Dart, Flame for Milo, Riverpod, go_router, Drift/SQLite, secure
 - `lib/core`: controller, services/configuration, audio and version.
 - `lib/data`: SQLite migrations, verified packs, parent auth and purchase adapters.
 - `lib/features`, `lib/ui`: approved child experience, parent controls and lazy previews.
-- `assets/content`: 24 drawings, 55 puzzles, 12 stories, 5 recipes, 6 roleplays, 10 discoveries.
+- `assets/content`: 24 drawings, 55 puzzles, 13 stories, 5 recipes, 6 roleplays, 10 discoveries.
+- `assets/art`, `assets/audio`: compressed original artwork and authored offline narration; provenance accompanies both.
 - `supabase`: server API, schema, CLI-generated migration and ownership tests.
 - `test`, `tool`: Flutter suites, portable server tests and offline content checks.
 

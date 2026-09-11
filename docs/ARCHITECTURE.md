@@ -24,4 +24,8 @@ A bounded HTTPS JSON pack supports definitions, manifest, rewards and inline med
 
 ## Verification
 
+The v0.7.5 presentation adapter uses compressed original WebP rooms, a transparent Milo sprite, expression/prop atlases and bounded shared Flame textures. `ui/illustrated.dart` owns scene, atlas and puzzle-symbol rendering; domain engines and SQLite schemas remain independent of artwork. World objects route to the existing activities. Device and parent reduced-motion settings both suppress mascot movement. Scene narration stops on navigation and retains independent voice/music/effects settings.
+
+`test/visual_review_test.dart` captures 21 screen states at 360×640, 430×932, 1000×900 and 150% text. CI loads real fonts, fails on layout exceptions and retains screenshots alongside coverage. These are review evidence, not automatically approved golden baselines. Physical frame time, battery and GPU memory need Android device profiling.
+
 GitHub Actions installs the pinned Flutter/Java toolchain and Supabase CLI. It runs PostgreSQL ownership/privilege tests, portable server tests, content checks, strict analysis, Flutter unit/widget/restart/migration tests and APK build. No generated Drift source is required. The build manifest and release tag identify the tested source, including retained formatting/lock/wrapper inputs. Device/store acceptance testing is distinct from CI.

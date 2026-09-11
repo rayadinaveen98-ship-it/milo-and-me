@@ -49,6 +49,11 @@ void main() {
   });
   const screens = <String, Widget>{
     'world': WorldScreen(),
+    'world-studio': WorldScreen(),
+    'world-stories': WorldScreen(),
+    'world-play': WorldScreen(),
+    'world-care': WorldScreen(),
+    'world-garden': WorldScreen(),
     'onboarding': OnboardingScreen(),
     'wardrobe': WardrobeScreen(),
     'drawing-library': CatalogueScreen(kind: 'drawings'),
@@ -57,6 +62,8 @@ void main() {
     'drawing': DrawingScreen(id: 'flower'),
     'puzzle': PuzzleScreen(id: 'leaf-twin'),
     'moonlight': StoryScreen(id: 'missing-moonlight'),
+    'moonlight-tree-ending': StoryScreen(id: 'missing-moonlight'),
+    'moonlight-pond-ending': StoryScreen(id: 'missing-moonlight'),
     'cooking': ScenarioScreen(kind: 'cooking', id: 'pancakes'),
     'astronaut': ScenarioScreen(kind: 'roleplay', id: 'astronaut-mission'),
     'memories': MemoriesScreen(),
@@ -81,14 +88,28 @@ void main() {
         final content = ContentRepository(db);
         await tester.runAsync(() async {
           await content.load();
-          for (final name in ['milo', 'expressions', 'props', 'food']) {
+          for (final name in ['milo', 'expressions', 'props', 'food', 'pieces']) {
             await PetGame.texture(name);
           }
         });
+        final world = World(onboarded: true, nickname: 'Acorn', reducedMotion: true);
+        if (entry.key.startsWith('world-')) {
+          world.companion.area = entry.key.substring(6);
+        }
+        if (entry.key.endsWith('-ending')) {
+          final ending = entry.key.substring('moonlight-'.length);
+          world.storyPositions['missing-moonlight'] = ending;
+          world.activities['story:missing-moonlight:$ending'] = {'done': true};
+        }
+        if (entry.key == 'memories' || entry.key == 'world-stories') {
+          world.completedStories.add('missing-moonlight');
+          world.companion.firsts.add('story');
+          world.memories.add(Memory(id: 'story:missing-moonlight', kind: 'story', title: 'Milo and the Missing Moonlight', topic: 'kindness', at: DateTime(2026, 9, 11), payload: {'ending': 'pond-ending'}));
+        }
         final app = WorldUiController(
           db,
           content,
-          World(onboarded: true, nickname: 'Acorn', reducedMotion: true),
+          world,
         );
         final boundaryKey = GlobalKey();
         await tester.pumpWidget(

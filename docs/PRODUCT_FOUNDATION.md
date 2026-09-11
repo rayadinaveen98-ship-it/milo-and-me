@@ -22,6 +22,8 @@ The child's home is a room: easel for art, book for stories, puzzle box for play
 
 The subsequently approved `EXECUTION_V02_V07.md` extends this V1 baseline through six world areas, virtual cooking, structured roleplay, safe science, parent services and premium architecture. These extensions preserve the north star; unrestricted AI conversation and child cloud accounts remain excluded.
 
+The authoritative `V075_BRIEF.md` subsequently raises the visual bar: the world is the interface; original sprout-eared Milo, distinct illustrated locations, tactile props and interactive picture-book stories. Preserve working engines and data while replacing prototype presentation. Quantity targets are subordinate to polished reusable templates and representative authored content. `V075_VISUAL_REVIEW.md` records the implemented coverage and remaining quality work.
+
 ## Trust rules
 
 No ads, tracking for advertising, loot boxes, stranger/public chat, child leaderboards, manipulative streaks, scarcity, paid energy or child-facing purchases. Never guilt a child for leaving. Do not collect a child's email, phone, precise location, contacts or recordings. Local-first play and creations must survive network failure.

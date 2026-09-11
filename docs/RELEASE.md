@@ -10,13 +10,13 @@ GitHub Actions is the authoritative build environment. Analysis, all Flutter tes
 6. Create and securely retain the production signing key outside the repository. Supply `android/key.properties` locally with `storeFile`, `storePassword`, `keyAlias`, `keyPassword`. The file and keystore are ignored by Git. The release configuration never substitutes a debug signing key.
 7. Once signing is configured and all gates pass, run `flutter build apk --release` and `flutter build appbundle --release`. Verify the signing certificate and install/upgrade path.
 8. Finish the privacy policy, publisher/contact identity, territory-specific child/privacy review, store family/kids disclosures and purchase configuration. The local parent checkbox is not a claim of verified regulatory consent.
-9. Produce screenshots from the actual application, not a recreated mockup. Included icons are original temporary shape assets; confirm the final brand name before submission.
+9. Produce screenshots from the actual application, not a recreated mockup. CI retains rendered screenshots; the launcher icon uses original Milo face artwork. Confirm physical-device/store presentation before submission.
 
 ## External configuration still needed
 
 - A dedicated Supabase project if hosted features are desired; project URL and publishable key alone do not implement parent auth or legal consent.
 - A trusted object-storage origin/catalogue and appropriate authorization for premium downloads.
 - Google Play / Apple developer accounts, products, receipt-verification services and production signing identities.
-- Final recorded narration and any Rive production assets.
+- Broader recorded narration and any future independently articulated character rig. Moonlight's seven authored narration tracks are already bundled offline.
 
 The `.env.example` file documents future backend inputs; the offline bootstrap does not consume it. There are no runtime LLM/API fees or active paid services in the source milestone. No production infrastructure was created.

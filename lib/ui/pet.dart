@@ -48,14 +48,17 @@ class _PetViewState extends State<PetView> {
   }
 
   @override
-  Widget build(BuildContext context) => Semantics(
+  Widget build(BuildContext context) {
+    game.reduced = widget.reducedMotion || MediaQuery.disableAnimationsOf(context);
+    return Semantics(
     label: 'Your pet, ${widget.pose}. Tap for a cuddle.',
     button: widget.onTap != null,
     child: GestureDetector(
       onTap: widget.onTap,
       child: GameWidget(game: game),
     ),
-  );
+    );
+  }
 }
 
 class PetGame extends FlameGame {

@@ -65,7 +65,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           w.privacyAccepted = true;
           return w;
         });
-        if (ok && mounted) context.go('/home');
+        if (ok) {
+          await app.care('cuddle');
+          if (mounted) context.go('/drawing/flower');
+        }
       } else if (mounted) {
         setState(() => step++);
       }

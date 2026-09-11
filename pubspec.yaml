@@ -1,7 +1,7 @@
 name: milo_and_me
 description: A local-first storybook companion for creative little explorers.
 publish_to: none
-version: 0.7.5-dev.1+8
+version: 0.7.5+8
 environment:
   sdk: '>=3.8.0 <4.0.0'
 dependencies:

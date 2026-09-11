@@ -1,5 +1,13 @@
 # Release notes
 
+## 0.7.5 — A warmer world to share
+
+Original illustrated Milo and six rooms replace the geometric presentation. Room objects lead into preserved activities; earned keepsakes and displayed drawings remain local. New themed covers, visible costume/food/puzzle props, reduced-motion-aware reactions, reward reveal and Android icon. Onboarding preserves parent consent and PIN setup, then offers the first cuddle and flower drawing.
+
+**Milo and the Missing Moonlight** adds seven interactive scenes, two meaningful routes, seven bundled English narration tracks and a persistent ending memory. All previous activities remain available: totals are 24 drawings, 55 puzzles, 13 stories, 5 recipes, 6 roleplays and 10 discoveries. This release prioritizes representative quality over filler counts.
+
+CI retains 84 rendered phone/tablet/large-text screenshots alongside tests and coverage. Final release manifest, APK and CI identity are recorded in STATUS.md. See V075_VISUAL_REVIEW.md for measured evidence and limitations. This remains an offline debug playtest; physical-device performance and production signing are separate gates.
+
 ## 0.2.0 — Companion Core
 
 Persistent companion state, firsts and keepsake slots; v1 save migration; contextual dialogue with bounded repetition; warm return greetings; expanded reactive/idle pet animation respecting reduced motion. Five new tests cover callbacks, repetition, migration and restart persistence. Existing onboarding, activities and wardrobe are preserved.

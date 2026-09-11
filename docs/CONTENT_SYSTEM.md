@@ -1,6 +1,6 @@
 # Content system
 
-Authors edit versioned JSON, not Dart screens. Current included pack: `assets/content/meadow.json` (24 drawings, 55 puzzles, 12 original stories).
+Authors edit versioned JSON, not Dart screens. Current included pack: `assets/content/meadow.json` (24 drawings, 55 puzzles, 13 original stories).
 
 | Definition | Required fields | Meaning |
 | --- | --- | --- |
@@ -14,6 +14,8 @@ Authors edit versioned JSON, not Dart screens. Current included pack: `assets/co
 | Choice | `label`, `next` | Visible action and valid target scene ID |
 
 Optional presentation: `subtitle`, puzzle `display`/`hint`, scene `background`/`symbol`/`emotion`. `{pet}` and `{child}` are the story substitutions. Supported backgrounds currently: space, ocean, meadow and sunset.
+
+v0.7.5 adds the `moonlight` illustrated background and optional normalized interaction `x`/`y` positions (0–1). `missing-moonlight` has seven short interactive scenes, two meaningful routes, seven bundled English MP3 tracks and distinct ending IDs retained in the completion memory. Catalogue featuring does not reorder stored definitions or change existing IDs. The visual renderer maps themes to original environments and symbolic puzzle objects to a 4×4 atlas; unsupported symbols retain readable text. See `assets/art/README.md` and `assets/audio/NARRATION.md` for provenance and replacement rules.
 
 Drawing Watch animates guide strokes; Together displays guides beneath the child's drawing; Create omits guides. Child strokes are stored independently, with eraser, colour and width. Completion creates a thumbnail/memory visible in the room. Puzzle completion and story endings create idempotent memories and unlock cosmetics. Scene choice persistence supports resuming.
 

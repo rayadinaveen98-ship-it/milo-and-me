@@ -17,11 +17,13 @@ class StoryScreen extends ConsumerStatefulWidget {
 }
 
 class _StoryScreenState extends ConsumerState<StoryScreen> {
+  final scroll = ScrollController();
   bool busy = false;
   String? narrated;
   AudioService? audio;
   @override
   void dispose() {
+    scroll.dispose();
     audio?.stopNarration();
     super.dispose();
   }
@@ -76,6 +78,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
     return PageShell(
       title: story['title'],
       child: ListView(
+        controller: scroll,
         padding: const EdgeInsets.only(bottom: 24),
         children: [
           SizedBox(
@@ -225,11 +228,20 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
                               ? null
                               : () async {
                                   setState(() => busy = true);
-                                  await app.storyPosition(
+                                  final ok = await app.storyPosition(
                                     widget.id,
                                     StoryEngine().choose(story, position, i),
                                   );
-                                  if (mounted) setState(() => busy = false);
+                                  if (mounted) {
+                                    setState(() => busy = false);
+                                    if (ok && scroll.hasClients) {
+                                      if (reduced) {
+                                        scroll.jumpTo(0);
+                                      } else {
+                                        await scroll.animateTo(0, duration: const Duration(milliseconds: 350), curve: Curves.easeOutCubic);
+                                      }
+                                    }
+                                  }
                                 },
                           child: Column(
                             children: [
