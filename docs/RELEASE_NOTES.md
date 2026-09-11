@@ -24,6 +24,8 @@ Seven reusable digital science themes; two optional seated observation activitie
 
 ## 0.7.0 — Parent services and dependable local play
 
-Protected parent account/library/store controls, explicit account consent, OTP token storage, configurable Google Play products and server-verified purchase/restore. Owner-isolated Supabase schema and server API, encrypted receipt tokens, PostgreSQL and portable server tests. Atomic versioned media packs, corruption fallback, lazy media/gallery, real schema-1 artwork migration and reliable local reset. Full offline playtest remains the default; live free/premium policy also protects direct routes. CI pending.
+Protected parent account/library/store controls, explicit account consent, OTP token storage, configurable Google Play products and server-verified purchase/restore. Owner-isolated Supabase schema and server API, encrypted receipt tokens, PostgreSQL and portable server tests. Atomic versioned media packs, corruption fallback, lazy media/gallery, real schema-1 artwork migration and reliable local reset. Full offline playtest remains the default; live free/premium policy also protects direct routes. Verified: CI 34511332749, 62 Flutter tests, 6 server tests, PostgreSQL ownership checks, strict analysis and APK build.
+
+Release tag `v0.7.0` identifies tested source `b34977e1a96e95830e685b373d1b61fef80b2e6e`. [Direct APK](https://github.com/rayadinaveen98-ship-it/milo-and-me/releases/download/v0.7.0/Milo-and-Me-v0.7.0.apk), 158,513,963 bytes; CI artifact 10166175968. Release assets include a source/checksum manifest.
 
 External activation requirements: Supabase/SMTP and deployed credentials, published catalogue/storage, Play Console products/service account/testers, and stable signing. See BACKEND_ACTIVATION.md. No live store or device acceptance is claimed by CI.

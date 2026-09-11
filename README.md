@@ -4,7 +4,7 @@ A child's virtual best friend for ages roughly 5–8. Milo and the child draw, s
 
 [Download verified APKs](https://github.com/rayadinaveen98-ship-it/milo-and-me/releases) · [Android CI](https://github.com/rayadinaveen98-ship-it/milo-and-me/actions/workflows/android.yml)
 
-The approved v0.1 experience and original Git history are preserved. v0.2–v0.6 are delivered. v0.7 source is implemented and awaiting its CI gate; see [roadmap](docs/ROADMAP.md) and [release notes](docs/RELEASE_NOTES.md).
+The approved v0.1 experience and original Git history are preserved. v0.2–v0.7 are delivered as verified playtest milestones. v0.7 passed CI 34511332749: 62 Flutter tests, 6 server tests, PostgreSQL ownership checks, strict analysis and APK build. See [roadmap](docs/ROADMAP.md) and [release notes](docs/RELEASE_NOTES.md).
 
 ## Stack and structure
 

@@ -1,6 +1,6 @@
 # Current status
 
-v0.2–v0.6 are delivered with passing CI, tags and direct APKs. v0.7 implementation is complete and its verification is in progress; use ROADMAP.md and RELEASE_NOTES.md for the final gate result.
+v0.2–v0.7 are delivered with passing CI, tags and direct APKs. v0.7 passed CI 34511332749 with 62 Flutter tests, 6 server tests, PostgreSQL ownership checks, strict analysis and APK build. Tested source: b34977e1a96e95830e685b373d1b61fef80b2e6e. APK artifact: 10166175968. Live deployment remains subject to the external activation steps below.
 
 The original v0.1 experience is preserved. Included content: 24 drawing lessons, 55 puzzles, 12 branching stories, 5 pretend recipes, 6 roleplays and 10 science/observation activities. Six world areas, persistent companion memory, local creations, parental controls, schema migration, verified offline packs, backend/server adapters and test purchase/restore flows are present.
 
