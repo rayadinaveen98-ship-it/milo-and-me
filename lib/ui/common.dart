@@ -20,7 +20,7 @@ class PageShell extends ConsumerWidget {
     final app = ref.watch(controllerProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
         automaticallyImplyLeading: false,
         leading: back
             ? IconButton(

@@ -8,6 +8,7 @@ String artForTheme(dynamic theme) => switch (theme) {
   'Dinosaurs' => 'dinosaurs',
   'Ocean' => 'ocean',
   'Animals' => 'garden',
+  'Nature' => 'garden',
   _ => 'studio',
 };
 
@@ -73,6 +74,7 @@ class ArtObject extends StatelessWidget {
     future: PetGame.texture(atlas),
     builder: (context, snapshot) => snapshot.hasData
         ? CustomPaint(
+            size: const Size(180, 180),
             painter: _AtlasPainter(snapshot.data!, index, columns, rows),
           )
         : const SizedBox(),
@@ -89,8 +91,8 @@ class _AtlasPainter extends CustomPainter {
     final w = image.width / columns, h = image.height / rows;
     canvas.drawImageRect(
       image,
-      Rect.fromLTWH((index % columns) * w, (index ~/ columns) * h, w, h),
-      Offset.zero & size,
+      Rect.fromLTWH((index % columns) * w + 5, (index ~/ columns) * h + 5, w - 10, h - 10),
+      Alignment.center.inscribe(applyBoxFit(BoxFit.contain, Size(w, h), size).destination, Offset.zero & size),
       Paint()..filterQuality = FilterQuality.medium,
     );
   }

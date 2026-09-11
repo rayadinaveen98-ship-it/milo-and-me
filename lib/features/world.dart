@@ -26,6 +26,7 @@ class WorldScreen extends ConsumerWidget {
         ? w.companion.area
         : 'bedroom';
     final picture = engine.displayedPicture(w);
+    final keepsakes = engine.decorations(w);
     final reduced = w.reducedMotion || MediaQuery.disableAnimationsOf(context);
     void route(String path) => context.go(path);
     final left = switch (area) {
@@ -98,7 +99,14 @@ class WorldScreen extends ConsumerWidget {
               ),
             Expanded(
               child: LayoutBuilder(
-                builder: (context, bounds) => Center(
+                builder: (context, bounds) => Stack(
+                  fit: StackFit.expand,
+                  children: [
+                  if (bounds.maxWidth > bounds.maxHeight * .85)
+                    SceneArt(area, fit: BoxFit.cover),
+                  if (bounds.maxWidth > bounds.maxHeight * .85)
+                    const ColoredBox(color: Color(0x99243b38)),
+                  Center(
                   child: SizedBox(
                     width: bounds.maxWidth.clamp(0, bounds.maxHeight * .85),
                     child: Stack(
@@ -115,6 +123,25 @@ class WorldScreen extends ConsumerWidget {
                           top: 12,
                           child: SpeechLeaf(text: w.dialogue),
                         ),
+                        if (keepsakes.isNotEmpty)
+                          Positioned(
+                            right: 16, top: bounds.maxHeight * .20,
+                            child: Tooltip(
+                              message: 'Our earned keepsakes',
+                              child: InkWell(
+                                onTap: () => route('/memories'),
+                                child: Container(
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(color: Brand.cream.withValues(alpha: .88), borderRadius: BorderRadius.circular(12)),
+                                  child: Row(mainAxisSize: MainAxisSize.min, children: [
+                                    for (final keepsake in keepsakes)
+                                      SymbolArt(switch (keepsake) {'blocks' => 'star', 'garland' => 'flower', 'heart' => 'flower', _ => keepsake}, size: 32),
+                                    if (w.completedStories.contains('missing-moonlight')) const SymbolArt('moon', size: 32),
+                                  ]),
+                                ),
+                              ),
+                            ),
+                          ),
                         Positioned(
                           left: 0,
                           right: 0,
@@ -217,6 +244,8 @@ class WorldScreen extends ConsumerWidget {
                       ],
                     ),
                   ),
+                  ),
+                  ],
                 ),
               ),
             ),

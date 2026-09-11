@@ -10,6 +10,7 @@ import 'package:milo_and_me/domain/engines.dart';
 import 'package:milo_and_me/domain/models.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   final pack = jsonDecode(
     File('assets/content/meadow.json').readAsStringSync(),
   );
