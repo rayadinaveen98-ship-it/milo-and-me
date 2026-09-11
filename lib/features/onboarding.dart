@@ -115,14 +115,36 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 const SizedBox(height: 20),
                 SizedBox(
                   height: step == 1 ? 100 : 310,
-                  child: ClipRRect(borderRadius: BorderRadius.circular(36),
-                    child: Stack(children: [
-                      if (step != 1) Positioned.fill(child: SceneArt(step == 4 ? 'studio' : 'garden', fit: BoxFit.cover)),
-                      Positioned.fill(child: PetView(color: color,
-                        pose: step == 0 ? 'waving' : step == 2 ? 'curious' : step == 4 ? 'celebrating' : 'happy',
-                        reducedMotion: MediaQuery.disableAnimationsOf(context),
-                        onTap: step == 4 ? next : null)),
-                    ])),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(36),
+                    child: Stack(
+                      children: [
+                        if (step != 1)
+                          Positioned.fill(
+                            child: SceneArt(
+                              step == 4 ? 'studio' : 'garden',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        Positioned.fill(
+                          child: PetView(
+                            color: color,
+                            pose: step == 0
+                                ? 'waving'
+                                : step == 2
+                                ? 'curious'
+                                : step == 4
+                                ? 'celebrating'
+                                : 'happy',
+                            reducedMotion: MediaQuery.disableAnimationsOf(
+                              context,
+                            ),
+                            onTap: step == 4 ? next : null,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 Text(
                   headings[step],

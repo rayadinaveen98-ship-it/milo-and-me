@@ -61,19 +61,24 @@ class _PetViewState extends State<PetView> {
 class PetGame extends FlameGame {
   static final Map<String, Future<ui.Image>> _textures = {};
   ui.Image? mascot, expressions, props;
-  static Future<ui.Image> texture(String name) => _textures.putIfAbsent(name, () async {
-    final bytes = await rootBundle.load('assets/art/$name.webp');
-    final codec = await ui.instantiateImageCodec(bytes.buffer.asUint8List(), targetWidth: name == 'milo' ? 512 : 1024);
-    final frame = await codec.getNextFrame();
-    codec.dispose();
-    return frame.image;
-  });
+  static Future<ui.Image> texture(String name) =>
+      _textures.putIfAbsent(name, () async {
+        final bytes = await rootBundle.load('assets/art/$name.webp');
+        final codec = await ui.instantiateImageCodec(
+          bytes.buffer.asUint8List(),
+          targetWidth: name == 'milo' ? 512 : 1024,
+        );
+        final frame = await codec.getNextFrame();
+        codec.dispose();
+        return frame.image;
+      });
   @override
   Future<void> onLoad() async {
     mascot = await texture('milo');
     expressions = await texture('expressions');
     props = await texture('props');
   }
+
   double clock = 0, poseAge = 0;
   int color = 0;
   String pose = 'happy', outfit = 'none';
@@ -98,9 +103,17 @@ class PetGame extends FlameGame {
     canvas.translate((size.x - 300 * scale) / 2, (size.y - 300 * scale) / 2);
     canvas.scale(scale);
     if (mascot != null && expressions != null && props != null) {
-      renderIllustratedMilo(canvas, mascot!, expressions!, props!,
-        pose: pose, outfit: outfit, color: color, clock: reduced ? 0 : clock,
-        reduced: reduced);
+      renderIllustratedMilo(
+        canvas,
+        mascot!,
+        expressions!,
+        props!,
+        pose: pose,
+        outfit: outfit,
+        color: color,
+        clock: reduced ? 0 : clock,
+        reduced: reduced,
+      );
       canvas.restore();
       return;
     }
@@ -131,16 +144,52 @@ class PetGame extends FlameGame {
 
 /// Atlas-based renderer preserves the existing Flame pose/outfit adapter.
 /// Textures are shared and bounded; transient motion never changes saved state.
-void renderIllustratedMilo(Canvas c, ui.Image mascot, ui.Image expressions,
-  ui.Image props, {required String pose, required String outfit,
-  required int color, required double clock, required bool reduced}) {
-  final p = Paint()..isAntiAlias = true..filterQuality = FilterQuality.medium;
-  c.drawOval(const Rect.fromLTWH(76, 279, 150, 12), p..color = const Color(0x33000000));
+void renderIllustratedMilo(
+  Canvas c,
+  ui.Image mascot,
+  ui.Image expressions,
+  ui.Image props, {
+  required String pose,
+  required String outfit,
+  required int color,
+  required double clock,
+  required bool reduced,
+}) {
+  final p = Paint()
+    ..isAntiAlias = true
+    ..filterQuality = FilterQuality.medium;
+  c.drawOval(
+    const Rect.fromLTWH(76, 279, 150, 12),
+    p..color = const Color(0x33000000),
+  );
   p.color = Colors.white;
-  final joyful = ['happy', 'laugh', 'dance', 'jump', 'excited', 'proud', 'celebrating'].contains(pose);
+  final joyful = [
+    'happy',
+    'laugh',
+    'dance',
+    'jump',
+    'excited',
+    'proud',
+    'celebrating',
+  ].contains(pose);
   final sleeping = ['sleep', 'sleepy', 'asleep'].contains(pose);
-  final curious = ['curious', 'surprise', 'surprised', 'exploring', 'worried', 'gently worried'].contains(pose);
-  final focused = ['thinking', 'concentrating', 'drawing', 'reading', 'cooking', 'eat', 'eating'].contains(pose);
+  final curious = [
+    'curious',
+    'surprise',
+    'surprised',
+    'exploring',
+    'worried',
+    'gently worried',
+  ].contains(pose);
+  final focused = [
+    'thinking',
+    'concentrating',
+    'drawing',
+    'reading',
+    'cooking',
+    'eat',
+    'eating',
+  ].contains(pose);
   c.save();
   c.translate(150, 280);
   final breath = reduced ? 0.0 : math.sin(clock * 1.5) * .008;
@@ -148,47 +197,97 @@ void renderIllustratedMilo(Canvas c, ui.Image mascot, ui.Image expressions,
   if (!reduced && ['dance', 'jump', 'celebrating', 'excited'].contains(pose)) {
     c.translate(0, -math.sin(clock * 3).abs() * 9);
   }
-  if (!reduced && (curious || pose == 'look')) c.rotate(math.sin(clock * .8) * .035);
+  if (!reduced && (curious || pose == 'look')) {
+    c.rotate(math.sin(clock * .8) * .035);
+  }
   c.translate(-150, -280);
   if (color == 1 || color == 2) {
-    p.colorFilter = ColorFilter.mode(color == 1 ? const Color(0xffb7d7bc) : const Color(0xffd5bbef), BlendMode.modulate);
+    p.colorFilter = ColorFilter.mode(
+      color == 1 ? const Color(0xffb7d7bc) : const Color(0xffd5bbef),
+      BlendMode.modulate,
+    );
   }
   int? frame;
-  if (sleeping || (!reduced && clock % 7 > 6.86)) { frame = 0; }
-  else if (curious) { frame = 1; }
-  else if (joyful && pose != 'happy') { frame = 2; }
-  else if (focused) { frame = 3; }
+  if (sleeping || (!reduced && clock % 7 > 6.86)) {
+    frame = 0;
+  } else if (curious) {
+    frame = 1;
+  } else if (joyful && pose != 'happy') {
+    frame = 2;
+  } else if (focused) {
+    frame = 3;
+  }
   if (frame == null) {
-    c.drawImageRect(mascot, Rect.fromLTWH(0, 0, mascot.width.toDouble(), mascot.height.toDouble()),
-      const Rect.fromLTWH(54, 0, 192, 288), p);
+    c.drawImageRect(
+      mascot,
+      Rect.fromLTWH(0, 0, mascot.width.toDouble(), mascot.height.toDouble()),
+      const Rect.fromLTWH(54, 0, 192, 288),
+      p,
+    );
   } else {
     final fw = expressions.width / 2, fh = expressions.height / 2;
-    c.drawImageRect(expressions, Rect.fromLTWH((frame % 2) * fw, (frame ~/ 2) * fh, fw, fh),
-      const Rect.fromLTWH(10, 0, 280, 288), p);
+    c.drawImageRect(
+      expressions,
+      Rect.fromLTWH((frame % 2) * fw, (frame ~/ 2) * fh, fw, fh),
+      const Rect.fromLTWH(10, 0, 280, 288),
+      p,
+    );
   }
   p.colorFilter = null;
-  final index = {'beret': 0, 'explorer': 1, 'astronaut': 2, 'chef': 3,
-    'builder': 4, 'detective': 5, 'doctor': 6, 'scarf': 7}[outfit];
+  final index = {
+    'beret': 0,
+    'explorer': 1,
+    'astronaut': 2,
+    'chef': 3,
+    'builder': 4,
+    'detective': 5,
+    'doctor': 6,
+    'scarf': 7,
+  }[outfit];
   void prop(int i, Rect target) {
     final pw = props.width / 4, ph = props.height / 3;
-    c.drawImageRect(props, Rect.fromLTWH((i % 4) * pw, (i ~/ 4) * ph, pw, ph), target, p);
+    c.drawImageRect(
+      props,
+      Rect.fromLTWH((i % 4) * pw, (i ~/ 4) * ph, pw, ph),
+      target,
+      p,
+    );
   }
+
   if (index == 2) {
-    c.drawOval(const Rect.fromLTWH(64, 68, 177, 133), Paint()
-      ..color = const Color(0xff93cad4)..style = PaintingStyle.stroke..strokeWidth = 9);
+    c.drawOval(
+      const Rect.fromLTWH(64, 68, 177, 133),
+      Paint()
+        ..color = const Color(0xff93cad4)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 9,
+    );
   } else if (index != null) {
-    prop(index, outfit == 'scarf' ? const Rect.fromLTWH(83, 147, 130, 88)
-      : outfit == 'doctor' ? const Rect.fromLTWH(154, 177, 46, 46)
-      : outfit == 'astronaut' ? const Rect.fromLTWH(60, 54, 186, 150)
-      : const Rect.fromLTWH(78, 18, 140, 102));
+    prop(
+      index,
+      outfit == 'scarf'
+          ? const Rect.fromLTWH(83, 147, 130, 88)
+          : outfit == 'doctor'
+          ? const Rect.fromLTWH(154, 177, 46, 46)
+          : outfit == 'astronaut'
+          ? const Rect.fromLTWH(60, 54, 186, 150)
+          : const Rect.fromLTWH(78, 18, 140, 102),
+    );
   }
-  if (pose == 'eat' || pose == 'eating') prop(9, const Rect.fromLTWH(95, 187, 100, 85));
+  if (pose == 'eat' || pose == 'eating') {
+    prop(9, const Rect.fromLTWH(95, 187, 100, 85));
+  }
   if (pose == 'cooking') prop(8, const Rect.fromLTWH(85, 193, 130, 90));
-  if (pose == 'affection' || pose == 'cuddling') prop(11, const Rect.fromLTWH(107, 181, 90, 100));
+  if (pose == 'affection' || pose == 'cuddling') {
+    prop(11, const Rect.fromLTWH(107, 181, 90, 100));
+  }
   if (pose == 'wash') {
     for (var i = 0; i < 6; i++) {
-      c.drawCircle(Offset(60 + i * 35, 210 - (reduced ? 0 : math.sin(clock + i) * 22)),
-        7 + i.toDouble(), p..color = const Color(0x889de3ef));
+      c.drawCircle(
+        Offset(60 + i * 35, 210 - (reduced ? 0 : math.sin(clock + i) * 22)),
+        7 + i.toDouble(),
+        p..color = const Color(0x889de3ef),
+      );
     }
   }
   c.restore();

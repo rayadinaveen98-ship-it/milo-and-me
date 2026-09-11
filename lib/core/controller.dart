@@ -210,7 +210,11 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
         kind: 'story',
         title: story['title'],
         topic: story['topic'],
-        payload: {'theme': story['theme'], 'milestone': story['milestone'], 'ending': ending},
+        payload: {
+          'theme': story['theme'],
+          'milestone': story['milestone'],
+          'ending': ending,
+        },
         at: DateTime.now(),
       ),
     );
