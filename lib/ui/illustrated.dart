@@ -15,16 +15,45 @@ class SymbolArt extends StatelessWidget {
   final String value;
   final double size;
   const SymbolArt(this.value, {super.key, this.size = 56});
-  static const objects = {'leaf': 0, 'shell': 1, 'star': 2, 'flower': 3,
-    'rocket': 4, 'planet': 5, 'moon': 6, 'fish': 7, 'dinosaur': 8,
-    'apple': 9, 'tree': 10, 'seed': 11, 'butterfly': 12, 'egg': 13,
-    'feather': 14, 'footprint': 15, '★': 2, '✦': 2, '☾': 6, '❧': 0};
+  static const objects = {
+    'leaf': 0,
+    'shell': 1,
+    'star': 2,
+    'flower': 3,
+    'rocket': 4,
+    'planet': 5,
+    'moon': 6,
+    'fish': 7,
+    'dinosaur': 8,
+    'apple': 9,
+    'tree': 10,
+    'seed': 11,
+    'butterfly': 12,
+    'egg': 13,
+    'feather': 14,
+    'footprint': 15,
+    '★': 2,
+    '✦': 2,
+    '☾': 6,
+    '❧': 0,
+  };
   @override
   Widget build(BuildContext context) {
     final index = objects[value.toLowerCase()];
-    return Semantics(label: value, child: index == null
-      ? Text(value, textAlign: TextAlign.center, style: const TextStyle(fontSize: 22, color: Brand.ink))
-      : SizedBox(width: size, height: size, child: ArtObject(index, atlas: 'pieces', columns: 4, rows: 4)));
+    return Semantics(
+      label: value,
+      child: index == null
+          ? Text(
+              value,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 22, color: Brand.ink),
+            )
+          : SizedBox(
+              width: size,
+              height: size,
+              child: ArtObject(index, atlas: 'pieces', columns: 4, rows: 4),
+            ),
+    );
   }
 }
 

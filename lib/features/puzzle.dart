@@ -56,9 +56,7 @@ class _PuzzleScreenState extends ConsumerState<PuzzleScreen> {
         color: selected ? Brand.gold : Brand.sky,
         borderRadius: BorderRadius.circular(18),
       ),
-      child: Center(
-        child: SymbolArt(text),
-      ),
+      child: Center(child: SymbolArt(text)),
     );
     Widget slot(int index) => DragTarget<String>(
       onWillAcceptWithDetails: (_) => !busy && index <= answer.length,
@@ -78,7 +76,9 @@ class _PuzzleScreenState extends ConsumerState<PuzzleScreen> {
               border: Border.all(color: Brand.sage, width: 2),
             ),
             child: Center(
-              child: SymbolArt(index < answer.length ? answer[index] : '${index + 1}'),
+              child: SymbolArt(
+                index < answer.length ? answer[index] : '${index + 1}',
+              ),
             ),
           ),
         ),

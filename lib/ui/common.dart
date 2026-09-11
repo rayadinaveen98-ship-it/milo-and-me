@@ -130,13 +130,29 @@ Future<void> showReward(BuildContext context, String title, String message) =>
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         icon: TweenAnimationBuilder<double>(
           tween: Tween(begin: .75, end: 1),
-          duration: Duration(milliseconds: MediaQuery.disableAnimationsOf(ctx) ||
-            ProviderScope.containerOf(ctx).read(controllerProvider).world.reducedMotion ? 0 : 650),
+          duration: Duration(
+            milliseconds:
+                MediaQuery.disableAnimationsOf(ctx) ||
+                    ProviderScope.containerOf(
+                      ctx,
+                    ).read(controllerProvider).world.reducedMotion
+                ? 0
+                : 650,
+          ),
           curve: Curves.easeOutBack,
-          builder: (context, scale, child) => Transform.scale(scale: scale, child: child),
-          child: SizedBox(height: 180, child: PetView(pose: 'celebrating',
-            reducedMotion: MediaQuery.disableAnimationsOf(ctx) ||
-              ProviderScope.containerOf(ctx).read(controllerProvider).world.reducedMotion)),
+          builder: (context, scale, child) =>
+              Transform.scale(scale: scale, child: child),
+          child: SizedBox(
+            height: 180,
+            child: PetView(
+              pose: 'celebrating',
+              reducedMotion:
+                  MediaQuery.disableAnimationsOf(ctx) ||
+                  ProviderScope.containerOf(
+                    ctx,
+                  ).read(controllerProvider).world.reducedMotion,
+            ),
+          ),
         ),
         title: Text(title),
         content: Text(message),

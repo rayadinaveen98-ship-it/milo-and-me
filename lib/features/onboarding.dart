@@ -102,10 +102,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(child: Text(
-                      Brand.name, maxLines: 1, overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    )),
+                    Expanded(
+                      child: Text(
+                        Brand.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ),
                     Text(
                       '${step + 1} / 5',
                       style: const TextStyle(color: Brand.sage),
