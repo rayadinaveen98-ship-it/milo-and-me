@@ -27,7 +27,9 @@ class _CatalogueState extends ConsumerState<CatalogueScreen> {
         .where((item) => theme == 'All' || item['theme'] == theme)
         .toList();
     if (kind == 'stories') {
-      final featured = items.indexWhere((item) => item['id'] == 'missing-moonlight');
+      final featured = items.indexWhere(
+        (item) => item['id'] == 'missing-moonlight',
+      );
       if (featured > 0) items.insert(0, items.removeAt(featured));
     }
     final title = {

@@ -91,8 +91,16 @@ class _AtlasPainter extends CustomPainter {
     final w = image.width / columns, h = image.height / rows;
     canvas.drawImageRect(
       image,
-      Rect.fromLTWH((index % columns) * w + 5, (index ~/ columns) * h + 5, w - 10, h - 10),
-      Alignment.center.inscribe(applyBoxFit(BoxFit.contain, Size(w, h), size).destination, Offset.zero & size),
+      Rect.fromLTWH(
+        (index % columns) * w + 5,
+        (index ~/ columns) * h + 5,
+        w - 10,
+        h - 10,
+      ),
+      Alignment.center.inscribe(
+        applyBoxFit(BoxFit.contain, Size(w, h), size).destination,
+        Offset.zero & size,
+      ),
       Paint()..filterQuality = FilterQuality.medium,
     );
   }

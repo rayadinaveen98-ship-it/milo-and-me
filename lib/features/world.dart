@@ -102,149 +102,169 @@ class WorldScreen extends ConsumerWidget {
                 builder: (context, bounds) => Stack(
                   fit: StackFit.expand,
                   children: [
-                  if (bounds.maxWidth > bounds.maxHeight * .85)
-                    SceneArt(area, fit: BoxFit.cover),
-                  if (bounds.maxWidth > bounds.maxHeight * .85)
-                    const ColoredBox(color: Color(0x99243b38)),
-                  Center(
-                  child: SizedBox(
-                    width: bounds.maxWidth.clamp(0, bounds.maxHeight * .85),
-                    child: Stack(
-                      children: [
-                        Positioned.fill(
-                          child: AnimatedSwitcher(
-                            duration: Duration(milliseconds: reduced ? 0 : 450),
-                            child: SceneArt(area, key: ValueKey(area)),
-                          ),
-                        ),
-                        Positioned(
-                          left: 16,
-                          right: 16,
-                          top: 12,
-                          child: SpeechLeaf(text: w.dialogue),
-                        ),
-                        if (keepsakes.isNotEmpty)
-                          Positioned(
-                            right: 16, top: bounds.maxHeight * .20,
-                            child: Tooltip(
-                              message: 'Our earned keepsakes',
-                              child: InkWell(
-                                onTap: () => route('/memories'),
-                                child: Container(
-                                  padding: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(color: Brand.cream.withValues(alpha: .88), borderRadius: BorderRadius.circular(12)),
-                                  child: Row(mainAxisSize: MainAxisSize.min, children: [
-                                    for (final keepsake in keepsakes)
-                                      SymbolArt(switch (keepsake) {'blocks' => 'star', 'garland' => 'flower', 'heart' => 'flower', _ => keepsake}, size: 32),
-                                    if (w.completedStories.contains('missing-moonlight')) const SymbolArt('moon', size: 32),
-                                  ]),
+                    if (bounds.maxWidth > bounds.maxHeight * .85)
+                      SceneArt(area, fit: BoxFit.cover),
+                    if (bounds.maxWidth > bounds.maxHeight * .85)
+                      const ColoredBox(color: Color(0x99243b38)),
+                    Center(
+                      child: SizedBox(
+                        width: bounds.maxWidth.clamp(0, bounds.maxHeight * .85),
+                        child: Stack(
+                          children: [
+                            Positioned.fill(
+                              child: AnimatedSwitcher(
+                                duration: Duration(
+                                  milliseconds: reduced ? 0 : 450,
                                 ),
+                                child: SceneArt(area, key: ValueKey(area)),
                               ),
                             ),
-                          ),
-                        Positioned(
-                          left: 0,
-                          right: 0,
-                          bottom: bounds.maxHeight * .12,
-                          height: bounds.maxHeight * .40,
-                          child: PetView(
-                            color: w.color,
-                            outfit: w.outfit,
-                            pose: w.mood,
-                            reducedMotion: reduced,
-                            onTap: () => app.care('cuddle'),
-                          ),
-                        ),
-                        Positioned(
-                          left: 8,
-                          top: bounds.maxHeight * .30,
-                          width: 104,
-                          height: bounds.maxHeight * .24,
-                          child: WorldHotspot(
-                            label: left.$1,
-                            onTap: () => route(left.$2),
-                          ),
-                        ),
-                        Positioned(
-                          right: 8,
-                          top: bounds.maxHeight * .36,
-                          width: 104,
-                          height: bounds.maxHeight * .24,
-                          child: WorldHotspot(
-                            label: right.$1,
-                            onTap: () {
-                              if (right.$2.isNotEmpty) {
-                                route(right.$2);
-                              } else {
-                                app.care(
-                                  area == 'care'
-                                      ? 'wash'
-                                      : w.mood == 'sleep'
-                                      ? 'cuddle'
-                                      : 'sleep',
-                                );
-                              }
-                            },
-                          ),
-                        ),
-                        if (picture != null &&
-                            (area == 'studio' || area == 'bedroom'))
-                          Positioned(
-                            left: 130,
-                            top: bounds.maxHeight * .22,
-                            width: 64,
-                            height: 72,
-                            child: Tooltip(
-                              message: 'Change displayed picture',
-                              child: InkWell(
-                                onTap: () => app.change(engine.rotatePicture),
-                                child: Container(
-                                  padding: const EdgeInsets.all(5),
-                                  color: Brand.gold,
-                                  child: CreationPreview(memory: picture),
-                                ),
-                              ),
+                            Positioned(
+                              left: 16,
+                              right: 16,
+                              top: 12,
+                              child: SpeechLeaf(text: w.dialogue),
                             ),
-                          ),
-                        Positioned(
-                          left: 12,
-                          right: 12,
-                          bottom: 10,
-                          child: Center(
-                            child: area == 'care'
-                                ? FilledButton.tonalIcon(
-                                    onPressed: () => app.care('food'),
-                                    icon: const Icon(Icons.apple_rounded),
-                                    label: const Text('Picnic'),
-                                  )
-                                : area == 'bedroom'
-                                ? FilledButton.tonalIcon(
-                                    onPressed: () => route('/roleplay'),
-                                    icon: const Icon(
-                                      Icons.theater_comedy_rounded,
-                                    ),
-                                    label: const Text('Let’s pretend'),
-                                  )
-                                : Text(
-                                    names[area]!,
-                                    style: const TextStyle(
-                                      color: Brand.cream,
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 20,
-                                      shadows: [
-                                        Shadow(
-                                          blurRadius: 8,
-                                          color: Colors.black,
+                            if (keepsakes.isNotEmpty)
+                              Positioned(
+                                right: 16,
+                                top: bounds.maxHeight * .20,
+                                child: Tooltip(
+                                  message: 'Our earned keepsakes',
+                                  child: InkWell(
+                                    onTap: () => route('/memories'),
+                                    child: Container(
+                                      padding: const EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                        color: Brand.cream.withValues(
+                                          alpha: .88,
                                         ),
-                                      ],
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          for (final keepsake in keepsakes)
+                                            SymbolArt(switch (keepsake) {
+                                              'blocks' => 'star',
+                                              'garland' => 'flower',
+                                              'heart' => 'flower',
+                                              _ => keepsake,
+                                            }, size: 32),
+                                          if (w.completedStories.contains(
+                                            'missing-moonlight',
+                                          ))
+                                            const SymbolArt('moon', size: 32),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                          ),
+                                ),
+                              ),
+                            Positioned(
+                              left: 0,
+                              right: 0,
+                              bottom: bounds.maxHeight * .12,
+                              height: bounds.maxHeight * .40,
+                              child: PetView(
+                                color: w.color,
+                                outfit: w.outfit,
+                                pose: w.mood,
+                                reducedMotion: reduced,
+                                onTap: () => app.care('cuddle'),
+                              ),
+                            ),
+                            Positioned(
+                              left: 8,
+                              top: bounds.maxHeight * .30,
+                              width: 104,
+                              height: bounds.maxHeight * .24,
+                              child: WorldHotspot(
+                                label: left.$1,
+                                onTap: () => route(left.$2),
+                              ),
+                            ),
+                            Positioned(
+                              right: 8,
+                              top: bounds.maxHeight * .36,
+                              width: 104,
+                              height: bounds.maxHeight * .24,
+                              child: WorldHotspot(
+                                label: right.$1,
+                                onTap: () {
+                                  if (right.$2.isNotEmpty) {
+                                    route(right.$2);
+                                  } else {
+                                    app.care(
+                                      area == 'care'
+                                          ? 'wash'
+                                          : w.mood == 'sleep'
+                                          ? 'cuddle'
+                                          : 'sleep',
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                            if (picture != null &&
+                                (area == 'studio' || area == 'bedroom'))
+                              Positioned(
+                                left: 130,
+                                top: bounds.maxHeight * .22,
+                                width: 64,
+                                height: 72,
+                                child: Tooltip(
+                                  message: 'Change displayed picture',
+                                  child: InkWell(
+                                    onTap: () =>
+                                        app.change(engine.rotatePicture),
+                                    child: Container(
+                                      padding: const EdgeInsets.all(5),
+                                      color: Brand.gold,
+                                      child: CreationPreview(memory: picture),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            Positioned(
+                              left: 12,
+                              right: 12,
+                              bottom: 10,
+                              child: Center(
+                                child: area == 'care'
+                                    ? FilledButton.tonalIcon(
+                                        onPressed: () => app.care('food'),
+                                        icon: const Icon(Icons.apple_rounded),
+                                        label: const Text('Picnic'),
+                                      )
+                                    : area == 'bedroom'
+                                    ? FilledButton.tonalIcon(
+                                        onPressed: () => route('/roleplay'),
+                                        icon: const Icon(
+                                          Icons.theater_comedy_rounded,
+                                        ),
+                                        label: const Text('Let’s pretend'),
+                                      )
+                                    : Text(
+                                        names[area]!,
+                                        style: const TextStyle(
+                                          color: Brand.cream,
+                                          fontWeight: FontWeight.w800,
+                                          fontSize: 20,
+                                          shadows: [
+                                            Shadow(
+                                              blurRadius: 8,
+                                              color: Colors.black,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                  ),
                   ],
                 ),
               ),

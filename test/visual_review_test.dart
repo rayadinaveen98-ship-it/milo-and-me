@@ -30,16 +30,22 @@ import 'world_test.dart' show WorldUiController;
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() async {
-    final flutterRoot = Platform.environment['FLUTTER_ROOT'] ?? Platform.resolvedExecutable.split('/bin/cache/').first;
+    final flutterRoot =
+        Platform.environment['FLUTTER_ROOT'] ??
+        Platform.resolvedExecutable.split('/bin/cache/').first;
     final fonts = Directory('$flutterRoot/bin/cache/artifacts/material_fonts');
     final roboto = FontLoader('Roboto');
     for (final file in fonts.listSync().whereType<File>()) {
       if (file.path.endsWith('.ttf') && file.path.contains('Roboto-')) {
-        roboto.addFont(file.readAsBytes().then((bytes) => ByteData.sublistView(bytes)));
+        roboto.addFont(
+          file.readAsBytes().then((bytes) => ByteData.sublistView(bytes)),
+        );
       }
     }
     await roboto.load();
-    await (FontLoader('MaterialIcons')..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'))).load();
+    await (FontLoader(
+      'MaterialIcons',
+    )..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'))).load();
   });
   const screens = <String, Widget>{
     'world': WorldScreen(),
@@ -89,7 +95,9 @@ void main() {
           ProviderScope(
             overrides: [controllerProvider.overrideWith((ref) => app)],
             child: MaterialApp(
-              theme: Brand.theme().copyWith(textTheme: Brand.theme().textTheme.apply(fontFamily: 'Roboto')),
+              theme: Brand.theme().copyWith(
+                textTheme: Brand.theme().textTheme.apply(fontFamily: 'Roboto'),
+              ),
               home: Consumer(
                 builder: (context, ref, child) {
                   ref.watch(controllerProvider);
@@ -108,7 +116,9 @@ void main() {
           ),
         );
         for (var frame = 0; frame < 3; frame++) {
-          await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 150)));
+          await tester.runAsync(
+            () => Future<void>.delayed(const Duration(milliseconds: 150)),
+          );
           await tester.pump(const Duration(milliseconds: 400));
         }
         expect(
