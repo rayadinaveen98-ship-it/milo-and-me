@@ -126,7 +126,7 @@ class _MiloAppState extends ConsumerState<MiloApp> {
       refreshListenable: app,
       redirect: (context, state) {
         if (!app.world.onboarded && state.uri.path != '/') return '/';
-        if (app.world.onboarded && state.uri.path == '/') return '/home';
+        if (app.world.onboarded && state.uri.path == '/') return '/drawing/flower';
         if (!app.access.route(state.uri.path, app.content.find)) return '/home';
         return null;
       },

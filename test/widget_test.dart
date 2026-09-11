@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:milo_and_me/main.dart';
+import 'package:milo_and_me/features/drawing.dart';
 import 'package:milo_and_me/core/audio.dart';
 import 'package:milo_and_me/core/controller.dart';
 import 'package:milo_and_me/data/database.dart';
@@ -35,6 +36,16 @@ void main() {
     await tester.tap(find.text('Let’s meet'));
     await tester.pump();
     expect(find.text('A little note for grown-ups'), findsOneWidget);
+    // Router refresh after setup must open the promised first activity;
+    // returning installs still start at home (covered by the next test).
+    await tester.runAsync(() => app.change((w) {
+      w.onboarded = true;
+      w.privacyAccepted = true;
+      return w;
+    }));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byType(DrawingScreen), findsOneWidget);
     await tester.pumpWidget(const SizedBox());
   });
   testWidgets('Child can open art catalogue; parent settings require PIN', (
