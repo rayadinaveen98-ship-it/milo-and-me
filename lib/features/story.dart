@@ -238,7 +238,13 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
                                       if (reduced) {
                                         scroll.jumpTo(0);
                                       } else {
-                                        await scroll.animateTo(0, duration: const Duration(milliseconds: 350), curve: Curves.easeOutCubic);
+                                        await scroll.animateTo(
+                                          0,
+                                          duration: const Duration(
+                                            milliseconds: 350,
+                                          ),
+                                          curve: Curves.easeOutCubic,
+                                        );
                                       }
                                     }
                                   }

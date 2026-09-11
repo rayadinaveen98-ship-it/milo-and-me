@@ -175,7 +175,12 @@ class _CatalogueState extends ConsumerState<CatalogueScreen> {
                                         ),
                                         borderRadius: BorderRadius.circular(16),
                                       ),
-                                      child: Center(child: SymbolArt(item['display'], size: 56)),
+                                      child: Center(
+                                        child: SymbolArt(
+                                          item['display'],
+                                          size: 56,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 Positioned(

@@ -88,11 +88,21 @@ void main() {
         final content = ContentRepository(db);
         await tester.runAsync(() async {
           await content.load();
-          for (final name in ['milo', 'expressions', 'props', 'food', 'pieces']) {
+          for (final name in [
+            'milo',
+            'expressions',
+            'props',
+            'food',
+            'pieces',
+          ]) {
             await PetGame.texture(name);
           }
         });
-        final world = World(onboarded: true, nickname: 'Acorn', reducedMotion: true);
+        final world = World(
+          onboarded: true,
+          nickname: 'Acorn',
+          reducedMotion: true,
+        );
         if (entry.key.startsWith('world-')) {
           world.companion.area = entry.key.substring(6);
         }
@@ -104,13 +114,18 @@ void main() {
         if (entry.key == 'memories' || entry.key == 'world-stories') {
           world.completedStories.add('missing-moonlight');
           world.companion.firsts.add('story');
-          world.memories.add(Memory(id: 'story:missing-moonlight', kind: 'story', title: 'Milo and the Missing Moonlight', topic: 'kindness', at: DateTime(2026, 9, 11), payload: {'ending': 'pond-ending'}));
+          world.memories.add(
+            Memory(
+              id: 'story:missing-moonlight',
+              kind: 'story',
+              title: 'Milo and the Missing Moonlight',
+              topic: 'kindness',
+              at: DateTime(2026, 9, 11),
+              payload: {'ending': 'pond-ending'},
+            ),
+          );
         }
-        final app = WorldUiController(
-          db,
-          content,
-          world,
-        );
+        final app = WorldUiController(db, content, world);
         final boundaryKey = GlobalKey();
         await tester.pumpWidget(
           ProviderScope(

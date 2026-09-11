@@ -57,7 +57,11 @@ abstract final class Brand {
         foregroundColor: cream,
         minimumSize: const Size(56, 58),
         padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 16),
-        textStyle: const TextStyle(fontFamily: 'Roboto', fontSize: 18, fontWeight: FontWeight.w700),
+        textStyle: const TextStyle(
+          fontFamily: 'Roboto',
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+        ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
       ),
     ),

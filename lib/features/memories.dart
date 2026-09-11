@@ -25,10 +25,21 @@ class MemoriesScreen extends ConsumerWidget {
                   height: 220,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(28),
-                    child: Stack(children: [
-                      const Positioned.fill(child: SceneArt('stories', fit: BoxFit.cover)),
-                      Positioned.fill(child: PetView(color: w.color, outfit: w.outfit, pose: 'proud', reducedMotion: w.reducedMotion)),
-                    ]),
+                    child: Stack(
+                      children: [
+                        const Positioned.fill(
+                          child: SceneArt('stories', fit: BoxFit.cover),
+                        ),
+                        Positioned.fill(
+                          child: PetView(
+                            color: w.color,
+                            outfit: w.outfit,
+                            pose: 'proud',
+                            reducedMotion: w.reducedMotion,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 18),
@@ -126,8 +137,16 @@ class MemoriesScreen extends ConsumerWidget {
                       padding: const EdgeInsets.only(top: 16),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(18),
-                        child: SizedBox(height: 180, width: double.infinity,
-                          child: SceneArt(m.id == 'story:missing-moonlight' ? 'moonlight' : 'stories', fit: BoxFit.cover)),
+                        child: SizedBox(
+                          height: 180,
+                          width: double.infinity,
+                          child: SceneArt(
+                            m.id == 'story:missing-moonlight'
+                                ? 'moonlight'
+                                : 'stories',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                     ),
                   const SizedBox(height: 10),
