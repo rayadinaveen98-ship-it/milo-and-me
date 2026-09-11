@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../core/brand.dart';
 import '../core/controller.dart';
+import 'pet.dart';
 
 class PageShell extends ConsumerWidget {
   final String title;
@@ -127,10 +128,15 @@ Future<void> showReward(BuildContext context, String title, String message) =>
       builder: (ctx) => AlertDialog(
         backgroundColor: Brand.cream,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        icon: const Icon(
-          Icons.auto_awesome_rounded,
-          size: 52,
-          color: Brand.sage,
+        icon: TweenAnimationBuilder<double>(
+          tween: Tween(begin: .75, end: 1),
+          duration: Duration(milliseconds: MediaQuery.disableAnimationsOf(ctx) ||
+            ProviderScope.containerOf(ctx).read(controllerProvider).world.reducedMotion ? 0 : 650),
+          curve: Curves.easeOutBack,
+          builder: (context, scale, child) => Transform.scale(scale: scale, child: child),
+          child: SizedBox(height: 180, child: PetView(pose: 'celebrating',
+            reducedMotion: MediaQuery.disableAnimationsOf(ctx) ||
+              ProviderScope.containerOf(ctx).read(controllerProvider).world.reducedMotion)),
         ),
         title: Text(title),
         content: Text(message),

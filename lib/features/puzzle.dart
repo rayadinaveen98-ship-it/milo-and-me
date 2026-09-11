@@ -57,11 +57,7 @@ class _PuzzleScreenState extends ConsumerState<PuzzleScreen> {
         borderRadius: BorderRadius.circular(18),
       ),
       child: Center(
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 22, color: Brand.ink),
-        ),
+        child: SymbolArt(text),
       ),
     );
     Widget slot(int index) => DragTarget<String>(
@@ -82,11 +78,7 @@ class _PuzzleScreenState extends ConsumerState<PuzzleScreen> {
               border: Border.all(color: Brand.sage, width: 2),
             ),
             child: Center(
-              child: Text(
-                index < answer.length ? answer[index] : '${index + 1}',
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 22),
-              ),
+              child: SymbolArt(index < answer.length ? answer[index] : '${index + 1}'),
             ),
           ),
         ),
@@ -134,11 +126,7 @@ class _PuzzleScreenState extends ConsumerState<PuzzleScreen> {
           if ((p['display'] as String? ?? '').isNotEmpty)
             Padding(
               padding: const EdgeInsets.all(12),
-              child: Text(
-                p['display'],
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 32, letterSpacing: 3),
-              ),
+              child: Center(child: SymbolArt(p['display'], size: 80)),
             ),
           Text(
             count > 1

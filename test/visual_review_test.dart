@@ -76,13 +76,16 @@ void main() {
             overrides: [controllerProvider.overrideWith((ref) => app)],
             child: MaterialApp(
               theme: Brand.theme(),
-              home: Builder(
-                builder: (context) => MediaQuery(
+              home: Consumer(
+                builder: (context, ref, child) {
+                  ref.watch(controllerProvider);
+                  return MediaQuery(
                   data: MediaQuery.of(
                     context,
                   ).copyWith(textScaler: TextScaler.linear(device.$3)),
                   child: RepaintBoundary(key: boundaryKey, child: entry.value),
-                ),
+                );
+                },
               ),
             ),
           ),

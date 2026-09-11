@@ -31,6 +31,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 100));
     expect(find.text('A little friend.\nA world to discover.'), findsOneWidget);
     await tester.ensureVisible(find.text('Let’s meet'));
+    await tester.pump();
     await tester.tap(find.text('Let’s meet'));
     await tester.pump();
     expect(find.text('A little note for grown-ups'), findsOneWidget);
