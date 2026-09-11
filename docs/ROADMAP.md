@@ -11,7 +11,7 @@ The approved `EXECUTION_V02_V07.md` contract controls scope and sequencing. Pres
 | 0.5.0 | Cooking and roleplay | Delivered; CI 34077648721, 46 tests, tag/APK v0.5.0 |
 | 0.6.0 | Science and safe offline discovery | Delivered; CI 34078295263, 52 tests, tag/APK v0.6.0 |
 | 0.7.0 | Parent, Supabase, packs, entitlement and restore | Delivered; CI 34511332749, 62 Flutter tests, 6 server tests, PostgreSQL checks, tag/APK v0.7.0; external activation documented |
-| 0.7.5 | Premium visual rebuild, original Milo/rooms/props, narrated Moonlight story | Final release verification in progress; see V075_VISUAL_REVIEW.md |
+| 0.7.5 | Premium visual rebuild, original Milo/rooms/props, narrated Moonlight story | Visual playtest delivered; CI 34594293078, 68 Flutter tests, 84 captures, tag/APK v0.7.5; quality limits in V075_VISUAL_REVIEW.md |
 
 Next quality work: physical Android/tablet profiling and child/parent playtesting; richer independently articulated Milo poses; additional distinct story-scene illustrations and narration; carefully authored expansion toward 50 drawings / 100 puzzles / 20 stories. Production services and stable signing remain separate external activation gates. Do not replace working engines to expand presentation.
 

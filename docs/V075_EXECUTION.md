@@ -18,4 +18,4 @@ Implementation order: mascot and art pipeline; world/onboarding; drawing/puzzle 
 
 All major flows preserved; phone/tablet/text-scale checks; strict analysis, Flutter/server/database tests and APK build passing in GitHub Actions; APK artifact and direct release download. Do not call v0.7.5 complete before those gates. Document unverified device performance and externally configured production services honestly.
 
-Status: baseline checkpoint; implementation not yet delivered.
+Status: v0.7.5 visual playtest delivered, green CI 34594293078 and verified APK. Full brief text is retained in V075_BRIEF.md; implementation evidence and exact remaining quality work are in V075_VISUAL_REVIEW.md and STATUS.md. Preserve the delivered source/manifest before beginning further content or rig expansion.
