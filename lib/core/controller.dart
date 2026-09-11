@@ -200,6 +200,7 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
     return w;
   });
   Future<bool> completeStory(Json story) => change((w) {
+    final ending = w.storyPositions[story['id']] ?? story['start'];
     w.completedStories.add(story['id']);
     w.storyPositions.remove(story['id']);
     return MemoryEngine().add(
@@ -209,7 +210,7 @@ class AppController extends ChangeNotifier with WidgetsBindingObserver {
         kind: 'story',
         title: story['title'],
         topic: story['topic'],
-        payload: {'theme': story['theme'], 'milestone': story['milestone']},
+        payload: {'theme': story['theme'], 'milestone': story['milestone'], 'ending': ending},
         at: DateTime.now(),
       ),
     );

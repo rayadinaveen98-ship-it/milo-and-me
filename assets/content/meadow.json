@@ -10864,6 +10864,64 @@
         }
       },
       "access": "library"
+    },
+    {
+      "id": "missing-moonlight",
+      "title": "Milo and the Missing Moonlight",
+      "topic": "moonlight kindness",
+      "subtitle": "A lantern, two paths, one lovely discovery",
+      "theme": "Space",
+      "access": "sample",
+      "milestone": "kindness",
+      "start": "opening",
+      "scenes": {
+        "opening": {
+          "text": "The moon’s silver path has vanished. Let’s light our lantern and look together!",
+          "background": "moonlight", "emotion": "curious", "symbol": "☾",
+          "audio": "audio/moonlight-opening.mp3",
+          "interaction": {"label": "Light the lantern", "symbol": "✦", "message": "A warm little glow!", "x": 0.84, "y": 0.68},
+          "choices": [
+            {"label": "The whispering tree", "next": "tree", "picture": "garden"},
+            {"label": "The sparkling pond", "next": "pond", "picture": "moonlight"}
+          ]
+        },
+        "tree": {
+          "text": "A firefly is tangled in a curled leaf. Tap the leaf to help it unfold.",
+          "background": "moonlight", "emotion": "gently worried", "symbol": "❧",
+          "interaction": {"label": "Unfold the leaf", "symbol": "❧", "message": "The firefly is free!", "x": 0.22, "y": 0.38},
+          "choices": [{"label": "Follow our firefly friend", "next": "firefly", "picture": "garden"}]
+        },
+        "pond": {
+          "text": "The pond holds a tiny silver shimmer. Touch the water gently to find its source.",
+          "background": "moonlight", "emotion": "thinking", "symbol": "≈",
+          "interaction": {"label": "Touch the shimmer", "symbol": "≈", "message": "Ripples point toward the clouds!", "x": 0.76, "y": 0.49},
+          "choices": [{"label": "Look up at the clouds", "next": "cloud", "picture": "moonlight"}]
+        },
+        "firefly": {
+          "text": "Our new friend lights a path to the hill. The moon is hiding behind a cloud!",
+          "background": "moonlight", "emotion": "exploring", "symbol": "✦",
+          "interaction": {"label": "Find the hidden moon", "symbol": "☾", "message": "There you are!", "x": 0.55, "y": 0.16},
+          "choices": [{"label": "Wave hello together", "next": "tree-ending", "picture": "moonlight"}]
+        },
+        "cloud": {
+          "text": "A soft cloud floats across the moon. Trace a breeze with your finger, or tap the cloud.",
+          "background": "moonlight", "emotion": "concentrating", "symbol": "☁",
+          "interaction": {"label": "Make a gentle breeze", "symbol": "☁", "message": "The clouds drift apart!", "x": 0.52, "y": 0.18},
+          "choices": [{"label": "Watch the silver path return", "next": "pond-ending", "picture": "moonlight"}]
+        },
+        "tree-ending": {
+          "text": "Moonlight fills the garden. We found the moon—and made a firefly friend. Let’s keep a glowing memory.",
+          "background": "moonlight", "emotion": "celebrating", "symbol": "★",
+          "interaction": {"label": "Catch a pretend sparkle", "symbol": "✦", "message": "Our firefly lantern keepsake", "x": 0.3, "y": 0.52},
+          "choices": []
+        },
+        "pond-ending": {
+          "text": "A silver path sparkles across the pond. We looked carefully and found our answer together.",
+          "background": "moonlight", "emotion": "proud", "symbol": "★",
+          "interaction": {"label": "Keep a pretend moonbeam", "symbol": "✦", "message": "Our silver moonbeam keepsake", "x": 0.75, "y": 0.48},
+          "choices": []
+        }
+      }
     }
   ],
   "themes": [

@@ -173,7 +173,10 @@ void renderIllustratedMilo(Canvas c, ui.Image mascot, ui.Image expressions,
     final pw = props.width / 4, ph = props.height / 3;
     c.drawImageRect(props, Rect.fromLTWH((i % 4) * pw, (i ~/ 4) * ph, pw, ph), target, p);
   }
-  if (index != null) {
+  if (index == 2) {
+    c.drawOval(const Rect.fromLTWH(64, 68, 177, 133), Paint()
+      ..color = const Color(0xff93cad4)..style = PaintingStyle.stroke..strokeWidth = 9);
+  } else if (index != null) {
     prop(index, outfit == 'scarf' ? const Rect.fromLTWH(83, 147, 130, 88)
       : outfit == 'doctor' ? const Rect.fromLTWH(154, 177, 46, 46)
       : outfit == 'astronaut' ? const Rect.fromLTWH(60, 54, 186, 150)

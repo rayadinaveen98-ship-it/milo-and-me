@@ -6,6 +6,7 @@ import '../core/brand.dart';
 import '../core/controller.dart';
 import '../ui/pet.dart';
 import '../ui/common.dart';
+import '../ui/illustrated.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
@@ -113,8 +114,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 ),
                 const SizedBox(height: 20),
                 SizedBox(
-                  height: step == 1 ? 100 : 235,
-                  child: PetView(color: color, onTap: step == 4 ? next : null),
+                  height: step == 1 ? 100 : 310,
+                  child: ClipRRect(borderRadius: BorderRadius.circular(36),
+                    child: Stack(children: [
+                      if (step != 1) Positioned.fill(child: SceneArt(step == 4 ? 'studio' : 'garden', fit: BoxFit.cover)),
+                      Positioned.fill(child: PetView(color: color,
+                        pose: step == 0 ? 'waving' : step == 2 ? 'curious' : step == 4 ? 'celebrating' : 'happy',
+                        reducedMotion: MediaQuery.disableAnimationsOf(context),
+                        onTap: step == 4 ? next : null)),
+                    ])),
                 ),
                 Text(
                   headings[step],

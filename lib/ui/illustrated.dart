@@ -1,5 +1,30 @@
 import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
 import '../core/brand.dart';
+import 'pet.dart';
+
+class ArtObject extends StatelessWidget {
+  final int index;
+  const ArtObject(this.index, {super.key});
+  @override
+  Widget build(BuildContext context) => FutureBuilder<ui.Image>(
+    future: PetGame.texture('props'), builder: (context, snapshot) =>
+      snapshot.hasData ? CustomPaint(painter: _AtlasPainter(snapshot.data!, index)) : const SizedBox());
+}
+
+class _AtlasPainter extends CustomPainter {
+  final ui.Image image;
+  final int index;
+  _AtlasPainter(this.image, this.index);
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = image.width / 4, h = image.height / 3;
+    canvas.drawImageRect(image, Rect.fromLTWH((index % 4) * w, (index ~/ 4) * h, w, h),
+      Offset.zero & size, Paint()..filterQuality = FilterQuality.medium);
+  }
+  @override
+  bool shouldRepaint(covariant _AtlasPainter old) => old.image != image || old.index != index;
+}
 
 class SceneArt extends StatelessWidget {
   final String name;
@@ -41,5 +66,5 @@ class WorldHotspot extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               boxShadow: const [BoxShadow(color: Color(0x44243938), blurRadius: 10)]),
             child: Text(label, textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Brand.ink)))))));
+              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Brand.ink))))))));
 }

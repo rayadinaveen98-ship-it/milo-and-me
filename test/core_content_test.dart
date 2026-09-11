@@ -13,7 +13,7 @@ void main() {
   test('Core library meets every requested content count and theme', () {
     expect((pack['drawings'] as List).length, 24);
     expect((pack['puzzles'] as List).length, 55);
-    expect((pack['stories'] as List).length, 12);
+    expect((pack['stories'] as List).length, 13);
     for (final kind in ['drawings', 'puzzles', 'stories']) {
       expect(
         (pack[kind] as List).map((p) => p['theme']).toSet(),

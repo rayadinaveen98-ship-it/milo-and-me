@@ -9,6 +9,7 @@ abstract class AudioService {
   });
   Future<void> reward();
   Future<void> narrate(String asset);
+  Future<void> stopNarration();
   Future<void> pause();
   void dispose();
 }
@@ -24,6 +25,8 @@ class SilentAudio implements AudioService {
   Future<void> reward() async {}
   @override
   Future<void> narrate(String asset) async {}
+  @override
+  Future<void> stopNarration() async {}
   @override
   Future<void> pause() async {}
   @override
@@ -79,6 +82,12 @@ class AudioDirector implements AudioService {
     } catch (_) {
       if (music) await _music.setVolume(.18);
     }
+  }
+
+  @override
+  Future<void> stopNarration() async {
+    await _voice.stop();
+    if (music) await _music.setVolume(.18);
   }
 
   @override
