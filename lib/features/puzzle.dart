@@ -99,16 +99,28 @@ class _PuzzleScreenState extends ConsumerState<PuzzleScreen> {
         children: [
           SizedBox(
             height: 260,
-            child: ClipRRect(borderRadius: BorderRadius.circular(28),
-              child: Stack(children: [
-                Positioned.fill(child: SceneArt(artForTheme(p['theme']), fit: BoxFit.cover)),
-                Positioned(right: 8, bottom: 0, width: 170, height: 190, child: PetView(
-              color: app.world.color,
-              outfit: app.world.outfit,
-              pose: feedback.isEmpty ? 'curious' : 'happy',
-              reducedMotion: app.world.reducedMotion,
-            )),
-              ])),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(28),
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: SceneArt(artForTheme(p['theme']), fit: BoxFit.cover),
+                  ),
+                  Positioned(
+                    right: 8,
+                    bottom: 0,
+                    width: 170,
+                    height: 190,
+                    child: PetView(
+                      color: app.world.color,
+                      outfit: app.world.outfit,
+                      pose: feedback.isEmpty ? 'curious' : 'happy',
+                      reducedMotion: app.world.reducedMotion,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
           Paper(
             color: Brand.mint,

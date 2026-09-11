@@ -4,20 +4,31 @@ import '../core/brand.dart';
 import 'pet.dart';
 
 String artForTheme(dynamic theme) => switch (theme) {
-  'Space' => 'space', 'Dinosaurs' => 'dinosaurs', 'Ocean' => 'ocean',
-  'Animals' => 'garden', _ => 'studio',
+  'Space' => 'space',
+  'Dinosaurs' => 'dinosaurs',
+  'Ocean' => 'ocean',
+  'Animals' => 'garden',
+  _ => 'studio',
 };
 
 class ArtObject extends StatelessWidget {
   final int index;
   final String atlas;
   final int columns, rows;
-  const ArtObject(this.index, {super.key, this.atlas = 'props', this.columns = 4, this.rows = 3});
+  const ArtObject(
+    this.index, {
+    super.key,
+    this.atlas = 'props',
+    this.columns = 4,
+    this.rows = 3,
+  });
   @override
   Widget build(BuildContext context) => FutureBuilder<ui.Image>(
     future: PetGame.texture(atlas),
     builder: (context, snapshot) => snapshot.hasData
-          ? CustomPaint(painter: _AtlasPainter(snapshot.data!, index, columns, rows))
+        ? CustomPaint(
+            painter: _AtlasPainter(snapshot.data!, index, columns, rows),
+          )
         : const SizedBox(),
   );
 }

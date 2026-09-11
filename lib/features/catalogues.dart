@@ -107,42 +107,142 @@ class _CatalogueState extends ConsumerState<CatalogueScreen> {
                   final resume = app.world.storyPositions.containsKey(
                     item['id'],
                   );
-                  final art = item['id'] == 'missing-moonlight' ? 'moonlight' : artForTheme(item['theme']);
+                  final art = item['id'] == 'missing-moonlight'
+                      ? 'moonlight'
+                      : artForTheme(item['theme']);
                   return Material(
-                    elevation: 3, shadowColor: const Color(0x44344a46),
-                    color: Brand.cream, borderRadius: BorderRadius.circular(24),
+                    elevation: 3,
+                    shadowColor: const Color(0x44344a46),
+                    color: Brand.cream,
+                    borderRadius: BorderRadius.circular(24),
                     clipBehavior: Clip.antiAlias,
-                    child: InkWell(onTap: () => context.go('/$route/${item['id']}'),
-                      child: Column(children: [
-                        Expanded(child: Stack(children: [
-                          Positioned.fill(child: SceneArt(art, fit: BoxFit.cover)),
-                          if (kind == 'drawings')
-                            Positioned.fill(child: Padding(padding: const EdgeInsets.all(18),
-                              child: Transform.rotate(angle: index.isEven ? -.04 : .04,
-                                child: Container(padding: const EdgeInsets.all(8), color: Brand.cream,
-                                  child: CustomPaint(painter: StrokePainter(strokes: [], watch: true,
-                                    guides: (item['steps'] as List).map((v) => Map<String, dynamic>.from(v)).toList())))))),
-                          if (kind == 'puzzles' && (item['display'] as String? ?? '').isNotEmpty)
-                            Positioned(left: 10, right: 10, bottom: 12,
-                              child: Container(padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(color: Brand.cream.withValues(alpha: .94),
-                                  borderRadius: BorderRadius.circular(16)),
-                                child: Text(item['display'], maxLines: 2, overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.center, style: const TextStyle(fontSize: 23, color: Brand.ink)))),
-                          Positioned(right: 8, top: 8, child: CircleAvatar(radius: 16,
-                            backgroundColor: Brand.cream, child: Icon(
-                              done ? Icons.check_rounded : resume ? Icons.bookmark_rounded : Icons.play_arrow_rounded,
-                              size: 21, color: Brand.ink))),
-                          if (kind == 'stories') Positioned(left: 0, top: 0, bottom: 0, width: 9,
-                            child: ColoredBox(color: Brand.ink.withValues(alpha: .55))),
-                        ])),
-                        Padding(padding: const EdgeInsets.fromLTRB(10, 12, 10, 4),
-                          child: Text(item['title'], maxLines: 2, overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800))),
-                        Padding(padding: const EdgeInsets.only(bottom: 12), child: Text(
-                          resume ? 'Continue' : done ? 'Again, together' : kind == 'stories' ? 'Open our adventure' : 'Let’s play',
-                          style: const TextStyle(fontSize: 12, color: Brand.sage))),
-                      ])),
+                    child: InkWell(
+                      onTap: () => context.go('/$route/${item['id']}'),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Stack(
+                              children: [
+                                Positioned.fill(
+                                  child: SceneArt(art, fit: BoxFit.cover),
+                                ),
+                                if (kind == 'drawings')
+                                  Positioned.fill(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(18),
+                                      child: Transform.rotate(
+                                        angle: index.isEven ? -.04 : .04,
+                                        child: Container(
+                                          padding: const EdgeInsets.all(8),
+                                          color: Brand.cream,
+                                          child: CustomPaint(
+                                            painter: StrokePainter(
+                                              strokes: [],
+                                              watch: true,
+                                              guides: (item['steps'] as List)
+                                                  .map(
+                                                    (v) =>
+                                                        Map<
+                                                          String,
+                                                          dynamic
+                                                        >.from(v),
+                                                  )
+                                                  .toList(),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                if (kind == 'puzzles' &&
+                                    (item['display'] as String? ?? '')
+                                        .isNotEmpty)
+                                  Positioned(
+                                    left: 10,
+                                    right: 10,
+                                    bottom: 12,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        color: Brand.cream.withValues(
+                                          alpha: .94,
+                                        ),
+                                        borderRadius: BorderRadius.circular(16),
+                                      ),
+                                      child: Text(
+                                        item['display'],
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          fontSize: 23,
+                                          color: Brand.ink,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                Positioned(
+                                  right: 8,
+                                  top: 8,
+                                  child: CircleAvatar(
+                                    radius: 16,
+                                    backgroundColor: Brand.cream,
+                                    child: Icon(
+                                      done
+                                          ? Icons.check_rounded
+                                          : resume
+                                          ? Icons.bookmark_rounded
+                                          : Icons.play_arrow_rounded,
+                                      size: 21,
+                                      color: Brand.ink,
+                                    ),
+                                  ),
+                                ),
+                                if (kind == 'stories')
+                                  Positioned(
+                                    left: 0,
+                                    top: 0,
+                                    bottom: 0,
+                                    width: 9,
+                                    child: ColoredBox(
+                                      color: Brand.ink.withValues(alpha: .55),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 12, 10, 4),
+                            child: Text(
+                              item['title'],
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: Text(
+                              resume
+                                  ? 'Continue'
+                                  : done
+                                  ? 'Again, together'
+                                  : kind == 'stories'
+                                  ? 'Open our adventure'
+                                  : 'Let’s play',
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Brand.sage,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   );
                 }, childCount: items.length),
               ),

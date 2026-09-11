@@ -43,10 +43,35 @@ class ScenarioCatalogue extends ConsumerWidget {
               borderRadius: BorderRadius.circular(24),
               child: ListTile(
                 minVerticalPadding: 24,
-                leading: SizedBox(width: 70, height: 80, child: kind == 'cooking'
-                  ? ArtObject({'pancakes': 0, 'sandwich': 1, 'fruit-bowl': 2, 'pizza': 3, 'cake': 4}[item['id']] ?? 4,
-                    atlas: 'food', columns: 3, rows: 2)
-                  : ArtObject({'astronaut': 2, 'chef': 3, 'doctor': 11, 'beret': 0, 'detective': 5, 'builder': 4}[item['outfit']] ?? 11)),
+                leading: SizedBox(
+                  width: 70,
+                  height: 80,
+                  child: kind == 'cooking'
+                      ? ArtObject(
+                          {
+                                'pancakes': 0,
+                                'sandwich': 1,
+                                'fruit-bowl': 2,
+                                'pizza': 3,
+                                'cake': 4,
+                              }[item['id']] ??
+                              4,
+                          atlas: 'food',
+                          columns: 3,
+                          rows: 2,
+                        )
+                      : ArtObject(
+                          {
+                                'astronaut': 2,
+                                'chef': 3,
+                                'doctor': 11,
+                                'beret': 0,
+                                'detective': 5,
+                                'builder': 4,
+                              }[item['outfit']] ??
+                              11,
+                        ),
+                ),
                 title: Text(
                   item['title'],
                   style: const TextStyle(
@@ -148,10 +173,18 @@ class _ScenarioState extends ConsumerState<ScenarioScreen> {
                 Positioned.fill(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(30),
-                    child: SceneArt(widget.kind == 'cooking' || definition['outfit'] == 'chef' ? 'care'
-                      : definition['outfit'] == 'astronaut' ? 'space'
-                      : definition['outfit'] == 'beret' ? 'studio'
-                      : definition['outfit'] == 'detective' ? 'stories' : 'play', fit: BoxFit.cover),
+                    child: SceneArt(
+                      widget.kind == 'cooking' || definition['outfit'] == 'chef'
+                          ? 'care'
+                          : definition['outfit'] == 'astronaut'
+                          ? 'space'
+                          : definition['outfit'] == 'beret'
+                          ? 'studio'
+                          : definition['outfit'] == 'detective'
+                          ? 'stories'
+                          : 'play',
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 Positioned(
@@ -161,8 +194,14 @@ class _ScenarioState extends ConsumerState<ScenarioScreen> {
                   height: 230,
                   child: PetView(
                     color: app.world.color,
-                    outfit: widget.kind == 'cooking' ? 'chef' : definition['outfit'] ?? app.world.outfit,
-                    pose: done ? 'celebrating' : widget.kind == 'cooking' ? 'cooking' : 'curious',
+                    outfit: widget.kind == 'cooking'
+                        ? 'chef'
+                        : definition['outfit'] ?? app.world.outfit,
+                    pose: done
+                        ? 'celebrating'
+                        : widget.kind == 'cooking'
+                        ? 'cooking'
+                        : 'curious',
                     reducedMotion: reduced,
                   ),
                 ),
@@ -196,15 +235,55 @@ class _ScenarioState extends ConsumerState<ScenarioScreen> {
                                 : Brand.mint,
                             borderRadius: BorderRadius.circular(24),
                           ),
-                          child: AnimatedSwitcher(duration: Duration(milliseconds: reduced ? 0 : 300),
-                            child: Transform.rotate(key: ValueKey('$index:${p['count']}'),
-                              angle: reduced || step?['action'] != 'mix' ? 0 : (p['count'] as int).isEven ? -.08 : .08,
+                          child: AnimatedSwitcher(
+                            duration: Duration(milliseconds: reduced ? 0 : 300),
+                            child: Transform.rotate(
+                              key: ValueKey('$index:${p['count']}'),
+                              angle: reduced || step?['action'] != 'mix'
+                                  ? 0
+                                  : (p['count'] as int).isEven
+                                  ? -.08
+                                  : .08,
                               child: widget.kind == 'cooking'
-                                ? (done || index >= (definition['steps'] as List).length - 2
-                                  ? ArtObject({'pancakes': 0, 'sandwich': 1, 'fruit-bowl': 2, 'pizza': 3, 'cake': 4}[widget.id] ?? 4,
-                                    atlas: 'food', columns: 3, rows: 2)
-                                  : index == 0 ? const ArtObject(5, atlas: 'food', columns: 3, rows: 2) : const ArtObject(8))
-                                : ArtObject({'astronaut': 2, 'chef': 9, 'doctor': 11, 'beret': 0, 'detective': 5, 'builder': 4}[definition['outfit']] ?? 11))),
+                                  ? (done ||
+                                            index >=
+                                                (definition['steps'] as List)
+                                                        .length -
+                                                    2
+                                        ? ArtObject(
+                                            {
+                                                  'pancakes': 0,
+                                                  'sandwich': 1,
+                                                  'fruit-bowl': 2,
+                                                  'pizza': 3,
+                                                  'cake': 4,
+                                                }[widget.id] ??
+                                                4,
+                                            atlas: 'food',
+                                            columns: 3,
+                                            rows: 2,
+                                          )
+                                        : index == 0
+                                        ? const ArtObject(
+                                            5,
+                                            atlas: 'food',
+                                            columns: 3,
+                                            rows: 2,
+                                          )
+                                        : const ArtObject(8))
+                                  : ArtObject(
+                                      {
+                                            'astronaut': 2,
+                                            'chef': 9,
+                                            'doctor': 11,
+                                            'beret': 0,
+                                            'detective': 5,
+                                            'builder': 4,
+                                          }[definition['outfit']] ??
+                                          11,
+                                    ),
+                            ),
+                          ),
                         ),
                       ),
                     ),

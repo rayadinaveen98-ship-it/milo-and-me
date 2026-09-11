@@ -28,14 +28,19 @@ import 'world_test.dart' show WorldUiController;
 // layout/render exception fails CI. Real persistence is covered separately.
 void main() {
   const screens = <String, Widget>{
-    'world': WorldScreen(), 'onboarding': OnboardingScreen(),
-    'wardrobe': WardrobeScreen(), 'drawing-library': CatalogueScreen(kind: 'drawings'),
-    'puzzle-library': CatalogueScreen(kind: 'puzzles'), 'story-library': CatalogueScreen(kind: 'stories'),
-    'drawing': DrawingScreen(id: 'flower'), 'puzzle': PuzzleScreen(id: 'leaf-twin'),
+    'world': WorldScreen(),
+    'onboarding': OnboardingScreen(),
+    'wardrobe': WardrobeScreen(),
+    'drawing-library': CatalogueScreen(kind: 'drawings'),
+    'puzzle-library': CatalogueScreen(kind: 'puzzles'),
+    'story-library': CatalogueScreen(kind: 'stories'),
+    'drawing': DrawingScreen(id: 'flower'),
+    'puzzle': PuzzleScreen(id: 'leaf-twin'),
     'moonlight': StoryScreen(id: 'missing-moonlight'),
     'cooking': ScenarioScreen(kind: 'cooking', id: 'pancakes'),
     'astronaut': ScenarioScreen(kind: 'roleplay', id: 'astronaut-mission'),
-    'memories': MemoriesScreen(), 'parent': ParentScreen(),
+    'memories': MemoriesScreen(),
+    'parent': ParentScreen(),
     'science': ScienceScreen(id: 'colour-lab'),
   };
   for (final device in [
@@ -44,7 +49,9 @@ void main() {
     ('tablet', const Size(1000, 900), 1.0),
     ('large-text', const Size(430, 932), 1.5),
   ]) {
-    testWidgets('Visual review and overflow gate: ${device.$1}', (tester) async {
+    testWidgets('Visual review and overflow gate: ${device.$1}', (
+      tester,
+    ) async {
       tester.view.physicalSize = device.$2;
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
@@ -58,22 +65,46 @@ void main() {
             await PetGame.texture(name);
           }
         });
-        final app = WorldUiController(db, content, World(onboarded: true, nickname: 'Acorn', reducedMotion: true));
+        final app = WorldUiController(
+          db,
+          content,
+          World(onboarded: true, nickname: 'Acorn', reducedMotion: true),
+        );
         final boundaryKey = GlobalKey();
-        await tester.pumpWidget(ProviderScope(
-          overrides: [controllerProvider.overrideWith((ref) => app)],
-          child: MaterialApp(theme: Brand.theme(), home: Builder(builder: (context) => MediaQuery(
-            data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(device.$3)),
-            child: RepaintBoundary(key: boundaryKey, child: entry.value)))),
-        ));
-        await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 350)));
+        await tester.pumpWidget(
+          ProviderScope(
+            overrides: [controllerProvider.overrideWith((ref) => app)],
+            child: MaterialApp(
+              theme: Brand.theme(),
+              home: Builder(
+                builder: (context) => MediaQuery(
+                  data: MediaQuery.of(
+                    context,
+                  ).copyWith(textScaler: TextScaler.linear(device.$3)),
+                  child: RepaintBoundary(key: boundaryKey, child: entry.value),
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 350)),
+        );
         await tester.pump(const Duration(milliseconds: 400));
-        expect(tester.takeException(), isNull, reason: '${device.$1}/${entry.key}');
+        expect(
+          tester.takeException(),
+          isNull,
+          reason: '${device.$1}/${entry.key}',
+        );
         await tester.runAsync(() async {
-          final boundary = boundaryKey.currentContext!.findRenderObject()! as RenderRepaintBoundary;
+          final boundary =
+              boundaryKey.currentContext!.findRenderObject()!
+                  as RenderRepaintBoundary;
           final image = await boundary.toImage(pixelRatio: 1);
           final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
-          final file = File('build/visual-review/${device.$1}-${entry.key}.png');
+          final file = File(
+            'build/visual-review/${device.$1}-${entry.key}.png',
+          );
           await file.parent.create(recursive: true);
           await file.writeAsBytes(bytes!.buffer.asUint8List());
           image.dispose();

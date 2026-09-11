@@ -47,7 +47,11 @@ void main() {
     final content = ContentRepository(db);
     // Asset loading and native SQLite initialization need real asynchronous I/O.
     await tester.runAsync(content.load);
-    final app = WorldUiController(db, content, World(onboarded: true, nickname: 'Acorn', reducedMotion: true));
+    final app = WorldUiController(
+      db,
+      content,
+      World(onboarded: true, nickname: 'Acorn', reducedMotion: true),
+    );
     await tester.pumpWidget(
       ProviderScope(
         overrides: [controllerProvider.overrideWith((ref) => app)],
